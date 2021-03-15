@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 import fetch from "node-fetch";
 import * as schema from "./schema";
 import { chan, UnbufferredChannel } from "./csp";
+import grammar from "./grammar";
+import * as nearley from "nearley";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,10 +15,12 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "tgde" is now active!');
 
+	const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+
 	let schema: schema.Schema;
 
 	// Get Schema Information
-	fetch("http://172.22.64.1:14240/gsqlserver/gsql/schema", {
+	fetch("http://3.92.64.253:14240/gsqlserver/gsql/schema", {
 		headers: {
 			"Authorization": "Basic dGlnZXJncmFwaDp0aWdlcmdyYXBo"
 		}
@@ -90,8 +94,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.languages.registerHoverProvider("gsql", {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
-
+			console.log("hover");
 			let w = word(document, position)
+			parser.feed(document.getText())
+			console.log(parser.results);
 
 			for(let v of schema.VertexTypes) {
 				if(v.Name === w.toLowerCase()) {
