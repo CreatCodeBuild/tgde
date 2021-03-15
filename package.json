@@ -50,6 +50,9 @@
 		"webpack-cli": "^4.4.0"
 	},
 	"dependencies": {
-		"node-fetch": "^2.6.1"
+		"@types/nearley": "^2.11.1",
+		"nearley": "^2.20.1",
+		"node-fetch": "^2.6.1",
+		"pegjs": "^0.10.0"
 	}
 }
