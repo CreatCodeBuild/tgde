@@ -96,8 +96,13 @@ export function activate(context: vscode.ExtensionContext) {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
 			console.log("hover");
 			let w = word(document, position)
-			parser.feed(document.getText())
-			console.log(parser.results);
+			try {
+				parser.feed(document.getText())
+			} catch(err) {
+				console.log(err)
+			}
+			
+			
 
 			for(let v of schema.VertexTypes) {
 				if(v.Name === w.toLowerCase()) {
