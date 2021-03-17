@@ -18,8 +18,17 @@ module.exports = grammar({
 
         // step -> stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
         step: _ => seq(
-            _.stepSourceSet
+            _.stepSourceSet,
+            optional(
+                seq(
+                    "-(", _.stepEdgeSet, ")", choice("-", "->"), _.stepVertexSet
+                )
+            )
         ),
+
+        stepEdgeSet: _ => _.name,
+
+        stepVertexSet: _ => _.name,
 
         // stepSourceSet -> vertexSetName [":" vertexAlias]
         stepSourceSet: _ => _.vertexSetName,

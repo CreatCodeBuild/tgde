@@ -94,8 +94,58 @@
         {
           "type": "SYMBOL",
           "name": "stepSourceSet"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "-("
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "stepEdgeSet"
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "-"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "->"
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "stepVertexSet"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
+    },
+    "stepEdgeSet": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "stepVertexSet": {
+      "type": "SYMBOL",
+      "name": "name"
     },
     "stepSourceSet": {
       "type": "SYMBOL",
