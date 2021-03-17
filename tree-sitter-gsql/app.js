@@ -6,4 +6,4 @@ parser.setLanguage(GSQL);
 
 const sourceCode = 'hello';
 const tree = parser.parse(sourceCode);
-console.log(tree.rootNode.toString());
+console.log(tree.rootNode);
