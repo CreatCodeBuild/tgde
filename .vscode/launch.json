@@ -6,6 +6,16 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "parse gsql",
+			"program": "./tree-sitter-gsql/app.js",
+			"runtimeExecutable": "/root/.nvm/versions/node/v15.11.0/bin/node",
+			"request": "launch",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "pwa-node"
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
