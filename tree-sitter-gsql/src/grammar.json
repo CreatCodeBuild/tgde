@@ -2,8 +2,112 @@
   "name": "gsql",
   "rules": {
     "source_file": {
-      "type": "STRING",
-      "value": "hello"
+      "type": "SYMBOL",
+      "name": "selectStmt"
+    },
+    "selectStmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "select"
+            },
+            {
+              "type": "STRING",
+              "value": "SELECT"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "STRING",
+            "value": " "
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "name"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "STRING",
+            "value": " "
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "from"
+            },
+            {
+              "type": "STRING",
+              "value": "FROM"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "step"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "step": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "stepSourceSet"
+        }
+      ]
+    },
+    "stepSourceSet": {
+      "type": "SYMBOL",
+      "name": "vertexSetName"
+    },
+    "vertexSetName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "name": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z]+"
     }
   },
   "extras": [
