@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:tgde.helloWorld"
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "tgde.helloWorld",
-        "title": "Hello World"
+        "title": "TigerGraph DE"
       }
     ]
   },

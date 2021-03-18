@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 // @ts-ignore
-import * as x from '../../tree-sitter-gsql/bindings/node';
+// import * as x from '../../tree-sitter-gsql/bindings/node';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from xxx', x);
+		vscode.window.showInformationMessage('Hello World from');
 	});
 
 	context.subscriptions.push(disposable);
