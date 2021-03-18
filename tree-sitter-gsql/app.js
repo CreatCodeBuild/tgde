@@ -1,9 +1,13 @@
-const Parser = require('tree-sitter');
-const GSQL = require('./bindings/node');
+const Parser = require('web-tree-sitter');
 
-const parser = new Parser();
-parser.setLanguage(GSQL);
+(async() => {
+    await Parser.init();
+    const parser = new Parser();
+    const GSQL = await Parser.Language.load('./tree-sitter-gsql.wasm');
+    parser.setLanguage(GSQL);
+    
+    const sourceCode = 'select tgt from Start:s-(friendship:e) ->person:tgt;';
+    const tree = parser.parse(sourceCode);
+    console.log(tree.rootNode);
+})();
 
-const sourceCode = 'select tgt from Start:s-(friendship:e) ->person:tgt;';
-const tree = parser.parse(sourceCode);
-console.log(tree.rootNode);
