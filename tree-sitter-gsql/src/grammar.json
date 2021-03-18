@@ -68,8 +68,12 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "step"
+          "type": "FIELD",
+          "name": "step",
+          "content": {
+            "type": "SYMBOL",
+            "name": "step"
+          }
         },
         {
           "type": "CHOICE",
@@ -106,8 +110,12 @@
                   "value": "-("
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "stepEdgeSet"
+                  "type": "FIELD",
+                  "name": "stepEdgeSet",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "stepEdgeSet"
+                  }
                 },
                 {
                   "type": "STRING",
@@ -127,8 +135,12 @@
                   ]
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "stepVertexSet"
+                  "type": "FIELD",
+                  "name": "stepVertexSet",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "stepVertexSet"
+                  }
                 }
               ]
             },

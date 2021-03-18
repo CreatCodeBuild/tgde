@@ -2,17 +2,24 @@
   {
     "type": "selectStmt",
     "named": true,
-    "fields": {},
+    "fields": {
+      "step": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "step",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "name",
-          "named": true
-        },
-        {
-          "type": "step",
           "named": true
         }
       ]
@@ -36,21 +43,34 @@
   {
     "type": "step",
     "named": true,
-    "fields": {},
+    "fields": {
+      "stepEdgeSet": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stepEdgeSet",
+            "named": true
+          }
+        ]
+      },
+      "stepVertexSet": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stepVertexSet",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "stepEdgeSet",
-          "named": true
-        },
-        {
           "type": "stepSourceSet",
-          "named": true
-        },
-        {
-          "type": "stepVertexSet",
           "named": true
         }
       ]

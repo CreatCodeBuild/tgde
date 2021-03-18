@@ -12,7 +12,7 @@ module.exports = grammar({
             $.name,
             repeat1(" "),
             choice("from", "FROM"),
-            $.step,
+            field('step', $.step),
             optional(repeat1(" ")),
         ),
 
@@ -21,7 +21,11 @@ module.exports = grammar({
             _.stepSourceSet,
             optional(
                 seq(
-                    "-(", _.stepEdgeSet, ")", choice("-", "->"), _.stepVertexSet
+                    "-(",
+                    field("stepEdgeSet",  _.stepEdgeSet),
+                    ")", 
+                    choice("-", "->"), 
+                    field("stepVertexSet", _.stepVertexSet)
                 )
             )
         ),

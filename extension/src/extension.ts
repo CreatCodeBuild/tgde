@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import fetch from "node-fetch";
 import * as schema from "./schema";
 import { chan, UnbufferredChannel } from "./csp";
-import grammar from "./grammar";
+
 import * as nearley from "nearley";
 
 // this method is called when your extension is activated
@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "tgde" is now active!');
 
-	const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
 	let schema: schema.Schema;
 
@@ -96,12 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
 			console.log("hover");
 			let w = word(document, position)
-			try {
-				parser.feed(document.getText())
-			} catch(err) {
-				console.log(err)
-			}
-			
 			
 
 			for(let v of schema.VertexTypes) {

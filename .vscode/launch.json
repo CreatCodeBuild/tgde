@@ -8,7 +8,7 @@
 		{
 			"name": "parse gsql",
 			"program": "./tree-sitter-gsql/app.js",
-			"runtimeExecutable": "/root/.nvm/versions/node/v15.11.0/bin/node",
+			"runtimeExecutable": "node",
 			"request": "launch",
 			"skipFiles": [
 				"<node_internals>/**"
@@ -20,12 +20,11 @@
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}"
+				"--extensionDevelopmentPath=${workspaceFolder}/extension"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/extension/dist/**/*.js"
 			],
-			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
 			"name": "Extension Tests",
