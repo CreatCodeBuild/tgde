@@ -14,7 +14,14 @@ import {
 	CompletionItemKind,
 	TextDocumentPositionParams,
 	TextDocumentSyncKind,
-	InitializeResult
+	InitializeResult,
+	CancellationToken,
+	WorkDoneProgressReporter,
+	ResultProgressReporter,
+	DocumentFormattingRequest,
+	DocumentFormattingParams,
+	HandlerResult,
+	TextEdit,
 } from 'vscode-languageserver/node';
 
 import {
@@ -60,7 +67,8 @@ connection.onInitialize((params: InitializeParams) => {
 			// Tell the client that this server supports code completion.
 			completionProvider: {
 				resolveProvider: true
-			}
+			},
+			documentFormattingProvider: true
 		}
 	};
 	if (hasWorkspaceFolderCapability) {
@@ -211,6 +219,24 @@ connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode
 	connection.console.log('We received an file change event');
 });
+
+connection.onDocumentFormatting(
+	(params: DocumentFormattingParams, token: CancellationToken, workDoneProgress: WorkDoneProgressReporter) => {
+		return [{
+			range: {
+				start: {
+					line: 0,
+					character: 0
+				},
+				end: {
+					line: 1,
+					character: 0
+				}
+			},
+			newText: "x"
+		}]
+	}
+	)
 
 // This handler provides the initial list of the completion items.
 connection.onCompletion(
