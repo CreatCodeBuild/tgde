@@ -12,9 +12,9 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 11
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 3
+#define FIELD_COUNT 4
 #define MAX_ALIAS_SEQUENCE_LENGTH 8
-#define PRODUCTION_ID_COUNT 4
+#define PRODUCTION_ID_COUNT 5
 
 enum {
   anon_sym_ = 1,
@@ -161,13 +161,15 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
 };
 
 enum {
-  field_step = 1,
-  field_stepEdgeSet = 2,
-  field_stepVertexSet = 3,
+  field_select = 1,
+  field_step = 2,
+  field_stepEdgeSet = 3,
+  field_stepVertexSet = 4,
 };
 
 static const char *ts_field_names[] = {
   [0] = NULL,
+  [field_select] = "select",
   [field_step] = "step",
   [field_stepEdgeSet] = "stepEdgeSet",
   [field_stepVertexSet] = "stepVertexSet",
@@ -176,15 +178,18 @@ static const char *ts_field_names[] = {
 static const TSFieldMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
   [1] = {.index = 0, .length = 1},
   [2] = {.index = 1, .length = 1},
-  [3] = {.index = 2, .length = 2},
+  [3] = {.index = 2, .length = 1},
+  [4] = {.index = 3, .length = 2},
 };
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
   [0] =
-    {field_step, 5},
+    {field_select, 0},
   [1] =
-    {field_step, 6},
+    {field_step, 5},
   [2] =
+    {field_step, 6},
+  [3] =
     {field_stepEdgeSet, 2},
     {field_stepVertexSet, 5},
 };
@@ -627,7 +632,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [16] = {.entry = {.count = 1, .reusable = false}}, SHIFT(3),
   [18] = {.entry = {.count = 1, .reusable = false}}, SHIFT(22),
   [20] = {.entry = {.count = 1, .reusable = false}}, SHIFT(6),
-  [22] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 6, .production_id = 1),
+  [22] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 6, .production_id = 2),
   [24] = {.entry = {.count = 1, .reusable = true}}, SHIFT(15),
   [26] = {.entry = {.count = 1, .reusable = true}}, SHIFT(17),
   [28] = {.entry = {.count = 1, .reusable = false}}, SHIFT(21),
@@ -640,13 +645,13 @@ static TSParseActionEntry ts_parse_actions[] = {
   [43] = {.entry = {.count = 1, .reusable = false}}, SHIFT(24),
   [45] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_stepSourceSet, 1),
   [47] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_stepSourceSet, 1),
-  [49] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 7, .production_id = 1),
+  [49] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 7, .production_id = 2),
   [51] = {.entry = {.count = 1, .reusable = true}}, SHIFT(12),
-  [53] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 7, .production_id = 2),
+  [53] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 7, .production_id = 3),
   [55] = {.entry = {.count = 1, .reusable = true}}, SHIFT(18),
   [57] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_selectStmt_repeat1, 2), SHIFT_REPEAT(17),
-  [60] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 8, .production_id = 2),
-  [62] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_step, 6, .production_id = 3),
+  [60] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_selectStmt, 8, .production_id = 3),
+  [62] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_step, 6, .production_id = 4),
   [64] = {.entry = {.count = 1, .reusable = true}}, SHIFT(10),
   [66] = {.entry = {.count = 1, .reusable = true}}, SHIFT(4),
   [68] = {.entry = {.count = 1, .reusable = true}}, SHIFT(9),
@@ -658,7 +663,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [80] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_stepVertexSet, 1),
   [82] = {.entry = {.count = 1, .reusable = true}},  ACCEPT_INPUT(),
   [84] = {.entry = {.count = 1, .reusable = true}}, SHIFT(25),
-  [86] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_source_file, 1),
+  [86] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_source_file, 1, .production_id = 1),
   [88] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_stepEdgeSet, 1),
 };
 

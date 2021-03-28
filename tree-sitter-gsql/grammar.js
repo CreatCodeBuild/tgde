@@ -3,7 +3,7 @@ module.exports = grammar({
 
     rules: {
         // TODO: add the actual grammar rules
-        source_file: $ => $.selectStmt,
+        source_file: $ => field('select', $.selectStmt),
 
         selectStmt: $ => seq(
             optional(repeat1(" ")),

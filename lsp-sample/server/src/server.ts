@@ -28,8 +28,13 @@ import {
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
+import * as path from 'path';
+// @ts-ignore
+import * as common from '../../common/common';
+
 declare const WebAssembly: any;
 const Parser = require('web-tree-sitter');
+
 
 
 
@@ -44,7 +49,19 @@ let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
 
-connection.onInitialize((params: InitializeParams) => {
+connection.onInitialize(async (params: InitializeParams) => {
+	console.log('loading parser');
+	await Parser.init();
+	const parser = new Parser();
+	const GSQL = await Parser.Language.load(path.join(__dirname, './tree-sitter-gsql.wasm'));
+	parser.setLanguage(GSQL);
+	console.log('done');
+	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {	
+		console.log('parsing', document)
+		const tree = parser.parse(document);
+		return tree.rootNode.toString();
+	});
+
 	let capabilities = params.capabilities;
 
 	// Does the client support the `workspace/configuration` request?
@@ -83,26 +100,7 @@ connection.onInitialize((params: InitializeParams) => {
 
 connection.onInitialized(() => {
 	connection.window.showInformationMessage("hello");
-	(async() => {
-		await Parser.init();
-		const parser = new Parser();
-		connection.window.showInformationMessage("prior load");
-		try {
-			const GSQL = await Parser.Language.load('./tree-sitter-gsql.wasm');
-			connection.window.showInformationMessage("after load");
-			parser.setLanguage(GSQL);
-			
-			const sourceCode = 'select tgt from Start:s-(friendship:e) ->person:tgt;';
-			const tree = parser.parse(sourceCode);
-			console.log();
-			connection.window.showInformationMessage(tree.rootNode.toString());
-		} catch(e) {
-			connection.window.showInformationMessage(e);
-		}
-		
 
-	})();
-	
 	if (hasConfigurationCapability) {
 		// Register for all configuration changes.
 		connection.client.register(DidChangeConfigurationNotification.type, undefined);
@@ -112,6 +110,8 @@ connection.onInitialized(() => {
 			connection.console.log('Workspace folder change event received.');
 		});
 	}
+
+	connection.client.register
 });
 
 // The example settings
@@ -236,7 +236,7 @@ connection.onDocumentFormatting(
 			newText: "x"
 		}]
 	}
-	)
+)
 
 // This handler provides the initial list of the completion items.
 connection.onCompletion(

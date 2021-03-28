@@ -2,8 +2,12 @@
   "name": "gsql",
   "rules": {
     "source_file": {
-      "type": "SYMBOL",
-      "name": "selectStmt"
+      "type": "FIELD",
+      "name": "select",
+      "content": {
+        "type": "SYMBOL",
+        "name": "selectStmt"
+      }
     },
     "selectStmt": {
       "type": "SEQ",

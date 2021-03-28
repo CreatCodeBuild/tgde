@@ -28,16 +28,17 @@
   {
     "type": "source_file",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "selectStmt",
-          "named": true
-        }
-      ]
+    "fields": {
+      "select": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "selectStmt",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

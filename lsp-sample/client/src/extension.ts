@@ -4,7 +4,8 @@
  * ------------------------------------------------------------------------------------------ */
 
 import * as path from 'path';
-import { workspace, ExtensionContext } from 'vscode';
+import { workspace, ExtensionContext, languages } from 'vscode';
+import * as vscode from 'vscode';
 
 import {
 	LanguageClient,
@@ -12,10 +13,13 @@ import {
 	ServerOptions,
 	TransportKind
 } from 'vscode-languageclient/node';
+// @ts-ignore
+import * as common from '../../common/common';
 
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
+	console.log("activate")
 	// The server is implemented in node
 	let serverModule = context.asAbsolutePath(
 		path.join('server', 'out', 'server.js')
@@ -51,6 +55,32 @@ export function activate(context: ExtensionContext) {
 		'Language Server Example',
 		serverOptions,
 		clientOptions
+	);
+
+	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable'];
+	const tokenModifiers = ['declaration', 'documentation'];
+	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
+
+	languages.registerDocumentSemanticTokensProvider(
+		'plaintext',
+		{
+			async provideDocumentSemanticTokens(document: vscode.TextDocument) {
+				// analyze the document and return semantic tokens
+				let r = await client.sendRequest(common.Request.SemanticHightlight, document.getText())
+				console.log(r)
+				
+ 
+				const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
+				// on line 1, characters 1-5 are a class declaration
+				tokensBuilder.push(
+					new vscode.Range(new vscode.Position(1, 1), new vscode.Position(1, 5)),
+					'class',
+					['declaration']
+				);
+				return tokensBuilder.build();
+			},
+		},
+		legend
 	);
 
 	// Start the client. This will also launch the server
