@@ -1,19 +1,38 @@
-module.exports = grammar({
+/*
+GSQL Query Language EBNF
+https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal-syntax-for-query-language
+*/
+ module.exports = grammar({
     name: 'gsql',
 
     rules: {
         // TODO: add the actual grammar rules
         source_file: $ => field('select', $.selectStmt),
 
+        /*
+        createQuery := CREATE [OR REPLACE] [DISTRIBUTED] QUERY queryName 
+               "(" [parameterList] ")"
+               [FOR GRAPH graphName]
+               [RETURNS "("  baseType | accumType ")"]
+               [API "(" stringLiteral ")"]
+               [SYNTAX syntaxName]
+               "{" queryBody "}"
+        */
+        createQuery: $ => seq(
+            choice("CREATE", "REPLACE"),
+            optional("DISTRIBUTED"),
+            "QUERY",
+            $.queryName,
+        ),
+
+        // queryName := name
+        queryName: $ => $.name,
+
         selectStmt: $ => seq(
-            optional($.whitespace),
             choice("select", "SELECT"),
-            $.whitespace,
             $.name,
-            $.whitespace,
             choice("from", "FROM"),
             field('step', $.step),
-            optional($.whitespace),
         ),
 
         // step -> stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
@@ -40,7 +59,7 @@ module.exports = grammar({
         vertexSetName: _ => _.name,
 
         name: $ => /[a-zA-Z]+/,
+    },
 
-        whitespace: _ => repeat1(choice(" ", "\n"))
-    }
+    extras: [' ', '\n']
 });
