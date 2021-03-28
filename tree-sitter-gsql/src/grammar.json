@@ -13,15 +13,27 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "STRING",
+          "value": "CREATE"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "CREATE"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "OR"
+                },
+                {
+                  "type": "STRING",
+                  "value": "REPLACE"
+                }
+              ]
             },
             {
-              "type": "STRING",
-              "value": "REPLACE"
+              "type": "BLANK"
             }
           ]
         },
@@ -44,12 +56,526 @@
         {
           "type": "SYMBOL",
           "name": "queryName"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "parameterList"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "FOR"
+                },
+                {
+                  "type": "STRING",
+                  "value": "GRAPH"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "graphName"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "RETURNS"
+                },
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "baseType"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "accumType"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
+    },
+    "parameterList": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "parameterType"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "paramName"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "="
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "constant"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "parameterType"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "paramName"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "="
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "constant"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "lowercase": {
+      "type": "PATTERN",
+      "value": "[a-z]"
+    },
+    "uppercase": {
+      "type": "PATTERN",
+      "value": "[A-Z]"
+    },
+    "letter": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "lowercase"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "uppercase"
+        }
+      ]
+    },
+    "digit": {
+      "type": "PATTERN",
+      "value": "[0-9]"
+    },
+    "integer": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "digit"
+          }
+        }
+      ]
+    },
+    "real": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "-"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "digit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "-"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "digit"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "digit"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "numeric": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "integer"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "real"
+        }
+      ]
+    },
+    "name": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "letter"
+            },
+            {
+              "type": "STRING",
+              "value": "_"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "letter"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "digit"
+              },
+              {
+                "type": "STRING",
+                "value": "_"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "graphName": {
+      "type": "SYMBOL",
+      "name": "name"
     },
     "queryName": {
       "type": "SYMBOL",
       "name": "name"
+    },
+    "paramName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "vertexType": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "edgeType": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "accumName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "vertexSetName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "attrName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "varName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "tupleType": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "fieldName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "funcName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "baseType": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "INT"
+        },
+        {
+          "type": "STRING",
+          "value": "FLOAT"
+        },
+        {
+          "type": "STRING",
+          "value": "DOUBLE"
+        },
+        {
+          "type": "STRING",
+          "value": "STRING"
+        },
+        {
+          "type": "STRING",
+          "value": "BOOL"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "VERTEX"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "<"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "vertexType"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ">"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "EDGE"
+        },
+        {
+          "type": "STRING",
+          "value": "JSONOBJECT"
+        },
+        {
+          "type": "STRING",
+          "value": "JSONARRAY"
+        },
+        {
+          "type": "STRING",
+          "value": "DATETIME"
+        }
+      ]
+    },
+    "parameterType": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "baseType"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "SET"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "BAG"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "baseType"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "FILE"
+        }
+      ]
+    },
+    "accumType": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": " "
+        }
+      ]
+    },
+    "constant": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "numeric"
+        }
+      ]
     },
     "selectStmt": {
       "type": "SEQ",
@@ -164,14 +690,6 @@
     "stepSourceSet": {
       "type": "SYMBOL",
       "name": "vertexSetName"
-    },
-    "vertexSetName": {
-      "type": "SYMBOL",
-      "name": "name"
-    },
-    "name": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z]+"
     }
   },
   "extras": [

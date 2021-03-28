@@ -1,5 +1,180 @@
 [
   {
+    "type": "accumType",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "baseType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constant",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "numeric",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "graphName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "integer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "digit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "letter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "lowercase",
+          "named": true
+        },
+        {
+          "type": "uppercase",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "digit",
+          "named": true
+        },
+        {
+          "type": "letter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "numeric",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "real",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "paramName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameterList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "parameterType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameterType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "queryName",
     "named": true,
     "fields": {},
@@ -9,6 +184,21 @@
       "types": [
         {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "real",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "digit",
           "named": true
         }
       ]
@@ -153,7 +343,34 @@
     }
   },
   {
+    "type": "vertexType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": " ",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {
@@ -169,7 +386,35 @@
     "named": false
   },
   {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": "BAG",
+    "named": false
+  },
+  {
+    "type": "BOOL",
+    "named": false
+  },
+  {
     "type": "CREATE",
+    "named": false
+  },
+  {
+    "type": "DATETIME",
     "named": false
   },
   {
@@ -177,7 +422,47 @@
     "named": false
   },
   {
+    "type": "DOUBLE",
+    "named": false
+  },
+  {
+    "type": "EDGE",
+    "named": false
+  },
+  {
+    "type": "FILE",
+    "named": false
+  },
+  {
+    "type": "FLOAT",
+    "named": false
+  },
+  {
+    "type": "FOR",
+    "named": false
+  },
+  {
     "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "GRAPH",
+    "named": false
+  },
+  {
+    "type": "INT",
+    "named": false
+  },
+  {
+    "type": "JSONARRAY",
+    "named": false
+  },
+  {
+    "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "OR",
     "named": false
   },
   {
@@ -189,19 +474,47 @@
     "named": false
   },
   {
+    "type": "RETURNS",
+    "named": false
+  },
+  {
     "type": "SELECT",
     "named": false
+  },
+  {
+    "type": "SET",
+    "named": false
+  },
+  {
+    "type": "STRING",
+    "named": false
+  },
+  {
+    "type": "VERTEX",
+    "named": false
+  },
+  {
+    "type": "_",
+    "named": false
+  },
+  {
+    "type": "digit",
+    "named": true
   },
   {
     "type": "from",
     "named": false
   },
   {
-    "type": "name",
+    "type": "lowercase",
     "named": true
   },
   {
     "type": "select",
     "named": false
+  },
+  {
+    "type": "uppercase",
+    "named": true
   }
 ]
