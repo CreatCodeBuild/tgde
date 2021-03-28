@@ -35,6 +35,37 @@
     }
   },
   {
+    "type": "createQuery",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "graphName",
+          "named": true
+        },
+        {
+          "type": "parameterList",
+          "named": true
+        },
+        {
+          "type": "queryName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "graphName",
     "named": true,
     "fields": {},
@@ -52,55 +83,12 @@
   {
     "type": "integer",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "digit",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "letter",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "lowercase",
-          "named": true
-        },
-        {
-          "type": "uppercase",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "digit",
-          "named": true
-        },
-        {
-          "type": "letter",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "numeric",
@@ -192,58 +180,21 @@
   {
     "type": "real",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "digit",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
-    "type": "selectStmt",
+    "type": "source_file",
     "named": true,
-    "fields": {
-      "step": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "step",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "name",
+          "type": "createQuery",
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "source_file",
-    "named": true,
-    "fields": {
-      "select": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "selectStmt",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -498,23 +449,11 @@
     "named": false
   },
   {
-    "type": "digit",
-    "named": true
-  },
-  {
     "type": "from",
     "named": false
   },
   {
-    "type": "lowercase",
-    "named": true
-  },
-  {
     "type": "select",
     "named": false
-  },
-  {
-    "type": "uppercase",
-    "named": true
   }
 ]

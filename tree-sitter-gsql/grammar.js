@@ -7,7 +7,7 @@ module.exports = grammar({
 
     rules: {
         // TODO: add the actual grammar rules
-        source_file: $ => field('select', $.selectStmt),
+        source_file: $ => $.createQuery,
 
         /*
         createQuery := CREATE [OR REPLACE] [DISTRIBUTED] QUERY queryName 
@@ -42,9 +42,6 @@ module.exports = grammar({
         uppercase          := [A-Z]
         letter             := lowercase | uppercase
         */
-        lowercase: $ => /[a-z]/,
-        uppercase: $ => /[A-Z]/,
-        letter: $ => choice($.lowercase, $.uppercase),
 
         /*
         digit              := [0-9]
@@ -52,11 +49,10 @@ module.exports = grammar({
         real               := ["-"]("."digit+) | ["-"](digit+"."digit*)
         numeric            := integer | real
         */
-        digit: $ => /[0-9]/,
-        integer: $ => seq(optional("-"), repeat1($.digit)),
+        integer: $ => seq(optional("-"), repeat1(digit())),
         real: $ => choice(
-            seq(optional("-"), ".", repeat1($.digit)),
-            seq(optional("-"), repeat1($.digit), ".", repeat($.digit))
+            seq(optional("-"), ".", repeat1(digit())),
+            seq(optional("-"), repeat1(digit()), ".", repeat(digit()))
         ),
         numeric: $ => choice($.integer, $.real),
 
@@ -68,8 +64,8 @@ module.exports = grammar({
         name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
         */
         name: $ => seq(
-            choice($.letter, "_"),
-            repeat(choice($.letter, $.digit, "_"))
+            choice(letter(), "_"),
+            repeat(choice(letter(), digit(), "_"))
         ),
         graphName: $ => $.name,
         queryName: $ => $.name,
@@ -208,3 +204,8 @@ module.exports = grammar({
     // space, unix line end/LF, windows line end/CRLF
     extras: () => [' ', '\n', '\r\n']
 });
+
+function lowercase() { return /[a-z]/ }
+function uppercase() { return /[A-Z]/ }
+function letter() { return choice(lowercase(), uppercase())}
+function digit() { return /[0-9]/ }

@@ -2,12 +2,8 @@
   "name": "gsql",
   "rules": {
     "source_file": {
-      "type": "FIELD",
-      "name": "select",
-      "content": {
-        "type": "SYMBOL",
-        "name": "selectStmt"
-      }
+      "type": "SYMBOL",
+      "name": "createQuery"
     },
     "createQuery": {
       "type": "SEQ",
@@ -217,31 +213,6 @@
         }
       ]
     },
-    "lowercase": {
-      "type": "PATTERN",
-      "value": "[a-z]"
-    },
-    "uppercase": {
-      "type": "PATTERN",
-      "value": "[A-Z]"
-    },
-    "letter": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "lowercase"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "uppercase"
-        }
-      ]
-    },
-    "digit": {
-      "type": "PATTERN",
-      "value": "[0-9]"
-    },
     "integer": {
       "type": "SEQ",
       "members": [
@@ -260,8 +231,8 @@
         {
           "type": "REPEAT1",
           "content": {
-            "type": "SYMBOL",
-            "name": "digit"
+            "type": "PATTERN",
+            "value": "[0-9]"
           }
         }
       ]
@@ -291,8 +262,8 @@
             {
               "type": "REPEAT1",
               "content": {
-                "type": "SYMBOL",
-                "name": "digit"
+                "type": "PATTERN",
+                "value": "[0-9]"
               }
             }
           ]
@@ -315,8 +286,8 @@
             {
               "type": "REPEAT1",
               "content": {
-                "type": "SYMBOL",
-                "name": "digit"
+                "type": "PATTERN",
+                "value": "[0-9]"
               }
             },
             {
@@ -326,8 +297,8 @@
             {
               "type": "REPEAT",
               "content": {
-                "type": "SYMBOL",
-                "name": "digit"
+                "type": "PATTERN",
+                "value": "[0-9]"
               }
             }
           ]
@@ -354,8 +325,17 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "letter"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[a-z]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[A-Z]"
+                }
+              ]
             },
             {
               "type": "STRING",
@@ -369,12 +349,21 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "letter"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[a-z]"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[A-Z]"
+                  }
+                ]
               },
               {
-                "type": "SYMBOL",
-                "name": "digit"
+                "type": "PATTERN",
+                "value": "[0-9]"
               },
               {
                 "type": "STRING",
