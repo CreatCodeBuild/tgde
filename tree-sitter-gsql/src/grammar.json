@@ -182,6 +182,10 @@
     {
       "type": "STRING",
       "value": "\n"
+    },
+    {
+      "type": "STRING",
+      "value": "\r\n"
     }
   ],
   "conflicts": [],
