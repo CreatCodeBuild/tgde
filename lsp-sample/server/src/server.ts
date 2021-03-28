@@ -59,7 +59,44 @@ connection.onInitialize(async (params: InitializeParams) => {
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {	
 		console.log('parsing', document)
 		const tree = parser.parse(document);
-		return tree.rootNode.toString();
+		// const walker = tree.walk();
+		const hightlights = [];
+		// while (true) {
+			// if(walker.nodeType === 'name') {
+			// 	hightlights.push({
+			// 		type: walker.nodeType,
+			// 		start: walker.startPosition,
+			// 		end: walker.endPosition
+			// 	})
+			// }
+		// 	let ok = walker.gotoFirstChild();
+		// 	if(!ok) {
+		// 		ok = walker.gotoNextSibling();
+		// 	}
+		// 	if(!ok) {
+		// 		ok = walker.gotoParent();
+		// 	}
+		// }
+		(function f(node) {
+			console.log(node, node.type)
+			if (node.type === 'name') {
+				const m: common.HighlightToken = {
+					type: node.type,
+					start: node.startPosition,
+					end: node.endPosition
+				}
+				console.log(m)
+				hightlights.push(m)
+			}
+			console.log('!=')
+			for(let child of node.children) {
+				console.log(child)
+				f(child)
+			}
+			console.log('?')
+		}(tree.rootNode))
+		console.log("done walk")
+		return hightlights;
 	});
 
 	let capabilities = params.capabilities;

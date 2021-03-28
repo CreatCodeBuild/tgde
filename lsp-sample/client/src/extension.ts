@@ -66,17 +66,22 @@ export function activate(context: ExtensionContext) {
 		{
 			async provideDocumentSemanticTokens(document: vscode.TextDocument) {
 				// analyze the document and return semantic tokens
-				let r = await client.sendRequest(common.Request.SemanticHightlight, document.getText())
+				let r: Array<common.HighlightToken> = await client.sendRequest(common.Request.SemanticHightlight, document.getText())
 				console.log(r)
 				
  
 				const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
-				// on line 1, characters 1-5 are a class declaration
-				tokensBuilder.push(
-					new vscode.Range(new vscode.Position(1, 1), new vscode.Position(1, 5)),
-					'class',
-					['declaration']
-				);
+				for(let token of r) {
+					// on line 1, characters 1-5 are a class declaration
+					tokensBuilder.push(
+						new vscode.Range(
+							new vscode.Position(token.start.row, token.start.column), 
+							new vscode.Position(token.end.row, token.end.column)),
+						'variable',
+						['declaration']
+					);
+				}
+
 				return tokensBuilder.build();
 			},
 		},

@@ -2,3 +2,14 @@
 export enum Request {
 	SemanticHightlight = "SemanticHightlight",
 }
+
+export interface HighlightToken {
+	start: TreeSitterPosition
+	end: TreeSitterPosition
+	type: string
+}
+
+export interface TreeSitterPosition {
+	row: number
+	column: number
+}
