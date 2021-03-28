@@ -61,5 +61,6 @@ https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal
         name: $ => /[a-zA-Z]+/,
     },
 
-    extras: () => [' ', '\n']
+    // space, unix line end/LF, windows line end/CRLF
+    extras: () => [' ', '\n', '\r\n']
 });
