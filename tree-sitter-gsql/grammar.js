@@ -6,14 +6,14 @@ module.exports = grammar({
         source_file: $ => field('select', $.selectStmt),
 
         selectStmt: $ => seq(
-            optional(repeat1(" ")),
+            optional($.whitespace),
             choice("select", "SELECT"),
-            repeat1(" "),
+            $.whitespace,
             $.name,
-            repeat1(" "),
+            $.whitespace,
             choice("from", "FROM"),
             field('step', $.step),
-            optional(repeat1(" ")),
+            optional($.whitespace),
         ),
 
         // step -> stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
@@ -40,5 +40,7 @@ module.exports = grammar({
         vertexSetName: _ => _.name,
 
         name: $ => /[a-zA-Z]+/,
+
+        whitespace: _ => repeat1(choice(" ", "\n"))
     }
 });
