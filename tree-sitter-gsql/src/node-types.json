@@ -15,11 +15,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "name",
+          "named": true
+        },
+        {
+          "type": "whitespace",
           "named": true
         }
       ]
@@ -136,6 +140,15 @@
         }
       ]
     }
+  },
+  {
+    "type": "whitespace",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "\n",
+    "named": false
   },
   {
     "type": " ",
