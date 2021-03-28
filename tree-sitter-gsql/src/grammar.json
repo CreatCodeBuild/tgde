@@ -9,21 +9,51 @@
         "name": "selectStmt"
       }
     },
-    "selectStmt": {
+    "createQuery": {
       "type": "SEQ",
       "members": [
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "whitespace"
+              "type": "STRING",
+              "value": "CREATE"
+            },
+            {
+              "type": "STRING",
+              "value": "REPLACE"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "DISTRIBUTED"
             },
             {
               "type": "BLANK"
             }
           ]
         },
+        {
+          "type": "STRING",
+          "value": "QUERY"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "queryName"
+        }
+      ]
+    },
+    "queryName": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "selectStmt": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "CHOICE",
           "members": [
@@ -39,15 +69,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "whitespace"
-        },
-        {
-          "type": "SYMBOL",
           "name": "name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "whitespace"
         },
         {
           "type": "CHOICE",
@@ -69,18 +91,6 @@
             "type": "SYMBOL",
             "name": "step"
           }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "whitespace"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
         }
       ]
     },
@@ -162,28 +172,16 @@
     "name": {
       "type": "PATTERN",
       "value": "[a-zA-Z]+"
-    },
-    "whitespace": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": " "
-          },
-          {
-            "type": "STRING",
-            "value": "\n"
-          }
-        ]
-      }
     }
   },
   "extras": [
     {
-      "type": "PATTERN",
-      "value": "\\s"
+      "type": "STRING",
+      "value": " "
+    },
+    {
+      "type": "STRING",
+      "value": "\n"
     }
   ],
   "conflicts": [],
