@@ -246,18 +246,19 @@ module.exports = grammar({
 
         /*  
         condition := expr
-                | expr comparisonOperator expr
                 | expr [ NOT ] IN setBagExpr
                 | expr IS [ NOT ] NULL
                 | expr BETWEEN expr AND expr
                 | "(" condition ")"
                 | NOT condition
-                | condition (AND | OR) condition
+                
                 | (TRUE | FALSE)
                 | expr [NOT] LIKE expr [ESCAPE escape_char]
         */
         condition: $ => choice(
             $.expr,
+            seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
+            seq($.expr, $.comparisonOperator, $.expr)           // expr comparisonOperator expr
             // todo
         ),
         /*
