@@ -57,32 +57,58 @@ export function activate(context: ExtensionContext) {
 		clientOptions
 	);
 
-	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable'];
+	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable', 'comment'];
 	const tokenModifiers = ['declaration', 'documentation'];
 	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 
 	languages.registerDocumentSemanticTokensProvider(
-		'plaintext',
+		['gsql'],
 		{
 			async provideDocumentSemanticTokens(document: vscode.TextDocument) {
 				// analyze the document and return semantic tokens
 				let r: Array<common.HighlightToken> = await client.sendRequest(common.Request.SemanticHightlight, document.getText())
 				console.log(r)
-				
- 
-				const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
-				for(let token of r) {
-					// on line 1, characters 1-5 are a class declaration
-					tokensBuilder.push(
-						new vscode.Range(
-							new vscode.Position(token.start.row, token.start.column), 
-							new vscode.Position(token.end.row, token.end.column)),
-						'variable',
-						['declaration']
-					);
+
+				function tsTokenToVS(token: common.HighlightToken) {
+					return new vscode.Range(
+						new vscode.Position(token.start.row, token.start.column),
+						new vscode.Position(token.end.row, token.end.column))
 				}
 
-				return tokensBuilder.build();
+				console.log(2)
+
+				const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
+				try {
+					for (let token of r) {
+						console.log(token)
+						if (token.type === 'name') {
+							tokensBuilder.push(
+								tsTokenToVS(token),
+								'variable',
+								[]
+							);
+						} else if (token.type === 'comment') {
+
+							const t = tsTokenToVS(token)
+							tokensBuilder.push(
+								t,
+								'comment',
+								[]
+							);
+
+
+
+						}
+						console.log(token, 'done')
+					}
+
+				} catch (e) {
+					console.log(e)
+				}
+				console.log(3)
+				const semanticTokens = tokensBuilder.build();
+				console.log(semanticTokens)
+				return semanticTokens;
 			},
 		},
 		legend

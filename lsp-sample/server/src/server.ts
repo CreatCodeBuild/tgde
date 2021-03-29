@@ -56,19 +56,19 @@ connection.onInitialize(async (params: InitializeParams) => {
 	const GSQL = await Parser.Language.load(path.join(__dirname, './tree-sitter-gsql.wasm'));
 	parser.setLanguage(GSQL);
 	console.log('done');
-	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {	
+	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
 		console.log('parsing', document)
 		const tree = parser.parse(document);
 		// const walker = tree.walk();
 		const hightlights = [];
 		// while (true) {
-			// if(walker.nodeType === 'name') {
-			// 	hightlights.push({
-			// 		type: walker.nodeType,
-			// 		start: walker.startPosition,
-			// 		end: walker.endPosition
-			// 	})
-			// }
+		// if(walker.nodeType === 'name') {
+		// 	hightlights.push({
+		// 		type: walker.nodeType,
+		// 		start: walker.startPosition,
+		// 		end: walker.endPosition
+		// 	})
+		// }
 		// 	let ok = walker.gotoFirstChild();
 		// 	if(!ok) {
 		// 		ok = walker.gotoNextSibling();
@@ -79,21 +79,22 @@ connection.onInitialize(async (params: InitializeParams) => {
 		// }
 		(function f(node) {
 			console.log(node, node.type)
-			if (node.type === 'name') {
-				const m: common.HighlightToken = {
-					type: node.type,
-					start: node.startPosition,
-					end: node.endPosition
-				}
-				console.log(m)
-				hightlights.push(m)
+			switch (node.type) {
+				case 'name':
+				case 'comment':
+					const m: common.HighlightToken = {
+						type: node.type,
+						start: node.startPosition,
+						end: node.endPosition
+					}
+					console.log(m)
+					hightlights.push(m)
+					break;
 			}
-			console.log('!=')
-			for(let child of node.children) {
+			for (let child of node.children) {
 				console.log(child)
 				f(child)
 			}
-			console.log('?')
 		}(tree.rootNode))
 		console.log("done walk")
 		return hightlights;
