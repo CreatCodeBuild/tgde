@@ -568,6 +568,10 @@
     "named": false
   },
   {
+    "type": "comment",
+    "named": true
+  },
+  {
     "type": "declExceptiStmts",
     "named": true
   },
