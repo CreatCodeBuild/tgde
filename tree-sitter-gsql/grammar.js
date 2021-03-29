@@ -22,8 +22,10 @@ module.exports = grammar({
             "CREATE", optional(seq("OR", "REPLACE")), optional("DISTRIBUTED"), "QUERY", $.queryName,
             "(", optional($.parameterList), ")",
             optional(seq("FOR", "GRAPH", $.graphName)),
-            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")"))
-            // todo
+            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
+            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
+            optional(seq("SYNTAX", $.syntaxName)),
+            "{", $.queryBody, "}"
         ),
 
         /*
@@ -33,6 +35,27 @@ module.exports = grammar({
         parameterList: $ => seq(
             $.parameterType, $.paramName, optional(seq("=", $.constant)),
             repeat(seq(",", $.parameterType, $.paramName, optional(seq("=", $.constant))))
+        ),
+
+        syntaxName: $ => $.name,
+
+        queryBody: $ => seq(
+            optional($.typedefs), optional($.declStmts), optional($.declExceptiStmts),
+            $.queryBodyStmts,
+        ),
+
+        // todo
+        typedefs: $ => "",
+
+        declStmts:  $ => " ",
+
+        declExceptiStmts:  $ => "  ",
+
+        queryBodyStmts: $ => repeat1(seq($.queryBodyStmt, ";")),
+
+        // todo
+        queryBodyStmt: $=> choice(
+            $.selectStmt
         ),
 
         /*
