@@ -378,6 +378,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "assignStmt"
+        },
+        {
+          "type": "SYMBOL",
           "name": "selectStmt"
         }
       ]
@@ -488,33 +492,12 @@
       ]
     },
     "name": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "[a-z]"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "[A-Z]"
-                }
-              ]
-            },
-            {
-              "type": "STRING",
-              "value": "_"
-            }
-          ]
-        },
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "PREC_LEFT",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
             "type": "CHOICE",
             "members": [
               {
@@ -531,17 +514,42 @@
                 ]
               },
               {
-                "type": "PATTERN",
-                "value": "[0-9]"
-              },
-              {
                 "type": "STRING",
                 "value": "_"
               }
             ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "[a-z]"
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "[A-Z]"
+                    }
+                  ]
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[0-9]"
+                },
+                {
+                  "type": "STRING",
+                  "value": "_"
+                }
+              ]
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "graphName": {
       "type": "SYMBOL",
@@ -568,8 +576,12 @@
       "name": "name"
     },
     "vertexSetName": {
-      "type": "SYMBOL",
-      "name": "name"
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SYMBOL",
+        "name": "name"
+      }
     },
     "attrName": {
       "type": "SYMBOL",
@@ -717,6 +729,19 @@
         }
       ]
     },
+    "globalAccumName": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@@"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "accumName"
+        }
+      ]
+    },
     "accumType": {
       "type": "CHOICE",
       "members": [
@@ -735,46 +760,145 @@
         }
       ]
     },
-    "selectStmt": {
-      "type": "SEQ",
+    "expr": {
+      "type": "CHOICE",
       "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "select"
-            },
-            {
-              "type": "STRING",
-              "value": "SELECT"
-            }
-          ]
-        },
         {
           "type": "SYMBOL",
           "name": "name"
         },
         {
-          "type": "CHOICE",
+          "type": "SYMBOL",
+          "name": "globalAccumName"
+        }
+      ]
+    },
+    "assignStmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "from"
+              "type": "SYMBOL",
+              "name": "name"
             },
             {
               "type": "STRING",
-              "value": "FROM"
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expr"
             }
           ]
         },
         {
-          "type": "FIELD",
-          "name": "step",
-          "content": {
-            "type": "SYMBOL",
-            "name": "step"
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "attrName"
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expr"
+            }
+          ]
+        }
+      ]
+    },
+    "selectStmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "gsqlSelectBlock"
+        }
+      ]
+    },
+    "gsqlSelectBlock": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "gsqlSelectClause"
+        }
+      ]
+    },
+    "gsqlSelectClause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "vertexSetName"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "STRING",
+          "value": "SELECT"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "vertexAlias"
+        }
+      ]
+    },
+    "fromClause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "FROM"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "step"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "pathPattern"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "pathPattern"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -793,15 +917,15 @@
               "members": [
                 {
                   "type": "STRING",
-                  "value": "-("
+                  "value": "-"
                 },
                 {
-                  "type": "FIELD",
-                  "name": "stepEdgeSet",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "stepEdgeSet"
-                  }
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "stepEdgeSet"
                 },
                 {
                   "type": "STRING",
@@ -821,12 +945,8 @@
                   ]
                 },
                 {
-                  "type": "FIELD",
-                  "name": "stepVertexSet",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "stepVertexSet"
-                  }
+                  "type": "SYMBOL",
+                  "name": "stepVertexSet"
                 }
               ]
             },
@@ -834,6 +954,51 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "vertexAlias": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "edgeAlias": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "pathPattern": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "stepVertexSet"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "STRING",
+                "value": "("
+              },
+              {
+                "type": "STRING",
+                "value": ")"
+              },
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "stepVertexSet"
+              }
+            ]
+          }
         }
       ]
     },
@@ -860,6 +1025,19 @@
               {
                 "type": "STRING",
                 "value": "//"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "#"
               },
               {
                 "type": "PATTERN",

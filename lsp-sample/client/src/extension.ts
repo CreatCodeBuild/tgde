@@ -57,7 +57,7 @@ export function activate(context: ExtensionContext) {
 		clientOptions
 	);
 
-	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable', 'comment'];
+	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable', 'comment', 'keyword'];
 	const tokenModifiers = ['declaration', 'documentation'];
 	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 
@@ -89,13 +89,15 @@ export function activate(context: ExtensionContext) {
 							pushToBuilder(tokensBuilder, token, 'variable')
 						} else if (token.type === 'comment') {
 							pushToBuilder(tokensBuilder, token, 'comment')
+						}else if (token.type === 'keyword') {
+							pushToBuilder(tokensBuilder, token, 'keyword')
 						}
 					}
 
 				} catch (e) {
 					console.log(e)
 				}
-				console.log(3)
+
 				const semanticTokens = tokensBuilder.build();
 				console.log(semanticTokens)
 				return semanticTokens;

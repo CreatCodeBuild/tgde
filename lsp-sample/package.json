@@ -21,16 +21,24 @@
 	],
 	"main": "./client/out/extension",
 	"contributes": {
-		"languages": [{
-			"id": "gsql",
-			"aliases": ["gsql"],
-			"extensions": [".gsql"]
-		}],
-		"grammars": [{
-            "language": "gsql",
-            "scopeName": "source.gsql",
-            "path": "./syntaxes/gsql.tmLanguage"
-        }],
+		"languages": [
+			{
+				"id": "gsql",
+				"aliases": [
+					"gsql"
+				],
+				"extensions": [
+					".gsql"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "gsql",
+				"scopeName": "source.gsql",
+				"path": "./syntaxes/gsql.tmLanguage"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "Example configuration",

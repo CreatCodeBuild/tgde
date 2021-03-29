@@ -31,6 +31,7 @@ import {
 import * as path from 'path';
 // @ts-ignore
 import * as common from '../../common/common';
+import { keywords } from './keywords';
 
 declare const WebAssembly: any;
 const Parser = require('web-tree-sitter');
@@ -57,24 +58,39 @@ connection.onInitialize(async (params: InitializeParams) => {
 	parser.setLanguage(GSQL);
 	console.log('done');
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
+
 		console.log('parsing', document)
 		const tree = parser.parse(document);
 		const hightlights = [];
 
 		(function f(node) {
-			switch (node.type) {
-				case 'name':
-				case 'comment':
+			try {
+				switch (node.type) {
+					case 'name':
+					case 'comment':
+						const m: common.HighlightToken = {
+							type: node.type,
+							start: node.startPosition,
+							end: node.endPosition
+						}
+						hightlights.push(m)
+						break;
+				}
+
+				console.log(node.type)
+				if (keywords.includes(node.type)) {
 					const m: common.HighlightToken = {
-						type: node.type,
+						type: 'keyword',
 						start: node.startPosition,
 						end: node.endPosition
 					}
 					hightlights.push(m)
-					break;
-			}
-			for (let child of node.children) {
-				f(child)
+				}
+				for (let child of node.children) {
+					f(child)
+				}
+			} catch (e) {
+				console.log('what')
 			}
 		}(tree.rootNode))
 		console.log("done")

@@ -13,7 +13,6 @@ module.exports = grammar({
     ],
 
     rules: {
-        // TODO: add the actual grammar rules
         source_file: $ => repeat1(
             choice(
                 $.createQuery,
@@ -65,8 +64,33 @@ module.exports = grammar({
 
         queryBodyStmts: $ => repeat1(seq($.queryBodyStmt, ";")),
 
+        /*
+        queryBodyStmt := assignStmt           // Assignment
+               | vSetVarDeclStmt      // Declaration
+               | lAccumAssignStmt     // Assignment
+               | gAccumAssignStmt     // Assignment
+               | gAccumAccumStmt      // Assignment
+               | funcCallStmt         // Function Call
+               | selectStmt           // Select 
+               | queryBodyCaseStmt    // Control Flow
+               | queryBodyIfStmt      // Control Flow
+               | queryBodyWhileStmt   // Control Flow
+               | queryBodyForEachStmt // Control Flow
+               | BREAK                // Control Flow
+               | CONTINUE             // Control Flow
+               | updateStmt           // Data Modification
+               | insertStmt           // Data Modification
+               | queryBodyDeleteStmt  // Data Modification
+               | printStmt            // Output
+               | printlnStmt          // Output
+               | logStmt              // Output
+               | returnStmt           // Output
+               | raiseStmt            // Exception
+               | tryStmt              // Exception
+        */
         // todo
         queryBodyStmt: $ => choice(
+            $.assignStmt,
             $.selectStmt
         ),
 
@@ -98,17 +122,17 @@ module.exports = grammar({
         /*
         name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
         */
-        name: $ => seq(
+        name: $ => prec.left(1, seq(
             choice(letter(), "_"),
             repeat(choice(letter(), digit(), "_"))
-        ),
+        )),
         graphName: $ => $.name,
         queryName: $ => $.name,
         paramName: $ => $.name,
         vertexType: $ => $.name,
         edgeType: $ => $.name,
         accumName: $ => $.name,
-        vertexSetName: $ => $.name,
+        vertexSetName: $ => prec.right($.name),
         attrName: $ => $.name,
         varName: $ => $.name,
         tupleType: $ => $.name,
@@ -161,8 +185,12 @@ module.exports = grammar({
                                         ["," globalAccumName ["=" constant]]*
         localAccumName := "@"accumName;
         globalAccumName := "@@"accumName;
-
-
+        */
+        globalAccumName : $ => seq(
+            "@@", $.accumName
+        ),
+       
+        /*
         accumType := "SumAccum" "<" ( INT | FLOAT | DOUBLE | STRING | STRING COMPRESS) ">"
                 | "MaxAccum" "<" ( INT | FLOAT | DOUBLE ) ">"
                 | "MinAccum" "<" ( INT | FLOAT | DOUBLE ) ">"
@@ -191,38 +219,232 @@ module.exports = grammar({
         ),
 
         /*
+        ###############################################################################
         ## Operators, Functions, and Expressions
 
         constant := numeric | stringLiteral | TRUE | FALSE | GSQL_UINT_MAX
                 | GSQL_INT_MAX | GSQL_INT_MIN | TO_DATETIME "(" stringLiteral ")"
-        
         */
         constant: $ => choice(
             $.numeric // todo
         ),
 
-        //////////////////////////////////////////////////////////////////////////////////
+        /*    
+        mathOperator := "*" | "/" | "%" | "+" | "-" | "<<" | ">>" | "&" | "|"
+        
+        condition := expr
+                | expr comparisonOperator expr
+                | expr [ NOT ] IN setBagExpr
+                | expr IS [ NOT ] NULL
+                | expr BETWEEN expr AND expr
+                | "(" condition ")"
+                | NOT condition
+                | condition (AND | OR) condition
+                | (TRUE | FALSE)
+                | expr [NOT] LIKE expr [ESCAPE escape_char]
 
-        selectStmt: $ => seq(
-            choice("select", "SELECT"),
+        comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
+
+        aggregator := COUNT | MAX | MIN | AVG | SUM
+        */
+        /*
+        expr := name  
+            | globalAccumName
+                | name "." name
+                | name "." localAccumName ["\'"]
+                | name "." name "." name "(" [argList] ")"
+            | name "." name "(" [argList] ")" [ "." FILTER "(" condition ")" ]
+                | name ["<" type ["," type]* ">"] "(" [argList] ")"
+                | name "." localAccumName ("." name "(" [argList] ")")+ ["." name]
+                | globalAccumName ("." name "(" [argList] ")")+ ["." name]
+                | COALESCE "(" [argList] ")"
+                | aggregator "(" [DISTINCT] setBagExpr ")"
+                | ISEMPTY "(" setBagExpr ")"
+                | expr mathOperator expr
+                | "-" expr
+                | "(" expr ")"
+                | "(" argList "->" argList ")"	// key value pair for MapAccum
+                | "[" argList "]"               // a list
+                | constant
+                | setBagExpr
+                | name "(" argList ")"          // function call or a tuple object 
+        */
+        expr : $ => choice(
             $.name,
-            choice("from", "FROM"),
-            field('step', $.step),
+            $.globalAccumName
+            // todo
+        ),
+        /*
+                
+        setBagExpr := name
+                | globalAccumName 
+                | name "." name
+                    | name "." localAccumName
+                    | name "." localAccumName ("." name "(" [argList] ")")+
+                    | name "." name "(" [argList] ")" [ "." FILTER "(" condition ")" ]
+                    | globalAccumName ("." name "(" [argList] ")")+
+                    | setBagExpr (UNION | INTERSECT | MINUS) setBagExpr
+                    | "(" argList ")"
+                    | "(" setBagExpr ")"
+        
+        */
+
+
+        /*
+        ## Assignment Statements ##
+        assignStmt := name "=" expr
+                    | name "." attrName "=" expr
+        */
+        assignStmt: $ => choice(
+            seq($.name, "=", $.expr),
+            seq($.name, ".", $.attrName, "=", $.expr)
+        ),
+        /*
+                    
+        attrAccumStmt := name "." attrName "+=" expr
+                    
+        lAccumAssignStmt := vertexAlias "." localAccumName ("+="| "=") expr
+
+        gAccumAssignStmt :=  globalAccumName ("+=" | "=") expr
+
+        loadAccumStmt := globalAccumName "=" "{" LOADACCUM loadAccumParams
+                                        ["," LOADACCUM loadAccumParams]* "}"
+
+        loadAccumParams := "(" filePath "," columnId ["," [columnId]* ","
+                        stringLiteral "," (TRUE | FALSE) ")" ["." FILTER "(" condition ")"]
+
+        ## Function Call Statement ##
+        funcCallStmt := name ["<" type ["," type"]* ">"] "(" [argList] ")"
+                    | globalAccumName ("." funcName "(" [argList] ")")+
+                
+        argList := expr ["," expr]*
+        */
+
+        /*
+        #########################################################
+        ## Select Statement
+        
+        selectStmt  := gsqlSelectBlock
+                    | sqlSelectBlock
+        */
+        selectStmt: $ => choice($.gsqlSelectBlock, /*todo: $.sqlSelectBlock*/),
+        /*
+        gsqlSelectBlock := gsqlSelectClause
+                    fromClause
+                    [sampleClause]
+                    [whereClause]
+                    [accumClause]
+                    [postAccumClause]*
+                    [havingClause]
+                    [orderClause]
+                    [limitClause]
+        */
+        gsqlSelectBlock: $ => seq(
+            $.gsqlSelectClause,
+            // $.fromClause
+            // todo
         ),
 
-        // step -> stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
+        /*
+        sqlSelectBlock := sqlSelectClause
+                fromClause
+                [whereClause]
+                [groupByClause]
+                [havingClause]
+                [orderClause]
+                [limitClause]
+        */
+
+        // gsqlSelectClause := vertexSetName "=" SELECT vertexAlias
+        gsqlSelectClause: $ => seq(
+            $.vertexSetName, "=", "SELECT", $.vertexAlias
+        ),
+        /*
+        sqlSelectClause := SELECT [DISTINCT] columnExpr ("," columnExpr)*
+                        INTO tableName
+        columnExpr := expr [AS columnName]
+                    | aggregator "("[DISTINCT] expr ")" [AS columnName]
+        columnName := name
+        tableName := name
+        */
+
+        // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
+        fromClause: $ => seq(
+            "FROM", choice($.step, /* todo $.stepV2 ,*/ seq($.pathPattern, repeat(seq(",", $.pathPattern))))
+        ),
+
+
+        // step   :=  stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
         step: _ => seq(
             _.stepSourceSet,
-            optional(
-                seq(
-                    "-(",
-                    field("stepEdgeSet", _.stepEdgeSet),
-                    ")",
-                    choice("-", "->"),
-                    field("stepVertexSet", _.stepVertexSet)
-                )
-            )
+            optional(seq(
+                "-", "(", _.stepEdgeSet, ")", choice("-", "->"), _.stepVertexSet
+            ))
         ),
+
+        /*
+        stepV2 :=  stepVertexSet ["-" "(" stepEdgeSet ")" "-" stepVertexSet]
+        
+        stepSourceSet := vertexSetName [":" vertexAlias]
+        stepEdgeSet := [stepEdgeTypes] [":" edgeAlias]
+        stepVertexSet := [stepVertexTypes] [":" vertexAlias]
+        alias := (vertexAlias | edgeAlias)
+        */
+
+        // vertexAlias := name
+        // edgeAlias := name
+        vertexAlias: $ => $.name,
+        edgeAlias: $ => $.name,
+
+        /*
+        stepEdgeTypes := atomicEdgeType | "(" edgeSetType ["|" edgeSetType]* ")"               
+        atomicEdgeType := "_" | ANY | edgeSetType
+        edgeSetType := edgeType | paramName | globalAccumName
+
+        stepVertexTypes := atomicVertexType | "(" vertexSetType ["|" vertexSetType]* ")"
+        atomicVertexType := "_" | ANY | vertexSetType
+        vertexSetType := vertexType | paramName | globalAccumName
+        */
+
+
+        // #----------# Pattern Matching #----------#
+        // pathPattern :=  stepVertexSet ["-" "(" pathEdgePattern ")" "-" stepVertexSet]*
+        pathPattern: $ => seq(
+            $.stepVertexSet,
+            repeat(seq(
+                "-", "(", /* todo $.pathEdgePattern, */ ")", "-", $.stepVertexSet
+            ))),
+
+        /*
+        pathEdgePattern := atomicEdgePattern
+                        | "(" pathEdgePattern ")"
+                        | pathEdgePattern "." pathEdgePattern
+                        | disjPattern
+                        | starPattern
+                        
+        atomicEdgePattern  := atomicEdgeType		
+                            | atomicEdgeType ">"	
+                            | "<" atomicEdgeType	
+                    
+        disjPattern := atomicEdgePattern ("|" atomicEdgePattern)*
+
+        starPattern := ([atomicEdgePattern] | "(" disjPattern ")") "*" [starBounds]
+
+        starBounds := CONST_INT ".." CONST_INT 
+                    | CONST_INT ".." 
+                    | ".." CONST_INT 
+                    | CONST_INT 
+        #--------------------------------------#
+        */
+
+
+        // selectStmt: $ => seq(
+        //     choice("select", "SELECT"),
+        //     $.name,
+        //     choice("from", "FROM"),
+        //     field('step', $.step),
+        // ),
+
 
         stepEdgeSet: _ => _.name,
 
@@ -231,11 +453,10 @@ module.exports = grammar({
         // stepSourceSet -> vertexSetName [":" vertexAlias]
         stepSourceSet: _ => _.vertexSetName,
 
-        vertexSetName: _ => _.name,
-
         // https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js#L887
         comment: $ => token(choice(
             seq('//', /.*/),
+            seq('#', /.*/),
             seq(
                 '/*',
                 /[^*]*\*+([^/*][^*]*\*+)*/,
