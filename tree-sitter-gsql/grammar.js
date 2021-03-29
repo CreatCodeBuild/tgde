@@ -5,6 +5,13 @@ https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal
 module.exports = grammar({
     name: 'gsql',
 
+    extras: $ => [
+        // space, tab, unix line end/LF, windows line end/CRLF
+        ' ', '\t', '\n', '\r\n',
+        // comments
+        $.comment,
+    ],
+
     rules: {
         // TODO: add the actual grammar rules
         source_file: $ => $.createQuery,
@@ -47,14 +54,14 @@ module.exports = grammar({
         // todo
         typedefs: $ => "",
 
-        declStmts:  $ => " ",
+        declStmts: $ => " ",
 
-        declExceptiStmts:  $ => "  ",
+        declExceptiStmts: $ => "  ",
 
         queryBodyStmts: $ => repeat1(seq($.queryBodyStmt, ";")),
 
         // todo
-        queryBodyStmt: $=> choice(
+        queryBodyStmt: $ => choice(
             $.selectStmt
         ),
 
@@ -221,14 +228,19 @@ module.exports = grammar({
 
         vertexSetName: _ => _.name,
 
-
+        // https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js#L887
+        comment: $ => token(choice(
+            seq('//', /.*/),
+            seq(
+                '/*',
+                /[^*]*\*+([^/*][^*]*\*+)*/,
+                '/'
+            )
+        )),
     },
-
-    // space, unix line end/LF, windows line end/CRLF
-    extras: () => [' ', '\n', '\r\n']
 });
 
 function lowercase() { return /[a-z]/ }
 function uppercase() { return /[A-Z]/ }
-function letter() { return choice(lowercase(), uppercase())}
+function letter() { return choice(lowercase(), uppercase()) }
 function digit() { return /[0-9]/ }
