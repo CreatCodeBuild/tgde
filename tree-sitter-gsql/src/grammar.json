@@ -492,12 +492,33 @@
       ]
     },
     "name": {
-      "type": "PREC_LEFT",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[a-z]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[A-Z]"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "_"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
             "type": "CHOICE",
             "members": [
               {
@@ -514,42 +535,17 @@
                 ]
               },
               {
+                "type": "PATTERN",
+                "value": "[0-9]"
+              },
+              {
                 "type": "STRING",
                 "value": "_"
               }
             ]
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[a-z]"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "[A-Z]"
-                    }
-                  ]
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "[0-9]"
-                },
-                {
-                  "type": "STRING",
-                  "value": "_"
-                }
-              ]
-            }
           }
-        ]
-      }
+        }
+      ]
     },
     "graphName": {
       "type": "SYMBOL",
@@ -576,12 +572,8 @@
       "name": "name"
     },
     "vertexSetName": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SYMBOL",
-        "name": "name"
-      }
+      "type": "SYMBOL",
+      "name": "name"
     },
     "attrName": {
       "type": "SYMBOL",
@@ -729,6 +721,19 @@
         }
       ]
     },
+    "localAccumName": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "accumName"
+        }
+      ]
+    },
     "globalAccumName": {
       "type": "SEQ",
       "members": [
@@ -760,6 +765,56 @@
         }
       ]
     },
+    "mathOperator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "STRING",
+          "value": "%"
+        },
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "STRING",
+          "value": "-"
+        },
+        {
+          "type": "STRING",
+          "value": "<<"
+        },
+        {
+          "type": "STRING",
+          "value": ">>"
+        },
+        {
+          "type": "STRING",
+          "value": "&"
+        },
+        {
+          "type": "STRING",
+          "value": "|"
+        }
+      ]
+    },
+    "condition": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expr"
+        }
+      ]
+    },
     "expr": {
       "type": "CHOICE",
       "members": [
@@ -770,6 +825,69 @@
         {
           "type": "SYMBOL",
           "name": "globalAccumName"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "localAccumName"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "'"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "expr"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "mathOperator"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expr"
+            }
+          ]
         }
       ]
     },
@@ -835,6 +953,14 @@
         {
           "type": "SYMBOL",
           "name": "gsqlSelectClause"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "fromClause"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "whereClause"
         }
       ]
     },
@@ -1014,6 +1140,19 @@
       "type": "SYMBOL",
       "name": "vertexSetName"
     },
+    "whereClause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "WHERE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "condition"
+        }
+      ]
+    },
     "comment": {
       "type": "TOKEN",
       "content": {
@@ -1088,7 +1227,22 @@
       "name": "comment"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "vertexSetName",
+      "stepVertexSet"
+    ],
+    [
+      "vertexSetName",
+      "assignStmt"
+    ],
+    [
+      "name"
+    ],
+    [
+      "expr"
+    ]
+  ],
   "precedences": [],
   "externals": [],
   "inline": [],

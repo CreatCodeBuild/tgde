@@ -5,11 +5,19 @@ https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal
 module.exports = grammar({
     name: 'gsql',
 
+    // https://tree-sitter.github.io/tree-sitter/creating-parsers
     extras: $ => [
         // space, tab, unix line end/LF, windows line end/CRLF
         ' ', '\t', '\n', '\r\n',
         // comments
         $.comment,
+    ],
+
+    conflicts: $ => [
+        [$.vertexSetName, $.stepVertexSet],
+        [$.vertexSetName, $.assignStmt],
+        [$.name],
+        [$.expr]
     ],
 
     rules: {
@@ -122,17 +130,17 @@ module.exports = grammar({
         /*
         name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
         */
-        name: $ => prec.left(1, seq(
+        name: $ => seq(
             choice(letter(), "_"),
             repeat(choice(letter(), digit(), "_"))
-        )),
+        ),
         graphName: $ => $.name,
         queryName: $ => $.name,
         paramName: $ => $.name,
         vertexType: $ => $.name,
         edgeType: $ => $.name,
         accumName: $ => $.name,
-        vertexSetName: $ => prec.right($.name),
+        vertexSetName: $ => $.name,
         attrName: $ => $.name,
         varName: $ => $.name,
         tupleType: $ => $.name,
@@ -186,10 +194,13 @@ module.exports = grammar({
         localAccumName := "@"accumName;
         globalAccumName := "@@"accumName;
         */
-        globalAccumName : $ => seq(
+        localAccumName: $ => seq(
+            "@", $.accumName
+        ),
+        globalAccumName: $ => seq(
             "@@", $.accumName
         ),
-       
+
         /*
         accumType := "SumAccum" "<" ( INT | FLOAT | DOUBLE | STRING | STRING COMPRESS) ">"
                 | "MaxAccum" "<" ( INT | FLOAT | DOUBLE ) ">"
@@ -229,9 +240,11 @@ module.exports = grammar({
             $.numeric // todo
         ),
 
-        /*    
-        mathOperator := "*" | "/" | "%" | "+" | "-" | "<<" | ">>" | "&" | "|"
-        
+
+        // mathOperator := "*" | "/" | "%" | "+" | "-" | "<<" | ">>" | "&" | "|"
+        mathOperator: $ => choice("*", "/", "%", "+", "-", "<<", ">>", "&", "|"),
+
+        /*  
         condition := expr
                 | expr comparisonOperator expr
                 | expr [ NOT ] IN setBagExpr
@@ -242,6 +255,12 @@ module.exports = grammar({
                 | condition (AND | OR) condition
                 | (TRUE | FALSE)
                 | expr [NOT] LIKE expr [ESCAPE escape_char]
+        */
+        condition: $ => choice(
+            $.expr,
+            // todo
+        ),
+        /*
 
         comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
 
@@ -250,28 +269,28 @@ module.exports = grammar({
         /*
         expr := name  
             | globalAccumName
-                | name "." name
-                | name "." localAccumName ["\'"]
-                | name "." name "." name "(" [argList] ")"
+            | name "." name "." name "(" [argList] ")"
             | name "." name "(" [argList] ")" [ "." FILTER "(" condition ")" ]
-                | name ["<" type ["," type]* ">"] "(" [argList] ")"
-                | name "." localAccumName ("." name "(" [argList] ")")+ ["." name]
-                | globalAccumName ("." name "(" [argList] ")")+ ["." name]
-                | COALESCE "(" [argList] ")"
-                | aggregator "(" [DISTINCT] setBagExpr ")"
-                | ISEMPTY "(" setBagExpr ")"
-                | expr mathOperator expr
-                | "-" expr
-                | "(" expr ")"
-                | "(" argList "->" argList ")"	// key value pair for MapAccum
-                | "[" argList "]"               // a list
-                | constant
-                | setBagExpr
-                | name "(" argList ")"          // function call or a tuple object 
+            | name ["<" type ["," type]* ">"] "(" [argList] ")"
+            | name "." localAccumName ("." name "(" [argList] ")")+ ["." name]
+            | globalAccumName ("." name "(" [argList] ")")+ ["." name]
+            | COALESCE "(" [argList] ")"
+            | aggregator "(" [DISTINCT] setBagExpr ")"
+            | ISEMPTY "(" setBagExpr ")"
+            | "-" expr
+            | "(" expr ")"
+            | "(" argList "->" argList ")"	// key value pair for MapAccum
+            | "[" argList "]"               // a list
+            | constant
+            | setBagExpr
+            | name "(" argList ")"          // function call or a tuple object 
         */
-        expr : $ => choice(
+        expr: $ => choice(
             $.name,
-            $.globalAccumName
+            $.globalAccumName,
+            seq($.name, ".", $.name),                               // | name "." name
+            seq($.name, ".", $.localAccumName, optional("\'")),     // | name "." localAccumName ["\'"]
+            seq($.expr, $.mathOperator, $.expr)                     // | expr mathOperator expr
             // todo
         ),
         /*
@@ -341,7 +360,8 @@ module.exports = grammar({
         */
         gsqlSelectBlock: $ => seq(
             $.gsqlSelectClause,
-            // $.fromClause
+            $.fromClause,
+            $.whereClause
             // todo
         ),
 
@@ -452,6 +472,56 @@ module.exports = grammar({
 
         // stepSourceSet -> vertexSetName [":" vertexAlias]
         stepSourceSet: _ => _.vertexSetName,
+
+        /*
+        sampleClause := SAMPLE ( expr | expr "%" ) EDGE WHEN condition
+                    | SAMPLE expr TARGET WHEN condition
+                    | SAMPLE expr "%" TARGET PINNED WHEN condition
+                                
+        whereClause := WHERE condition
+        */
+        whereClause: $ => seq(
+            "WHERE", $.condition
+        ),
+        /*
+        accumClause := [perClauseV2] ACCUM dmlSubStmtList
+
+        perClauseV2 := PER "(" alias ["," alias] ")"
+        
+        postAccumClause := "POST-ACCUM" dmlSubStmtList
+            
+        dmlSubStmtList := dmlSubStmt ["," dmlSubStmt]*
+
+        dmlSubStmt := assignStmt           // Assignment   
+                    | funcCallStmt         // Function Call
+                    | gAccumAccumStmt      // Assignment
+                    | lAccumAccumStmt      // Assignment
+                    | attrAccumStmt        // Assignment
+                    | vAccumFuncCall       // Function Call
+                    | localVarDeclStmt     // Declaration
+                    | dmlSubCaseStmt       // Control Flow
+                    | dmlSubIfStmt         // Control Flow
+                    | dmlSubWhileStmt      // Control Flow
+                    | dmlSubForEachStmt    // Control Flow
+                    | BREAK                // Control Flow
+                    | CONTINUE             // Control Flow
+                    | insertStmt           // Data Modification
+                    | dmlSubDeleteStmt     // Data Modification
+                    | printlnStmt          // Output
+                    | logStmt              // Output
+
+
+        vAccumFuncCall := vertexAlias "." localAccumName ("." funcName "(" [argList] ")")+
+
+        groupByClause := GROUP BY groupExpr ("," groupExpr)*
+        groupExpr := expr
+
+        havingClause := HAVING condition
+        
+        orderClause := ORDER BY expr [ASC | DESC] ["," expr [ASC | DESC]]*
+        
+        limitClause := LIMIT ( expr | expr "," expr | expr OFFSET expr 
+        */
 
         // https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js#L887
         comment: $ => token(choice(

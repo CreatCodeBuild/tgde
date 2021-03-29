@@ -73,6 +73,21 @@
     }
   },
   {
+    "type": "condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "constant",
     "named": true,
     "fields": {},
@@ -136,15 +151,46 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
         {
           "type": "globalAccumName",
           "named": true
         },
         {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "mathOperator",
+          "named": true
+        },
+        {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fromClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pathPattern",
+          "named": true
+        },
+        {
+          "type": "step",
           "named": true
         }
       ]
@@ -185,11 +231,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "fromClause",
+          "named": true
+        },
+        {
           "type": "gsqlSelectClause",
+          "named": true
+        },
+        {
+          "type": "whereClause",
           "named": true
         }
       ]
@@ -216,6 +270,26 @@
   },
   {
     "type": "integer",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "localAccumName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mathOperator",
     "named": true,
     "fields": {}
   },
@@ -555,7 +629,34 @@
     }
   },
   {
+    "type": "whereClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": " ",
+    "named": false
+  },
+  {
+    "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -564,6 +665,14 @@
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
     "named": false
   },
   {
@@ -583,6 +692,10 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
@@ -591,11 +704,23 @@
     "named": false
   },
   {
+    "type": "<<",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
   {
     "type": ">",
+    "named": false
+  },
+  {
+    "type": ">>",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {
@@ -699,6 +824,10 @@
     "named": false
   },
   {
+    "type": "WHERE",
+    "named": false
+  },
+  {
     "type": "_",
     "named": false
   },
@@ -716,6 +845,10 @@
   },
   {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   },
   {

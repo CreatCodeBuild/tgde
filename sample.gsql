@@ -25,4 +25,4 @@ CREATE QUERY RecommendMessage (String fn, String ln) SYNTAX v2{
              LIMIT 2;
 
   PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank];
-} 
+}
