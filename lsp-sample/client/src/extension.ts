@@ -8,6 +8,7 @@ import { workspace, ExtensionContext, languages } from 'vscode';
 import * as vscode from 'vscode';
 
 import {
+	HoverRequest,
 	LanguageClient,
 	LanguageClientOptions,
 	ServerOptions,
@@ -17,6 +18,7 @@ import {
 import * as common from '../../common/common';
 
 let client: LanguageClient;
+const lang = "gsql";
 
 export function activate(context: ExtensionContext) {
 	console.log("activate")
@@ -42,7 +44,7 @@ export function activate(context: ExtensionContext) {
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
 		// Register the server for plain text documents
-		documentSelector: [{ scheme: 'file', language: 'plaintext' }],
+		documentSelector: [{ scheme: 'file', language: lang }],
 		synchronize: {
 			// Notify the server about file changes to '.clientrc files contained in the workspace
 			fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
@@ -62,7 +64,7 @@ export function activate(context: ExtensionContext) {
 	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 
 	languages.registerDocumentSemanticTokensProvider(
-		['gsql'],
+		[lang],
 		{
 			async provideDocumentSemanticTokens(document: vscode.TextDocument) {
 				// analyze the document and return semantic tokens
@@ -77,7 +79,7 @@ export function activate(context: ExtensionContext) {
 				function pushToBuilder(tokensBuilder: vscode.SemanticTokensBuilder, token: common.HighlightToken, tokenType, tokenModifiers?) {
 					try {
 						tokensBuilder.push(tsTokenToVS(token), tokenType, tokenModifiers);
-					} catch(e) {
+					} catch (e) {
 						console.log(e)
 					}
 				}
@@ -89,7 +91,7 @@ export function activate(context: ExtensionContext) {
 							pushToBuilder(tokensBuilder, token, 'variable')
 						} else if (token.type === 'comment') {
 							pushToBuilder(tokensBuilder, token, 'comment')
-						}else if (token.type === 'keyword') {
+						} else if (token.type === 'keyword') {
 							pushToBuilder(tokensBuilder, token, 'keyword')
 						}
 					}
@@ -105,6 +107,13 @@ export function activate(context: ExtensionContext) {
 		},
 		legend
 	);
+
+	vscode.languages.registerHoverProvider(lang, {
+		async provideHover(document, position: vscode.Position, token) {
+			console.log("xxx")
+			return client.sendRequest('Hover', position);;
+		}
+	});
 
 	// Start the client. This will also launch the server
 	client.start();

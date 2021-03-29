@@ -2,6 +2,7 @@
 GSQL Query Language EBNF
 https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal-syntax-for-query-language
 */
+
 module.exports = grammar({
     name: 'gsql',
 
@@ -17,7 +18,8 @@ module.exports = grammar({
         [$.vertexSetName, $.stepVertexSet],
         [$.vertexSetName, $.assignStmt],
         [$.name],
-        [$.expr]
+        [$.expr],
+        [$.condition]
     ],
 
     rules: {
@@ -38,7 +40,7 @@ module.exports = grammar({
                "{" queryBody "}"
         */
         createQuery: $ => seq(
-            "CREATE", optional(seq("OR", "REPLACE")), optional("DISTRIBUTED"), "QUERY", $.queryName,
+            kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
             "(", optional($.parameterList), ")",
             optional(seq("FOR", "GRAPH", $.graphName)),
             optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
@@ -161,16 +163,16 @@ module.exports = grammar({
           | DATETIME
         */
         baseType: $ => choice(
-            "INT",
-            "FLOAT",
-            "DOUBLE",
-            "STRING",
-            "BOOL",
-            seq("VERTEX", optional(seq("<", $.vertexType, ">"))),
-            "EDGE",
-            "JSONOBJECT",
-            "JSONARRAY",
-            "DATETIME",
+            kw("INT"),
+            kw("FLOAT"),
+            kw("DOUBLE"),
+            kw("STRING"),
+            kw("BOOL"),
+            seq(kw("VERTEX"), optional(seq("<", $.vertexType, ">"))),
+            kw("EDGE"),
+            kw("JSONOBJECT"),
+            kw("JSONARRAY"),
+            kw("DATETIME"),
         ),
 
         /*
@@ -261,12 +263,12 @@ module.exports = grammar({
             seq($.expr, $.comparisonOperator, $.expr)           // expr comparisonOperator expr
             // todo
         ),
-        /*
 
-        comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
+        //comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
+        comparisonOperator: $ => choice("<", "<=", ">", ">=", "==", "!="),
 
-        aggregator := COUNT | MAX | MIN | AVG | SUM
-        */
+        // aggregator := COUNT | MAX | MIN | AVG | SUM
+
         /*
         expr := name  
             | globalAccumName
@@ -541,3 +543,15 @@ function lowercase() { return /[a-z]/ }
 function uppercase() { return /[A-Z]/ }
 function letter() { return choice(lowercase(), uppercase()) }
 function digit() { return /[0-9]/ }
+
+function caseInsensitive(word) {
+    return new RegExp(word
+        .split('')
+        .map(letter => `[${letter.toLowerCase()}${letter.toUpperCase()}]`)
+        .join('')
+    )
+}
+
+function kw(keyword) {
+    return alias(caseInsensitive(keyword), keyword)
+}

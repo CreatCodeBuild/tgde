@@ -73,13 +73,26 @@
     }
   },
   {
+    "type": "comparisonOperator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "condition",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "comparisonOperator",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
         {
           "type": "expr",
           "named": true
@@ -648,6 +661,10 @@
     "named": false
   },
   {
+    "type": "!=",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -708,11 +725,23 @@
     "named": false
   },
   {
+    "type": "<=",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
   {
+    "type": "==",
+    "named": false
+  },
+  {
     "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
     "named": false
   },
   {
@@ -728,15 +757,15 @@
     "named": false
   },
   {
+    "type": "AND",
+    "named": false
+  },
+  {
     "type": "BAG",
     "named": false
   },
   {
     "type": "BOOL",
-    "named": false
-  },
-  {
-    "type": "CREATE",
     "named": false
   },
   {
@@ -834,6 +863,10 @@
   {
     "type": "comment",
     "named": true
+  },
+  {
+    "type": "create",
+    "named": false
   },
   {
     "type": "declExceptiStmts",

@@ -22,9 +22,11 @@ import {
 	DocumentFormattingParams,
 	HandlerResult,
 	TextEdit,
+	HoverParams
 } from 'vscode-languageserver/node';
 
 import {
+	Position,
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
@@ -32,6 +34,7 @@ import * as path from 'path';
 // @ts-ignore
 import * as common from '../../common/common';
 import { keywords } from './keywords';
+import { connect } from 'http2';
 
 declare const WebAssembly: any;
 const Parser = require('web-tree-sitter');
@@ -56,12 +59,12 @@ connection.onInitialize(async (params: InitializeParams) => {
 	const parser = new Parser();
 	const GSQL = await Parser.Language.load(path.join(__dirname, './tree-sitter-gsql.wasm'));
 	parser.setLanguage(GSQL);
+	let tree = parser.parse('');	// init the tree
+
 	console.log('done');
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
-
-		console.log('parsing', document)
-		const tree = parser.parse(document);
-		const hightlights = [];
+		tree = parser.parse(document);
+		const hightlights =[];
 
 		(function f(node) {
 			try {
@@ -77,8 +80,8 @@ connection.onInitialize(async (params: InitializeParams) => {
 						break;
 				}
 
-				console.log(node.type)
-				if (keywords.includes(node.type)) {
+				// console.log(node.type)
+				if (keywords.includes(node.type.toUpperCase())) {
 					const m: common.HighlightToken = {
 						type: 'keyword',
 						start: node.startPosition,
@@ -90,10 +93,9 @@ connection.onInitialize(async (params: InitializeParams) => {
 					f(child)
 				}
 			} catch (e) {
-				console.log('what')
+				console.log(e)
 			}
 		}(tree.rootNode))
-		console.log("done")
 		return hightlights;
 	});
 
@@ -130,8 +132,23 @@ connection.onInitialize(async (params: InitializeParams) => {
 			}
 		};
 	}
+	connection.onRequest(common.Request.Hover, function(p: Position) {
+		console.log('hover', p)
+		
+		const node = tree.rootNode.descendantForPosition({row: p.line, column:p.character})
+
+		return {
+			contents: [
+				node.type,
+				`${JSON.stringify(node.startPosition)}`,
+				`${JSON.stringify(node.endPosition)}`,
+			]
+		};
+	});
 	return result;
 });
+
+
 
 connection.onInitialized(() => {
 	connection.window.showInformationMessage("hello");
@@ -200,6 +217,7 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(change => {
+	console.log('change');
 	validateTextDocument(change.document);
 });
 
