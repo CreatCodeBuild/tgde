@@ -283,11 +283,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "createQuery",
+          "named": true
+        },
+        {
+          "type": "selectStmt",
           "named": true
         }
       ]

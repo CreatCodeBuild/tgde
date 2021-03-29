@@ -59,26 +59,9 @@ connection.onInitialize(async (params: InitializeParams) => {
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
 		console.log('parsing', document)
 		const tree = parser.parse(document);
-		// const walker = tree.walk();
 		const hightlights = [];
-		// while (true) {
-		// if(walker.nodeType === 'name') {
-		// 	hightlights.push({
-		// 		type: walker.nodeType,
-		// 		start: walker.startPosition,
-		// 		end: walker.endPosition
-		// 	})
-		// }
-		// 	let ok = walker.gotoFirstChild();
-		// 	if(!ok) {
-		// 		ok = walker.gotoNextSibling();
-		// 	}
-		// 	if(!ok) {
-		// 		ok = walker.gotoParent();
-		// 	}
-		// }
+
 		(function f(node) {
-			console.log(node, node.type)
 			switch (node.type) {
 				case 'name':
 				case 'comment':
@@ -87,16 +70,14 @@ connection.onInitialize(async (params: InitializeParams) => {
 						start: node.startPosition,
 						end: node.endPosition
 					}
-					console.log(m)
 					hightlights.push(m)
 					break;
 			}
 			for (let child of node.children) {
-				console.log(child)
 				f(child)
 			}
 		}(tree.rootNode))
-		console.log("done walk")
+		console.log("done")
 		return hightlights;
 	});
 

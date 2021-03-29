@@ -2,8 +2,20 @@
   "name": "gsql",
   "rules": {
     "source_file": {
-      "type": "SYMBOL",
-      "name": "createQuery"
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "createQuery"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "selectStmt"
+          }
+        ]
+      }
     },
     "createQuery": {
       "type": "SEQ",

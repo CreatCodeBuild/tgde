@@ -14,7 +14,12 @@ module.exports = grammar({
 
     rules: {
         // TODO: add the actual grammar rules
-        source_file: $ => $.createQuery,
+        source_file: $ => repeat1(
+            choice(
+                $.createQuery,
+                $.selectStmt
+            )
+        ),
 
         /*
         createQuery := CREATE [OR REPLACE] [DISTRIBUTED] QUERY queryName 

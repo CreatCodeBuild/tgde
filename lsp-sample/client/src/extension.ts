@@ -74,32 +74,22 @@ export function activate(context: ExtensionContext) {
 						new vscode.Position(token.start.row, token.start.column),
 						new vscode.Position(token.end.row, token.end.column))
 				}
-
-				console.log(2)
-
+				function pushToBuilder(tokensBuilder: vscode.SemanticTokensBuilder, token: common.HighlightToken, tokenType, tokenModifiers?) {
+					try {
+						tokensBuilder.push(tsTokenToVS(token), tokenType, tokenModifiers);
+					} catch(e) {
+						console.log(e)
+					}
+				}
 				const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
 				try {
 					for (let token of r) {
 						console.log(token)
 						if (token.type === 'name') {
-							tokensBuilder.push(
-								tsTokenToVS(token),
-								'variable',
-								[]
-							);
+							pushToBuilder(tokensBuilder, token, 'variable')
 						} else if (token.type === 'comment') {
-
-							const t = tsTokenToVS(token)
-							tokensBuilder.push(
-								t,
-								'comment',
-								[]
-							);
-
-
-
+							pushToBuilder(tokensBuilder, token, 'comment')
 						}
-						console.log(token, 'done')
 					}
 
 				} catch (e) {
