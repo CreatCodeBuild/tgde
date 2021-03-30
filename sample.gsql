@@ -1,13 +1,12 @@
 Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
-
+   #1. mark messages liked by Viktor
+   #2. calculate log similarity score for each persons share the same 
+   #   interests at Tag level.
   SumAccum<int> @TagInCommon;
   SumAccum<float> @SimilarityScore;
   SumAccum<float> @Rank;
   OrAccum @Liked = false;        
 
-   #1. mark messages liked by Viktor
-   #2. calculate log similarity score for each persons share the same 
-   #   interests at Tag level.
     Others =
        SELECT p
        FROM Person:s-(LIKES>)-:msg - (HAS_TAG>.<HAS_TAG.<LIKES)- :p
@@ -25,4 +24,4 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
              LIMIT 2;        
 
   PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank];
-}    
+}

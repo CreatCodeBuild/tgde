@@ -3,7 +3,9 @@ GSQL Query Language EBNF
 https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal-syntax-for-query-language
 */
 
-module.exports = grammar({
+const { kw } = require("./grammar/index");
+
+const g = {
     name: 'gsql',
 
     // https://tree-sitter.github.io/tree-sitter/creating-parsers
@@ -19,7 +21,8 @@ module.exports = grammar({
         [$.vertexSetName, $.assignStmt],
         [$.name],
         [$.expr],
-        [$.condition]
+        [$.condition],
+        [$.baseType, $.accumType],
     ],
 
     rules: {
@@ -61,14 +64,27 @@ module.exports = grammar({
         syntaxName: $ => $.name,
 
         queryBody: $ => seq(
-            optional($.typedefs), optional($.declStmts), optional($.declExceptiStmts),
+            /* optional($.typedefs) ,*/ optional($.declStmts), /* optional($.declExceptiStmts) ,*/
             $.queryBodyStmts,
         ),
 
-        // todo
-        typedefs: $ => "",
 
-        declStmts: $ => " ",
+        typedefs: $ => repeat1(seq($.typedef, ";")),
+
+        typedef: $ => seq(kw("TYPEDEF"), kw("TUPLE"), "<", $.tupleFields, ">", $.tupleType),
+
+        // tupleFields := (baseType fieldName) | (fieldName baseType)
+        //                ["," (baseType fieldName) | (fieldName baseType)]*
+        tupleFields: $ => seq(
+            choice(seq($.baseType, $.fieldName), seq($.fieldName, $.baseType)),
+            optional(repeat(seq(",", choice(seq($.baseType, $.fieldName), seq($.fieldName, $.baseType)))))
+        ),
+
+        // todo
+        declStmts: $ => repeat1(seq($.declStmt, ";")),
+
+        // declStmt := baseDeclStmt | accumDeclStmt | fileDeclStmt
+        declStmt: $ => choice(/* $.baseDeclStmt,*/ $.accumDeclStmt, /*$.fileDeclStmt*/),
 
         declExceptiStmts: $ => "  ",
 
@@ -184,51 +200,6 @@ module.exports = grammar({
             $.baseType,
             seq(optional(choice("SET", "BAG")), "<", $.baseType, ">"),
             "FILE"
-        ),
-
-        /*
-        #########################################################
-        ## Accumulators
-        accumDeclStmt := accumType localAccumName ["=" constant]
-                                ["," localAccumName ["=" constant]]*
-                    | [STATIC] accumType globalAccumName ["=" constant]
-                                        ["," globalAccumName ["=" constant]]*
-        localAccumName := "@"accumName;
-        globalAccumName := "@@"accumName;
-        */
-        localAccumName: $ => seq(
-            "@", $.accumName
-        ),
-        globalAccumName: $ => seq(
-            "@@", $.accumName
-        ),
-
-        /*
-        accumType := "SumAccum" "<" ( INT | FLOAT | DOUBLE | STRING | STRING COMPRESS) ">"
-                | "MaxAccum" "<" ( INT | FLOAT | DOUBLE ) ">"
-                | "MinAccum" "<" ( INT | FLOAT | DOUBLE ) ">"
-                | "AvgAccum"
-                | "OrAccum"
-                | "AndAccum"
-                | "BitwiseOrAccum"
-                | "BitwiseAndAccum"
-                | "ListAccum" "<" type ">"
-                | "SetAccum"  "<" elementType ">"      
-                | "BagAccum"  "<" elementType ">"      
-                | "MapAccum"  "<" elementType "," (baseType | accumType | tupleType) ">"   
-                | "HeapAccum" "<" tupleType ">" "(" simpleSize "," fieleName [ASC | DESC]
-                                                    ["," fieldName [ASC | DESC]]* ")"
-                | "GroupByAccum" "<" elementType fieldName ["," elementType fieldName]* ,
-                                        accumType fieldName ["," accumType fieldName]* ">"
-                | "ArrayAccum" "<" accumName ">"
-
-        elementType := baseType | tupleType | STRING COMPRESS
-
-        gAccumAccumStmt := globalAccumName "+=" expr
-        */
-        // todo
-        accumType: $ => choice(
-            " "
         ),
 
         /*
@@ -537,21 +508,13 @@ module.exports = grammar({
             )
         )),
     },
-});
+}
 
 function lowercase() { return /[a-z]/ }
 function uppercase() { return /[A-Z]/ }
 function letter() { return choice(lowercase(), uppercase()) }
 function digit() { return /[0-9]/ }
 
-function caseInsensitive(word) {
-    return new RegExp(word
-        .split('')
-        .map(letter => `[${letter.toLowerCase()}${letter.toUpperCase()}]`)
-        .join('')
-    )
-}
-
-function kw(keyword) {
-    return alias(caseInsensitive(keyword), keyword)
-}
+Object.assign(g.rules, require("./grammar/declarations"));
+Object.assign(g.rules, require("./grammar/accumulators"));
+module.exports = grammar(g);

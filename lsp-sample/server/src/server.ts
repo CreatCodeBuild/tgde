@@ -140,6 +140,8 @@ connection.onInitialize(async (params: InitializeParams) => {
 		return {
 			contents: [
 				node.type,
+				node.parent.type,
+				node.parent.parent?.type,
 				`${JSON.stringify(node.startPosition)}`,
 				`${JSON.stringify(node.endPosition)}`,
 			]

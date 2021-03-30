@@ -1,5 +1,24 @@
 [
   {
+    "type": "accumDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "accumName",
     "named": true,
     "fields": {},
@@ -155,9 +174,34 @@
     }
   },
   {
+    "type": "declStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumDeclStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "declStmts",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declStmt",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "expr",
@@ -183,6 +227,21 @@
           "type": "mathOperator",
           "named": true
         },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fieldName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
         {
           "type": "name",
           "named": true
@@ -407,19 +466,11 @@
       "required": true,
       "types": [
         {
-          "type": "declExceptiStmts",
-          "named": true
-        },
-        {
           "type": "declStmts",
           "named": true
         },
         {
           "type": "queryBodyStmts",
-          "named": true
-        },
-        {
-          "type": "typedefs",
           "named": true
         }
       ]
@@ -597,6 +648,59 @@
     }
   },
   {
+    "type": "tupleFields",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "fieldName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tupleType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typedef",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "tupleFields",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "vertexAlias",
     "named": true,
     "fields": {},
@@ -655,10 +759,6 @@
         }
       ]
     }
-  },
-  {
-    "type": " ",
-    "named": false
   },
   {
     "type": "!=",
@@ -849,6 +949,18 @@
     "named": false
   },
   {
+    "type": "SumAccum",
+    "named": false
+  },
+  {
+    "type": "TUPLE",
+    "named": false
+  },
+  {
+    "type": "TYPEDEF",
+    "named": false
+  },
+  {
     "type": "VERTEX",
     "named": false
   },
@@ -869,12 +981,24 @@
     "named": false
   },
   {
-    "type": "declExceptiStmts",
-    "named": true
+    "type": "double",
+    "named": false
   },
   {
-    "type": "typedefs",
-    "named": true
+    "type": "float",
+    "named": false
+  },
+  {
+    "type": "int",
+    "named": false
+  },
+  {
+    "type": "string",
+    "named": false
+  },
+  {
+    "type": "string compress",
+    "named": false
   },
   {
     "type": "{",
