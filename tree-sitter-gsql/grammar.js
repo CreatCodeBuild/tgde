@@ -64,7 +64,7 @@ const g = {
         syntaxName: $ => $.name,
 
         queryBody: $ => seq(
-            /* optional($.typedefs) ,*/ optional($.declStmts), /* optional($.declExceptiStmts) ,*/
+            optional($.typedefs) , optional($.declStmts), /* todo optional($.declExceptiStmts) ,*/
             $.queryBodyStmts,
         ),
 
@@ -80,7 +80,6 @@ const g = {
             optional(repeat(seq(",", choice(seq($.baseType, $.fieldName), seq($.fieldName, $.baseType)))))
         ),
 
-        // todo
         declStmts: $ => repeat1(seq($.declStmt, ";")),
 
         // declStmt := baseDeclStmt | accumDeclStmt | fileDeclStmt
@@ -116,7 +115,7 @@ const g = {
         */
         // todo
         queryBodyStmt: $ => choice(
-            $.assignStmt,
+            /* $.assignStmt, */
             $.selectStmt
         ),
 
@@ -335,7 +334,7 @@ const g = {
         gsqlSelectBlock: $ => seq(
             $.gsqlSelectClause,
             $.fromClause,
-            $.whereClause
+            optional($.whereClause)
             // todo
         ),
 
@@ -351,7 +350,7 @@ const g = {
 
         // gsqlSelectClause := vertexSetName "=" SELECT vertexAlias
         gsqlSelectClause: $ => seq(
-            $.vertexSetName, "=", "SELECT", $.vertexAlias
+            $.vertexSetName, "=", kw("SELECT"), $.vertexAlias
         ),
         /*
         sqlSelectClause := SELECT [DISTINCT] columnExpr ("," columnExpr)*
@@ -430,14 +429,6 @@ const g = {
                     | CONST_INT 
         #--------------------------------------#
         */
-
-
-        // selectStmt: $ => seq(
-        //     choice("select", "SELECT"),
-        //     $.name,
-        //     choice("from", "FROM"),
-        //     field('step', $.step),
-        // ),
 
 
         stepEdgeSet: _ => _.name,

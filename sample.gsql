@@ -1,18 +1,20 @@
 Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
-   #1. mark messages liked by Viktor
-   #2. calculate log similarity score for each persons share the same 
-   #   interests at Tag level.
-  SumAccum<int> @TagInCommon;
-  SumAccum<float> @SimilarityScore;
-  SumAccum<float> @Rank;
-  OrAccum @Liked = false;        
+	#1. mark messages liked by Viktor
+	#2. calculate log similarity score for each persons share the same 
+	#   interests at Tag level.
 
-    Others =
-       SELECT p
-       FROM Person:s-(LIKES>)-:msg - (HAS_TAG>.<HAS_TAG.<LIKES)- :p
-       WHERE s.firstName == fn AND s.lastName == ln
-       ACCUM msg.@Liked = true, p.@TagInCommon +=1
-       POST-ACCUM p.@SimilarityScore = log (1 + p.@TagInCommc  on);
+	TYPEDEF tuple<STRING countryName, STRING companyName> companyInfo;
+
+	SumAccum<int> @TagInCommon;
+	SumAccum<float> @SimilarityScore;
+	SumAccum<float> @Rank;
+	OrAccum @Liked = false;        
+
+   	Ohters = SELECT p
+		FROM Person:s-(LIKES>)-:msg - (HAS_TAG>.<HAS_TAG.<LIKES)- :p;
+		WHERE s.firstName == fn AND s.lastName == ln
+		ACCUM msg.@Liked = true, p.@TagInCommon +=1
+		POST-ACCUM p.@SimilarityScore = log (1 + p.@TagInCommc  on);
     
     # recommend new messages to Viktor that have not liked by him.
     RecommendedMessage =

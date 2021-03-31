@@ -328,6 +328,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "typedefs"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "declStmts"
             },
             {
@@ -531,10 +543,6 @@
     "queryBodyStmt": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "assignStmt"
-        },
         {
           "type": "SYMBOL",
           "name": "selectStmt"
@@ -1201,8 +1209,16 @@
           "name": "fromClause"
         },
         {
-          "type": "SYMBOL",
-          "name": "whereClause"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "whereClause"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -1218,7 +1234,12 @@
           "value": "="
         },
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[sS][eE][lL][eE][cC][tT]"
+          },
+          "named": false,
           "value": "SELECT"
         },
         {

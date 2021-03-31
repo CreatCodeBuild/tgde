@@ -39,29 +39,6 @@
     "fields": {}
   },
   {
-    "type": "assignStmt",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attrName",
-          "named": true
-        },
-        {
-          "type": "expr",
-          "named": true
-        },
-        {
-          "type": "name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "attrName",
     "named": true,
     "fields": {},
@@ -472,6 +449,10 @@
         {
           "type": "queryBodyStmts",
           "named": true
+        },
+        {
+          "type": "typedefs",
+          "named": true
         }
       ]
     }
@@ -484,10 +465,6 @@
       "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "assignStmt",
-          "named": true
-        },
         {
           "type": "selectStmt",
           "named": true
@@ -695,6 +672,21 @@
         },
         {
           "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typedefs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "typedef",
           "named": true
         }
       ]
