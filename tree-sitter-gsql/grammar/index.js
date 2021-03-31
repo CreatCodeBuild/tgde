@@ -5,9 +5,12 @@ function caseInsensitive(word) {
         .join('')
     )
 }
+function kw(keyword) {
+    return alias(caseInsensitive(keyword), keyword)
+}
 
 module.exports = {
-    kw: function kw(keyword) {
-        return alias(caseInsensitive(keyword), keyword)
-    }
+    kw: kw,
+    TRUE: kw("TRUE"),
+    FALSE: kw("FALSE")
 }

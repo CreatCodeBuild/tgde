@@ -4,13 +4,18 @@
 const { kw } = require("./index");
 module.exports = {
     /*
-    accumDeclStmt := accumType localAccumName ["=" constant]
-                        ["," localAccumName ["=" constant]]*
-                        | [STATIC] accumType globalAccumName ["=" constant]
-                                            ["," globalAccumName ["=" constant]]*
+    accumDeclStmt := accumType localAccumName ["=" constant] ["," localAccumName ["=" constant]]*
+                    | [STATIC] accumType globalAccumName ["=" constant] ["," globalAccumName ["=" constant]]*
     */
-    accumDeclStmt: $ => seq(
-        $.accumType, $.localAccumName
+    accumDeclStmt: $ => choice(
+        seq($.accumType, $.localAccumName,
+            optional(seq("=", $.constant)),
+            repeat(seq(",", $.localAccumName, optional(seq("=", $.constant))))
+        ),
+        seq(optional(kw("STATIC")), $.accumType, $.globalAccumName,
+            optional(seq("=", $.constant)),
+            repeat(seq(",", $.localAccumName, optional(seq("=", $.constant))))
+        )
     ),
 
     localAccumName: $ => seq(   // localAccumName := "@"accumName;
@@ -40,7 +45,8 @@ module.exports = {
                 | "ArrayAccum" "<" accumName ">"
     */
     accumType: $ => choice(
-        seq("SumAccum", "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">")
+        seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
+        kw("OrAccum"),
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS

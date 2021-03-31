@@ -2,28 +2,27 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
 	#1. mark messages liked by Viktor
 	#2. calculate log similarity score for each persons share the same 
 	#   interests at Tag level.
-
 	TYPEDEF tuple<STRING countryName, STRING companyName> companyInfo;
-
 	SumAccum<int> @TagInCommon;
 	SumAccum<float> @SimilarityScore;
 	SumAccum<float> @Rank;
-	OrAccum @Liked = false;        
+	OrAccum @Liked = false;
+	SumAccum<int> @@cnt;
 
-   	Ohters = SELECT p
-		FROM Person:s-(LIKES>)-:msg - (HAS_TAG>.<HAS_TAG.<LIKES)- :p;
-		WHERE s.firstName == fn AND s.lastName == ln
-		ACCUM msg.@Liked = true, p.@TagInCommon +=1
-		POST-ACCUM p.@SimilarityScore = log (1 + p.@TagInCommc  on);
-    
-    # recommend new messages to Viktor that have not liked by him.
-    RecommendedMessage =
-             SELECT msg
-             FROM Others:o-(LIKES>) - :msg
-             WHERE  msg.@Liked == false
-             ACCUM msg.@Rank +=o.@SimilarityScore
-             ORDER BY msg.@Rank DESC   
-             LIMIT 2;        
+	A  =  SELECT t
+			FROM :s -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t
+			WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
 
-  PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank];
+	B  =  SELECT t
+			FROM :s -(LIKES>:e1)- Comment:msg -(HAS_CREATOR>)- :t
+			WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
+
+	Univ = SELECT u
+			FROM A:p -(STUDY_AT>) -:u - (<STUDY_AT)- B:s
+			WHERE s != p
+			Per (u)
+			POST-ACCUM @@cnt+=1;
+
+	PRINT @@cnt;
+	PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank];
 }

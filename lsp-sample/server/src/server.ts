@@ -64,7 +64,7 @@ connection.onInitialize(async (params: InitializeParams) => {
 	console.log('done');
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
 		tree = parser.parse(document);
-		const hightlights =[];
+		const hightlights = new Map<string, common.HighlightToken>();
 
 		(function f(node) {
 			try {
@@ -76,7 +76,9 @@ connection.onInitialize(async (params: InitializeParams) => {
 							start: node.startPosition,
 							end: node.endPosition
 						}
-						hightlights.push(m)
+						if (!hightlights.has(node.parent?.id) && !hightlights.has(node.parent?.parent?.id)) {
+							hightlights.set(node.id, m)
+						}
 						break;
 				}
 
@@ -87,7 +89,15 @@ connection.onInitialize(async (params: InitializeParams) => {
 						start: node.startPosition,
 						end: node.endPosition
 					}
-					hightlights.push(m)
+					hightlights.set(node.id, m)
+				}
+				if (node.type.toLowerCase().includes("type")) {
+					const m: common.HighlightToken = {
+						type: 'type',
+						start: node.startPosition,
+						end: node.endPosition
+					}
+					hightlights.set(node.id, m)
 				}
 				for (let child of node.children) {
 					f(child)
@@ -96,7 +106,7 @@ connection.onInitialize(async (params: InitializeParams) => {
 				console.log(e)
 			}
 		}(tree.rootNode))
-		return hightlights;
+		return Array.from(hightlights.values());
 	});
 
 	let capabilities = params.capabilities;

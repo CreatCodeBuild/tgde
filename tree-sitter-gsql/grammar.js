@@ -3,7 +3,7 @@ GSQL Query Language EBNF
 https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal-syntax-for-query-language
 */
 
-const { kw } = require("./grammar/index");
+const { kw, TRUE, FALSE } = require("./grammar/index");
 
 const g = {
     name: 'gsql',
@@ -23,6 +23,15 @@ const g = {
         [$.expr],
         [$.condition],
         [$.baseType, $.accumType],
+        [$.pathPattern, $.stepV2],
+        [$.name, $.atomicEdgeType],
+        [$.stepEdgeSet, $.paramName, $.edgeType],
+        [$.paramName, $.edgeType],
+        [$.name, $.atomicVertexType],
+        [$.paramName, $.vertexType, $.vertexSetName],
+        [$.paramName, $.vertexType],
+        [$.atomicEdgePattern, $.stepEdgeTypes],
+        [$.stepEdgeTypes, $.atomicEdgeType]
     ],
 
     rules: {
@@ -120,88 +129,6 @@ const g = {
         ),
 
         /*
-        #########################################################
-        ## Types and names
-        lowercase          := [a-z]
-        uppercase          := [A-Z]
-        letter             := lowercase | uppercase
-        */
-
-        /*
-        digit              := [0-9]
-        integer            := ["-"]digit+
-        real               := ["-"]("."digit+) | ["-"](digit+"."digit*)
-        numeric            := integer | real
-        */
-        integer: $ => seq(optional("-"), repeat1(digit())),
-        real: $ => choice(
-            seq(optional("-"), ".", repeat1(digit())),
-            seq(optional("-"), repeat1(digit()), ".", repeat(digit()))
-        ),
-        numeric: $ => choice($.integer, $.real),
-
-        /*
-        stringLiteral      := '"' [~["] | '\\' ('"' | '\\')]* '"'
-        */
-
-        /*
-        name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
-        */
-        name: $ => seq(
-            choice(letter(), "_"),
-            repeat(choice(letter(), digit(), "_"))
-        ),
-        graphName: $ => $.name,
-        queryName: $ => $.name,
-        paramName: $ => $.name,
-        vertexType: $ => $.name,
-        edgeType: $ => $.name,
-        accumName: $ => $.name,
-        vertexSetName: $ => $.name,
-        attrName: $ => $.name,
-        varName: $ => $.name,
-        tupleType: $ => $.name,
-        fieldName: $ => $.name,
-        funcName: $ => $.name,
-
-        /*
-        baseType := INT
-          | UINT
-          | FLOAT
-          | DOUBLE
-          | STRING
-          | BOOL
-          | VERTEX ["<" vertexType ">"]
-          | EDGE
-          | JSONOBJECT
-          | JSONARRAY
-          | DATETIME
-        */
-        baseType: $ => choice(
-            kw("INT"),
-            kw("FLOAT"),
-            kw("DOUBLE"),
-            kw("STRING"),
-            kw("BOOL"),
-            seq(kw("VERTEX"), optional(seq("<", $.vertexType, ">"))),
-            kw("EDGE"),
-            kw("JSONOBJECT"),
-            kw("JSONARRAY"),
-            kw("DATETIME"),
-        ),
-
-        /*
-        parameterType := baseType
-               | [ SET | BAG ] "<" baseType ">"
-               | FILE
-        */
-        parameterType: $ => choice(
-            $.baseType,
-            seq(optional(choice("SET", "BAG")), "<", $.baseType, ">"),
-            "FILE"
-        ),
-
-        /*
         ###############################################################################
         ## Operators, Functions, and Expressions
 
@@ -209,7 +136,7 @@ const g = {
                 | GSQL_INT_MAX | GSQL_INT_MIN | TO_DATETIME "(" stringLiteral ")"
         */
         constant: $ => choice(
-            $.numeric // todo
+            $.numeric, $.stringLiteral, TRUE, FALSE
         ),
 
 
@@ -311,93 +238,8 @@ const g = {
                 
         argList := expr ["," expr]*
         */
-
-        /*
-        #########################################################
-        ## Select Statement
         
-        selectStmt  := gsqlSelectBlock
-                    | sqlSelectBlock
-        */
-        selectStmt: $ => choice($.gsqlSelectBlock, /*todo: $.sqlSelectBlock*/),
-        /*
-        gsqlSelectBlock := gsqlSelectClause
-                    fromClause
-                    [sampleClause]
-                    [whereClause]
-                    [accumClause]
-                    [postAccumClause]*
-                    [havingClause]
-                    [orderClause]
-                    [limitClause]
-        */
-        gsqlSelectBlock: $ => seq(
-            $.gsqlSelectClause,
-            $.fromClause,
-            optional($.whereClause)
-            // todo
-        ),
-
-        /*
-        sqlSelectBlock := sqlSelectClause
-                fromClause
-                [whereClause]
-                [groupByClause]
-                [havingClause]
-                [orderClause]
-                [limitClause]
-        */
-
-        // gsqlSelectClause := vertexSetName "=" SELECT vertexAlias
-        gsqlSelectClause: $ => seq(
-            $.vertexSetName, "=", kw("SELECT"), $.vertexAlias
-        ),
-        /*
-        sqlSelectClause := SELECT [DISTINCT] columnExpr ("," columnExpr)*
-                        INTO tableName
-        columnExpr := expr [AS columnName]
-                    | aggregator "("[DISTINCT] expr ")" [AS columnName]
-        columnName := name
-        tableName := name
-        */
-
-        // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
-        fromClause: $ => seq(
-            "FROM", choice($.step, /* todo $.stepV2 ,*/ seq($.pathPattern, repeat(seq(",", $.pathPattern))))
-        ),
-
-
-        // step   :=  stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
-        step: _ => seq(
-            _.stepSourceSet,
-            optional(seq(
-                "-", "(", _.stepEdgeSet, ")", choice("-", "->"), _.stepVertexSet
-            ))
-        ),
-
-        /*
-        stepV2 :=  stepVertexSet ["-" "(" stepEdgeSet ")" "-" stepVertexSet]
         
-        stepSourceSet := vertexSetName [":" vertexAlias]
-        stepEdgeSet := [stepEdgeTypes] [":" edgeAlias]
-        stepVertexSet := [stepVertexTypes] [":" vertexAlias]
-        alias := (vertexAlias | edgeAlias)
-        */
-
-        // vertexAlias := name
-        // edgeAlias := name
-        vertexAlias: $ => $.name,
-        edgeAlias: $ => $.name,
-
-        /*
-        stepEdgeTypes := atomicEdgeType | "(" edgeSetType ["|" edgeSetType]* ")"               
-        atomicEdgeType := "_" | ANY | edgeSetType
-        edgeSetType := edgeType | paramName | globalAccumName
-
-        stepVertexTypes := atomicVertexType | "(" vertexSetType ["|" vertexSetType]* ")"
-        atomicVertexType := "_" | ANY | vertexSetType
-        vertexSetType := vertexType | paramName | globalAccumName
-        */
 
 
         // #----------# Pattern Matching #----------#
@@ -405,20 +247,32 @@ const g = {
         pathPattern: $ => seq(
             $.stepVertexSet,
             repeat(seq(
-                "-", "(", /* todo $.pathEdgePattern, */ ")", "-", $.stepVertexSet
+                "-", "(", $.pathEdgePattern, ")", "-", $.stepVertexSet
             ))),
 
-        /*
-        pathEdgePattern := atomicEdgePattern
-                        | "(" pathEdgePattern ")"
-                        | pathEdgePattern "." pathEdgePattern
-                        | disjPattern
-                        | starPattern
+        
+        // pathEdgePattern := atomicEdgePattern
+        //                 | "(" pathEdgePattern ")"
+        //                 | pathEdgePattern "." pathEdgePattern
+        //                 | disjPattern
+        //                 | starPattern
+        pathEdgePattern: $ => choice(
+            $.atomicEdgePattern,
+            seq("(", $.pathEdgePattern, ")")
+            // todo
+        ),
+        
                         
-        atomicEdgePattern  := atomicEdgeType		
-                            | atomicEdgeType ">"	
-                            | "<" atomicEdgeType	
+        // atomicEdgePattern  := atomicEdgeType		
+        //                     | atomicEdgeType ">"	
+        //                     | "<" atomicEdgeType	
+        atomicEdgePattern: $ => choice(
+            $.atomicEdgeType,
+            seq($.atomicEdgeType, ">"),
+            seq("<", $.atomicEdgeType)
+        ),
                     
+                            /*
         disjPattern := atomicEdgePattern ("|" atomicEdgePattern)*
 
         starPattern := ([atomicEdgePattern] | "(" disjPattern ")") "*" [starBounds]
@@ -429,14 +283,6 @@ const g = {
                     | CONST_INT 
         #--------------------------------------#
         */
-
-
-        stepEdgeSet: _ => _.name,
-
-        stepVertexSet: _ => _.name,
-
-        // stepSourceSet -> vertexSetName [":" vertexAlias]
-        stepSourceSet: _ => _.vertexSetName,
 
         /*
         sampleClause := SAMPLE ( expr | expr "%" ) EDGE WHEN condition
@@ -501,11 +347,8 @@ const g = {
     },
 }
 
-function lowercase() { return /[a-z]/ }
-function uppercase() { return /[A-Z]/ }
-function letter() { return choice(lowercase(), uppercase()) }
-function digit() { return /[0-9]/ }
-
 Object.assign(g.rules, require("./grammar/declarations"));
 Object.assign(g.rules, require("./grammar/accumulators"));
+Object.assign(g.rules, require("./grammar/types-and-names"));
+Object.assign(g.rules, require("./grammar/select"));
 module.exports = grammar(g);

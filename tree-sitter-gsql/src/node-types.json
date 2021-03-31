@@ -12,6 +12,14 @@
           "named": true
         },
         {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
           "type": "localAccumName",
           "named": true
         }
@@ -37,6 +45,51 @@
     "type": "accumType",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "atomicEdgePattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgeType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "atomicEdgeType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "edgeSetType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "atomicVertexType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "vertexSetType",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "attrName",
@@ -102,10 +155,14 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "numeric",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
           "named": true
         }
       ]
@@ -181,6 +238,59 @@
     }
   },
   {
+    "type": "edgeAlias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "edgeSetType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "edgeType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "expr",
     "named": true,
     "fields": {},
@@ -240,6 +350,10 @@
         },
         {
           "type": "step",
+          "named": true
+        },
+        {
+          "type": "stepV2",
           "named": true
         }
       ]
@@ -420,6 +534,25 @@
     }
   },
   {
+    "type": "pathEdgePattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgePattern",
+          "named": true
+        },
+        {
+          "type": "pathEdgePattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "pathPattern",
     "named": true,
     "fields": {},
@@ -427,6 +560,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "pathEdgePattern",
+          "named": true
+        },
         {
           "type": "stepVertexSet",
           "named": true
@@ -573,7 +710,30 @@
       "required": true,
       "types": [
         {
-          "type": "name",
+          "type": "edgeAlias",
+          "named": true
+        },
+        {
+          "type": "stepEdgeTypes",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepEdgeTypes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgeType",
+          "named": true
+        },
+        {
+          "type": "edgeSetType",
           "named": true
         }
       ]
@@ -584,11 +744,34 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "vertexAlias",
+          "named": true
+        },
+        {
           "type": "vertexSetName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepV2",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "stepEdgeSet",
+          "named": true
+        },
+        {
+          "type": "stepVertexSet",
           "named": true
         }
       ]
@@ -603,7 +786,30 @@
       "required": true,
       "types": [
         {
-          "type": "name",
+          "type": "stepVertexTypes",
+          "named": true
+        },
+        {
+          "type": "vertexAlias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepVertexTypes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicVertexType",
+          "named": true
+        },
+        {
+          "type": "vertexSetType",
           "named": true
         }
       ]
@@ -723,6 +929,29 @@
     }
   },
   {
+    "type": "vertexSetType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "vertexType",
     "named": true,
     "fields": {},
@@ -805,6 +1034,10 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
@@ -853,6 +1086,10 @@
     "named": false
   },
   {
+    "type": "ANY",
+    "named": false
+  },
+  {
     "type": "BAG",
     "named": false
   },
@@ -874,6 +1111,10 @@
   },
   {
     "type": "EDGE",
+    "named": false
+  },
+  {
+    "type": "FALSE",
     "named": false
   },
   {
@@ -913,6 +1154,10 @@
     "named": false
   },
   {
+    "type": "OrAccum",
+    "named": false
+  },
+  {
     "type": "QUERY",
     "named": false
   },
@@ -933,6 +1178,10 @@
     "named": false
   },
   {
+    "type": "STATIC",
+    "named": false
+  },
+  {
     "type": "STRING",
     "named": false
   },
@@ -942,6 +1191,10 @@
   },
   {
     "type": "SumAccum",
+    "named": false
+  },
+  {
+    "type": "TRUE",
     "named": false
   },
   {
@@ -991,6 +1244,10 @@
   {
     "type": "string compress",
     "named": false
+  },
+  {
+    "type": "stringLiteral",
+    "named": true
   },
   {
     "type": "{",
