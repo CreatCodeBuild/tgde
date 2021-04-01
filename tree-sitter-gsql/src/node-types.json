@@ -1130,10 +1130,6 @@
     "named": false
   },
   {
-    "type": "FROM",
-    "named": false
-  },
-  {
     "type": "GRAPH",
     "named": false
   },
@@ -1231,6 +1227,10 @@
   },
   {
     "type": "float",
+    "named": false
+  },
+  {
+    "type": "from",
     "named": false
   },
   {

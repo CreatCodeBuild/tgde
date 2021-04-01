@@ -59,15 +59,16 @@ export function activate(context: ExtensionContext) {
 		clientOptions
 	);
 
+	// DocumentSemanticTokensProvider
 	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable', 'comment', 'keyword', 'type'];
 	const tokenModifiers = ['declaration', 'documentation'];
 	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
-
 	languages.registerDocumentSemanticTokensProvider(
 		[lang],
 		{
 			async provideDocumentSemanticTokens(document: vscode.TextDocument) {
 				// analyze the document and return semantic tokens
+				// todo: refactor to GraphQL
 				let r: Array<common.HighlightToken> = await client.sendRequest(common.Request.SemanticHightlight, document.getText())
 				console.log(r)
 
@@ -111,10 +112,13 @@ export function activate(context: ExtensionContext) {
 		legend
 	);
 
+	// HoverProvider
 	vscode.languages.registerHoverProvider(lang, {
 		async provideHover(document, position: vscode.Position, token) {
-			console.log("xxx")
-			return client.sendRequest('Hover', position);;
+			return {
+				// @ts-ignore
+				contents: (await client.sendRequest(common.Request.GQL, `{Hover(line:${position.line},character:${position.character})}`)).data.Hover
+			}
 		}
 	});
 

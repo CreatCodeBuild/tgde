@@ -1,0 +1,20 @@
+type Query {
+	SemanticHightlight: [HighlightToken]
+	Hover(line: Int,character: Int): [String] # markdown string
+}
+
+input Position {
+	line: Int
+	character: Int
+}
+
+type HighlightToken {
+	start: TreeSitterPosition
+	end: TreeSitterPosition
+	type: String
+}
+
+type TreeSitterPosition {
+	row: Int
+	column: Int
+}

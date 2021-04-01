@@ -1,0 +1,5 @@
+schema: ./server/src/server.gql
+generates:
+  ./server/src/gql.d.ts:
+    plugins:
+      - typescript

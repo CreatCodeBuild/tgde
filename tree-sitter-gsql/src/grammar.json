@@ -1817,8 +1817,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "FROM"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[fF][rR][oO][mM]"
+          },
+          "named": false,
+          "value": "from"
         },
         {
           "type": "CHOICE",

@@ -8,7 +8,7 @@
 		"type": "git",
 		"url": "https://github.com/Microsoft/vscode-extension-samples"
 	},
-	"publisher": "vscode-samples",
+	"publisher": "CreatCodeBuild",
 	"categories": [],
 	"keywords": [
 		"multi-root ready"
@@ -71,14 +71,19 @@
 		"test": "sh ./scripts/e2e.sh"
 	},
 	"devDependencies": {
+		"@graphql-codegen/cli": "^1.21.3",
+		"@graphql-codegen/typescript": "^1.21.1",
 		"@types/mocha": "^8.0.3",
 		"@types/node": "^12.12.0",
 		"@typescript-eslint/parser": "^2.3.0",
 		"eslint": "^6.4.0",
 		"mocha": "^8.1.1",
-		"typescript": "^4.2.2"
+		"simple-graphql-to-typescript": "^0.10.13",
+		"typescript": "^4.2.2",
+		"vsce": "^1.87.1"
 	},
 	"dependencies": {
+		"graphql": "^15.5.0",
 		"web-tree-sitter": "^0.19.1"
 	}
 }

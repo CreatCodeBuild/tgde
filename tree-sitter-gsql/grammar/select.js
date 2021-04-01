@@ -49,7 +49,7 @@ module.exports = {
 
     // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
     fromClause: $ => seq(
-        "FROM", choice($.step, $.stepV2 , seq($.pathPattern, optional(repeat(seq(",", $.pathPattern)))))
+        kw("from"), choice($.step, $.stepV2 , seq($.pathPattern, optional(repeat(seq(",", $.pathPattern)))))
     ),
 
 

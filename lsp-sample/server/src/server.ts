@@ -34,7 +34,9 @@ import * as path from 'path';
 // @ts-ignore
 import * as common from '../../common/common';
 import { keywords } from './keywords';
-import { connect } from 'http2';
+import { serve } from './graphql';
+
+// import { serve } from './graphql';
 
 declare const WebAssembly: any;
 const Parser = require('web-tree-sitter');
@@ -142,22 +144,15 @@ connection.onInitialize(async (params: InitializeParams) => {
 			}
 		};
 	}
-	connection.onRequest(common.Request.Hover, function(p: Position) {
-		console.log('hover', p)
-		
-		const node = tree.rootNode.descendantForPosition({row: p.line, column:p.character})
 
-		return {
-			contents: [
-				node.type,
-				node.parent.type,
-				node.parent.parent?.type,
-				node.parent.parent?.parent?.type,
-				`${JSON.stringify(node.startPosition)}`,
-				`${JSON.stringify(node.endPosition)}`,
-			]
-		};
-	});
+	// All LSP requests are done through GraphQL
+	connection.onRequest(common.Request.GQL, async function(query: string, args: any) {
+		try {
+			return await serve(query, tree);
+		} catch (e) {
+			console.log(e)
+		}
+	})
 	return result;
 });
 

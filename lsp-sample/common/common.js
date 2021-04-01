@@ -5,6 +5,6 @@ exports.Request = void 0;
 var Request;
 (function (Request) {
     Request["SemanticHightlight"] = "SemanticHightlight";
-    Request["Hover"] = "Hover";
+    Request["GQL"] = "GQL";
 })(Request = exports.Request || (exports.Request = {}));
 //# sourceMappingURL=common.js.map

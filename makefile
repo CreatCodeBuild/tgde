@@ -12,3 +12,8 @@ cp:
 
 all:
 	make gen && make build && make cp
+
+# build lsp
+lsp:
+	cd ./lsp-sample && ./node_modules/.bin/graphql-codegen
+	cd ./lsp-sample && npm run compile && cp ./server/src/server.gql ./server/out
