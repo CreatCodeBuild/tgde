@@ -32,7 +32,7 @@ import {
 
 import * as path from 'path';
 // @ts-ignore
-import * as common from '../../common/common';
+import * as common from '../common/common';
 import { keywords } from './keywords';
 import { serve } from './graphql';
 
