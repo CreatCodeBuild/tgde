@@ -1,9 +1,9 @@
 {
-	"name": "lsp-sample",
-	"description": "A language server example",
-	"author": "Microsoft Corporation",
+	"name": "tgde",
+	"description": "TigerGraph GSQL language server",
+	"author": "CreatCodeBuild",
 	"license": "MIT",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Microsoft/vscode-extension-samples"
@@ -19,7 +19,7 @@
 	"activationEvents": [
 		"onLanguage:gsql"
 	],
-	"main": "./client/out/extension",
+	"main": "./dist/client/extension.js",
 	"contributes": {
 		"languages": [
 			{
@@ -64,10 +64,7 @@
 		}
 	},
 	"scripts": {
-		"compile": "tsc -b",
-		"watch": "tsc -b -w",
 		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-		"test": "sh ./scripts/e2e.sh",
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
