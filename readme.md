@@ -6,6 +6,7 @@ npm
 g++
 emcc
 ```
+[tree-sitter-gsql](./tree-sitter-gsql/readme.md)
 
 ## Design
 The project consists of 2 components.
