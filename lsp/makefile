@@ -8,3 +8,6 @@ build:
 
 watch:
 	$$(npm bin)/tsc -b -w
+
+cp-dev:
+	cd .. && cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/src/server/

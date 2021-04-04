@@ -35,14 +35,8 @@ import * as path from 'path';
 import * as common from '../common/common';
 import { keywords } from './keywords';
 import { serve } from './graphql';
-
-// import { serve } from './graphql';
-
-declare const WebAssembly: any;
-const Parser = require('web-tree-sitter');
-
-
-
+import { GetParser } from './parser';
+import Parser from 'web-tree-sitter';
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -54,19 +48,17 @@ let documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
+let parser: Parser;
 
 connection.onInitialize(async (params: InitializeParams) => {
 	console.log('loading parser');
-	await Parser.init();
-	const parser = new Parser();
-	const GSQL = await Parser.Language.load(path.join(__dirname, './tree-sitter-gsql.wasm'));
-	parser.setLanguage(GSQL);
+	parser = await GetParser();
 	let tree = parser.parse('');	// init the tree
-
 	console.log('done');
+
 	connection.onRequest(common.Request.SemanticHightlight, async (document: string) => {
 		tree = parser.parse(document);
-		const hightlights = new Map<string, common.HighlightToken>();
+		const hightlights = new Map<number, common.HighlightToken>();
 
 		(function f(node) {
 			try {
