@@ -64,7 +64,6 @@
 		}
 	},
 	"scripts": {
-		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
 		"copy": "cp package.json dist/package.json",
 		"prod": "webpack --mode production",
 		"webpack": "webpack --mode development",
@@ -87,9 +86,11 @@
 		"webpack-cli": "^4.6.0"
 	},
 	"dependencies": {
+		"@types/vscode": "^1.55.0",
 		"graphql": "^15.5.0",
-		"web-tree-sitter": "^0.19.1",
-		"vscode": "^1.1.37",
-		"vscode-languageclient": "^7.0.0"
+		"vscode-languageclient": "^7.0.0",
+		"vscode-languageserver": "^7.0.0",
+		"vscode-languageserver-textdocument": "^1.0.1",
+		"web-tree-sitter": "^0.19.1"
 	}
 }
