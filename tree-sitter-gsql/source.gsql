@@ -1,1 +1,0 @@
-select tgt from Start:s-(friendship:e) ->person:tgt;

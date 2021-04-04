@@ -4,6 +4,10 @@ export enum Request {
 	GQL = "GQL"
 }
 
+export interface SemanticHightlightHandler {
+	(document: string): Promise<HighlightToken[]>
+} 
+
 export interface HighlightToken {
 	start: TreeSitterPosition
 	end: TreeSitterPosition
