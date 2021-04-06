@@ -82,6 +82,7 @@
 		"webpack-cli": "^4.6.0"
 	},
 	"dependencies": {
+		"@creatcodebuild/csp": "0.0.3",
 		"@types/vscode": "^1.55.0",
 		"graphql": "^15.5.0",
 		"vscode-languageclient": "^7.0.0",

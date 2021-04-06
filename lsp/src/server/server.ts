@@ -38,7 +38,7 @@ import { serve } from './graphql';
 import { GetParser } from './parser';
 import Parser from 'web-tree-sitter';
 import { NewSemanticHightlightHandler } from './request-handlers';
-import {UnbufferredChannel} from './csp';
+import { UnbufferredChannel } from '@creatcodebuild/csp/csp';
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -58,8 +58,8 @@ connection.onInitialize(async (params: InitializeParams) => {
 	let tree = parser.parse('');	// init the tree
 	console.log('done');
 	const treeChan = new UnbufferredChannel<Parser.Tree>();
-	(async function() {
-		for(;;) {
+	(async function () {
+		for (; ;) {
 			tree = await treeChan.pop();
 		}
 	}())
@@ -100,7 +100,7 @@ connection.onInitialize(async (params: InitializeParams) => {
 		};
 	}
 
-	connection.onRequest(common.Request.GQL, async function(query: string, args: any) {
+	connection.onRequest(common.Request.GQL, async function (query: string, args: any) {
 		try {
 			console.log('123', tree)
 			return await serve(query, tree);
