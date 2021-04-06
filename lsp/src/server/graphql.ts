@@ -2,14 +2,13 @@ import { graphql, buildSchema } from 'graphql';
 import { readFileSync } from 'fs';
 import * as gql from './gql';
 import { join } from 'path';
+import * as Parser from 'web-tree-sitter';
 
 const schema = buildSchema(readFileSync(join(__dirname, './server.gql')).toString());
 
-type gsqlTree = any;	// todo
-
 class Root {
-	tree: gsqlTree
-	constructor(tree: gsqlTree) {
+	tree: Parser.Tree
+	constructor(tree: Parser.Tree) {
 		this.tree = tree;
 	}
 
@@ -31,7 +30,7 @@ class Root {
 	}
 };
 
-export async function serve(query: string, tree: gsqlTree) {
+export async function serve(query: string, tree: Parser.Tree) {
 	let r = await graphql(schema, query, new Root(tree))
 	console.log(r)
 	return r

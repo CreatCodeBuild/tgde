@@ -337,6 +337,40 @@
     }
   },
   {
+    "type": "filePath",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fileVar",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "fromClause",
     "named": true,
     "fields": {},
@@ -435,6 +469,21 @@
     "type": "integer",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "jsonKey",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "localAccumName",
@@ -572,6 +621,60 @@
     }
   },
   {
+    "type": "printExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "jsonKey",
+          "named": true
+        },
+        {
+          "type": "tableName",
+          "named": true
+        },
+        {
+          "type": "vExprSet",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "printStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "filePath",
+          "named": true
+        },
+        {
+          "type": "fileVar",
+          "named": true
+        },
+        {
+          "type": "printExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "queryBody",
     "named": true,
     "fields": {},
@@ -602,6 +705,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "printStmt",
+          "named": true
+        },
         {
           "type": "selectStmt",
           "named": true
@@ -831,6 +938,21 @@
     }
   },
   {
+    "type": "tableName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "tupleFields",
     "named": true,
     "fields": {},
@@ -893,6 +1015,44 @@
       "types": [
         {
           "type": "typedef",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vExprSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "vSetProj",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vSetProj",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "jsonKey",
           "named": true
         }
       ]
@@ -1090,6 +1250,10 @@
     "named": false
   },
   {
+    "type": "AS",
+    "named": false
+  },
+  {
     "type": "BAG",
     "named": false
   },
@@ -1154,6 +1318,10 @@
     "named": false
   },
   {
+    "type": "PRINT",
+    "named": false
+  },
+  {
     "type": "QUERY",
     "named": false
   },
@@ -1190,6 +1358,10 @@
     "named": false
   },
   {
+    "type": "TO_CSV",
+    "named": false
+  },
+  {
     "type": "TRUE",
     "named": false
   },
@@ -1207,6 +1379,14 @@
   },
   {
     "type": "WHERE",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

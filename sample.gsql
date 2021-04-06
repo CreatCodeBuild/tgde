@@ -1,6 +1,6 @@
 Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
 	#1. mark messages liked by Viktor
-	#2. calculate log similarity score for each persons share the same 
+	#2. calculate log similarity score for each persons share the same
 	#   interests at Tag level.
 	TYPEDEF tuple<STRING countryName, STRING companyName> companyInfo;
 	SumAccum<int> @TagInCommon;
@@ -13,7 +13,7 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
             from :s -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t
             WHERE s.firstName == "Viktor" AND s.lastname == "Akhiezer" ;
 
-	C = select x 
+	C = select x
 			FROM :x -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t
 			WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
 

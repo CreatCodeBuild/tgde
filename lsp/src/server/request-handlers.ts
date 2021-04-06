@@ -3,9 +3,14 @@ import { SemanticHightlightHandler } from '../common/common';
 import { keywords } from '../common/keywords';
 import Parser from 'web-tree-sitter';
 
-export function NewSemanticHightlightHandler(parser: Parser): SemanticHightlightHandler {
+interface Putter {
+	put(tree: Parser.Tree)
+}
+
+export function NewSemanticHightlightHandler(parser: Parser, treeStateSub: Putter): SemanticHightlightHandler {
 	return async function onSemanticHighlighting(document: string) {
 		let tree = parser.parse(document);
+		treeStateSub.put(tree);	// caller scope subscribes the current tree state.
 		const hightlights = new Map<number, common.HighlightToken>();
 	
 		(function f(node) {

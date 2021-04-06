@@ -36,5 +36,6 @@ module.exports = {
     // fileVar := name
     fileDeclStmt: $ => seq(
         kw("FILE")
-    )
+    ),
+    fileVar: $=> $.name
 }

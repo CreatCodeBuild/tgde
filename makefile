@@ -11,7 +11,7 @@ parse:
 	cd tree-sitter-gsql && ./node_modules/.bin/tree-sitter parse source.gsql
 
 cp:
-	cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/server/out/
+	cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/src/server/
 
 # build lsp
 lsp:

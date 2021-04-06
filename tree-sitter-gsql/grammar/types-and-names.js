@@ -39,8 +39,6 @@ baseType := INT
           | JSONARRAY
           | DATETIME
 
-filePath := paramName | stringLiteral
-
 typedef := TYPEDEF TUPLE "<" tupleFields ">" tupleType
 
 tupleFields := (baseType fieldName) | (fieldName baseType)
@@ -86,6 +84,9 @@ module.exports = {
     tupleType: $ => $.name,
     fieldName: $ => $.name,
     funcName: $ => $.name,
+
+    // filePath := paramName | stringLiteral
+    filePath: $=> choice($.paramName, $.stringLiteral),
 
     /*
     baseType := INT

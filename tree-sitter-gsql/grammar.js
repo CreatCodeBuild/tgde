@@ -31,7 +31,9 @@ const g = {
         [$.paramName, $.vertexType, $.vertexSetName],
         [$.paramName, $.vertexType],
         [$.atomicEdgePattern, $.stepEdgeTypes],
-        [$.stepEdgeTypes, $.atomicEdgeType]
+        [$.stepEdgeTypes, $.atomicEdgeType],
+        [$.expr, $.tableName],
+        [$.fileVar, $.paramName]
     ],
 
     rules: {
@@ -125,7 +127,8 @@ const g = {
         // todo
         queryBodyStmt: $ => choice(
             /* $.assignStmt, */
-            $.selectStmt
+            $.selectStmt,
+            $.printStmt,
         ),
 
         /*
@@ -347,8 +350,9 @@ const g = {
     },
 }
 
-Object.assign(g.rules, require("./grammar/declarations"));
 Object.assign(g.rules, require("./grammar/accumulators"));
-Object.assign(g.rules, require("./grammar/types-and-names"));
+Object.assign(g.rules, require("./grammar/declarations"));
+Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));
+Object.assign(g.rules, require("./grammar/types-and-names"));
 module.exports = grammar(g);

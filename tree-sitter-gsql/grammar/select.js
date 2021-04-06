@@ -44,8 +44,9 @@ module.exports = {
     columnExpr := expr [AS columnName]
                 | aggregator "("[DISTINCT] expr ")" [AS columnName]
     columnName := name
-    tableName := name
     */
+    // tableName := name
+    tableName: $=> $.name,
 
     // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
     fromClause: $ => seq(
