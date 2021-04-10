@@ -12,8 +12,3 @@ parse:
 
 cp:
 	cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/src/server/
-
-# build lsp
-lsp:
-	cd ./lsp && ./node_modules/.bin/graphql-codegen
-	cd ./lsp && npm run compile && cp ./server/src/server.gql ./server/out

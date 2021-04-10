@@ -111,8 +111,7 @@ export function activate(context: ExtensionContext) {
 		async provideHover(document, position: vscode.Position, token) {
 			console.log(position)
 			return {
-				// @ts-ignore
-				contents: (await client.sendRequest(common.Request.GQL, `{Hover(line:${position.line},character:${position.character})}`)).data.Hover
+				contents: await client.sendRequest(common.Request.GQL, position)
 			}
 		}
 	});

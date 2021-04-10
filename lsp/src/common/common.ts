@@ -5,7 +5,7 @@ export enum Request {
 }
 
 export interface SemanticHightlightHandler {
-	(document: string): Promise<HighlightToken[]>
+	(document: string): Promise<HighlightToken[]> | HighlightToken[]
 } 
 
 export interface HighlightToken {

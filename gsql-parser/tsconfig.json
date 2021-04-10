@@ -8,6 +8,7 @@
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"strictNullChecks": true,
+		"declaration": true,
 	},
 	"include": [
 		"src"

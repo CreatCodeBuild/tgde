@@ -26,16 +26,12 @@ import {
 } from 'vscode-languageserver/node';
 
 import {
-	Position,
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
-import * as path from 'path';
-// @ts-ignore
 import * as common from '../common/common';
-import { keywords } from '../common/keywords';
-import { serve } from './graphql';
-import { GetParser } from './parser';
+
+import { GSQLParser } from 'gsql-parser';
 import Parser from 'web-tree-sitter';
 import { NewSemanticHightlightHandler } from './request-handlers';
 import { UnbufferredChannel } from '@creatcodebuild/csp/csp';
@@ -50,21 +46,14 @@ let documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
-let parser: Parser;
 
 connection.onInitialize(async (params: InitializeParams) => {
 	console.log('loading parser');
-	parser = await GetParser();
-	let tree = parser.parse('');	// init the tree
+	const parser = await GSQLParser.New();
 	console.log('done');
 	const treeChan = new UnbufferredChannel<Parser.Tree>();
-	(async function () {
-		for (; ;) {
-			tree = await treeChan.pop();
-		}
-	}())
 
-	connection.onRequest(common.Request.SemanticHightlight, NewSemanticHightlightHandler(parser, treeChan));
+	connection.onRequest(common.Request.SemanticHightlight, NewSemanticHightlightHandler(parser));
 
 	let capabilities = params.capabilities;
 
@@ -100,10 +89,9 @@ connection.onInitialize(async (params: InitializeParams) => {
 		};
 	}
 
-	connection.onRequest(common.Request.GQL, async function (query: string, args: any) {
+	connection.onRequest(common.Request.GQL, async function (args: any) {
 		try {
-			console.log('123', tree)
-			return await serve(query, tree);
+			return await parser.hover(args)
 		} catch (e) {
 			console.log(e)
 		}
