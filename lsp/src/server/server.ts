@@ -76,6 +76,7 @@ connection.onInitialize(async (params: InitializeParams) => {
 
 	connection.onRequest(common.Request.GQL, async function (args: any) {
 		try {
+			console.log(args);
 			return await parser.hover(args)
 		} catch (e) {
 			console.log(e)
