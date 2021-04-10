@@ -9,7 +9,8 @@ publish:
 	make cp
 	npm publish dist --access public
 
-cp:	
+cp:
+	cp src/tree-sitter-gsql.wasm dist/tree-sitter-gsql.wasm
 	cp package.json dist/package.json
 
 p: publish

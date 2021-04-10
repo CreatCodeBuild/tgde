@@ -3,6 +3,8 @@ build:
 	$$(npm bin)/tsc -b
 	cd .. && cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/dist/server/
 	cp package.json dist/package.json
+
+build-prod: build
 	cp -r node_modules dist/node_modules
 
 watch:
@@ -11,7 +13,7 @@ watch:
 cp-dev:
 	cd .. && cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/src/server/
 
-package:
-	$$(npm bin)/vsce package dist
+package: build-prod
+	cd dist && $$(npm bin)/vsce package
 
 bp: build package

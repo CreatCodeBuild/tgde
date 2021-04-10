@@ -5,24 +5,11 @@
 import {
 	createConnection,
 	TextDocuments,
-	Diagnostic,
-	DiagnosticSeverity,
 	ProposedFeatures,
 	InitializeParams,
 	DidChangeConfigurationNotification,
-	CompletionItem,
-	CompletionItemKind,
-	TextDocumentPositionParams,
 	TextDocumentSyncKind,
 	InitializeResult,
-	CancellationToken,
-	WorkDoneProgressReporter,
-	ResultProgressReporter,
-	DocumentFormattingRequest,
-	DocumentFormattingParams,
-	HandlerResult,
-	TextEdit,
-	HoverParams
 } from 'vscode-languageserver/node';
 
 import {
@@ -32,9 +19,8 @@ import {
 import * as common from '../common/common';
 
 import { GSQLParser } from 'gsql-parser';
-import Parser from 'web-tree-sitter';
 import { NewSemanticHightlightHandler } from './request-handlers';
-import { UnbufferredChannel } from '@creatcodebuild/csp/csp';
+
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -51,7 +37,6 @@ connection.onInitialize(async (params: InitializeParams) => {
 	console.log('loading parser');
 	const parser = await GSQLParser.New();
 	console.log('done');
-	const treeChan = new UnbufferredChannel<Parser.Tree>();
 
 	connection.onRequest(common.Request.SemanticHightlight, NewSemanticHightlightHandler(parser));
 
