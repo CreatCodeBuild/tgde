@@ -931,19 +931,6 @@
         }
       ]
     },
-    "whereClause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "WHERE"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "condition"
-        }
-      ]
-    },
     "comment": {
       "type": "TOKEN",
       "content": {
@@ -1615,6 +1602,18 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "accumClause"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -1858,6 +1857,28 @@
               "name": "edgeAlias"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "stepEdgeTypes"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "edgeAlias"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2055,6 +2076,117 @@
         {
           "type": "SYMBOL",
           "name": "globalAccumName"
+        }
+      ]
+    },
+    "whereClause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "WHERE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "condition"
+        }
+      ]
+    },
+    "accumClause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "perClauseV2"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[aA][cC][cC][uU][mM]"
+          },
+          "named": false,
+          "value": "ACCUM"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dmlSubStmtList"
+        }
+      ]
+    },
+    "perClauseV2": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[pP][eE][rR]"
+          },
+          "named": false,
+          "value": "PER"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "alias"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "alias"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "dmlSubStmtList": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "dmlSubStmt"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "dmlSubStmt"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "dmlSubStmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "assignStmt"
         }
       ]
     },
@@ -2562,6 +2694,10 @@
     [
       "fileVar",
       "paramName"
+    ],
+    [
+      "vertexAlias",
+      "edgeAlias"
     ]
   ],
   "precedences": [],

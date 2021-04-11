@@ -1,6 +1,6 @@
 {
   "name": "gsql-parser",
-  "version": "0.0.7",
+  "version": "0.0.13",
   "description": "",
   "main": "parser.js",
   "author": "https://github.com/CreatCodeBuild",

@@ -1,5 +1,24 @@
 [
   {
+    "type": "accumClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "perClauseV2",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "accumDeclStmt",
     "named": true,
     "fields": {},
@@ -45,6 +64,48 @@
     "type": "accumType",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "edgeAlias",
+          "named": true
+        },
+        {
+          "type": "vertexAlias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assignStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "atomicEdgePattern",
@@ -232,6 +293,36 @@
       "types": [
         {
           "type": "declStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubStmtList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmt",
           "named": true
         }
       ]
@@ -432,6 +523,10 @@
       "required": true,
       "types": [
         {
+          "type": "accumClause",
+          "named": true
+        },
+        {
           "type": "fromClause",
           "named": true
         },
@@ -615,6 +710,21 @@
         },
         {
           "type": "stepVertexSet",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "perClauseV2",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "alias",
           "named": true
         }
       ]
@@ -813,7 +923,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -1242,6 +1352,10 @@
     "named": false
   },
   {
+    "type": "ACCUM",
+    "named": false
+  },
+  {
     "type": "AND",
     "named": false
   },
@@ -1315,6 +1429,10 @@
   },
   {
     "type": "OrAccum",
+    "named": false
+  },
+  {
+    "type": "PER",
     "named": false
   },
   {

@@ -4,7 +4,7 @@ build:
 	$$(npm bin)/tsc -b
 	make cp
 
-publish:
+publish: build
 	npm version patch
 	make cp
 	npm publish dist --access public

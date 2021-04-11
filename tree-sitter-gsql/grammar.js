@@ -33,7 +33,8 @@ const g = {
         [$.atomicEdgePattern, $.stepEdgeTypes],
         [$.stepEdgeTypes, $.atomicEdgeType],
         [$.expr, $.tableName],
-        [$.fileVar, $.paramName]
+        [$.fileVar, $.paramName],
+        [$.vertexAlias, $.edgeAlias]
     ],
 
     rules: {
@@ -293,48 +294,6 @@ const g = {
                     | SAMPLE expr "%" TARGET PINNED WHEN condition
                                 
         whereClause := WHERE condition
-        */
-        whereClause: $ => seq(
-            "WHERE", $.condition
-        ),
-        /*
-        accumClause := [perClauseV2] ACCUM dmlSubStmtList
-
-        perClauseV2 := PER "(" alias ["," alias] ")"
-        
-        postAccumClause := "POST-ACCUM" dmlSubStmtList
-            
-        dmlSubStmtList := dmlSubStmt ["," dmlSubStmt]*
-
-        dmlSubStmt := assignStmt           // Assignment   
-                    | funcCallStmt         // Function Call
-                    | gAccumAccumStmt      // Assignment
-                    | lAccumAccumStmt      // Assignment
-                    | attrAccumStmt        // Assignment
-                    | vAccumFuncCall       // Function Call
-                    | localVarDeclStmt     // Declaration
-                    | dmlSubCaseStmt       // Control Flow
-                    | dmlSubIfStmt         // Control Flow
-                    | dmlSubWhileStmt      // Control Flow
-                    | dmlSubForEachStmt    // Control Flow
-                    | BREAK                // Control Flow
-                    | CONTINUE             // Control Flow
-                    | insertStmt           // Data Modification
-                    | dmlSubDeleteStmt     // Data Modification
-                    | printlnStmt          // Output
-                    | logStmt              // Output
-
-
-        vAccumFuncCall := vertexAlias "." localAccumName ("." funcName "(" [argList] ")")+
-
-        groupByClause := GROUP BY groupExpr ("," groupExpr)*
-        groupExpr := expr
-
-        havingClause := HAVING condition
-        
-        orderClause := ORDER BY expr [ASC | DESC] ["," expr [ASC | DESC]]*
-        
-        limitClause := LIMIT ( expr | expr "," expr | expr OFFSET expr 
         */
 
         // https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js#L887

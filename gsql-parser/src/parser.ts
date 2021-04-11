@@ -37,6 +37,9 @@ export class GSQLParser {
 			node.parent?.type,
 			node.parent?.parent?.type,
 			node.parent?.parent?.parent?.type,
+			node.parent?.parent?.parent?.parent?.type,
+			node.parent?.parent?.parent?.parent?.parent?.type,
+			node.parent?.parent?.parent?.parent?.parent?.parent?.type,
 			`${JSON.stringify(node.startPosition)}`,
 			`${JSON.stringify(node.endPosition)}`,
 		]
