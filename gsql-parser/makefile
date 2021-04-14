@@ -10,4 +10,10 @@ publish: build
 	cp readme.md dist/readme.md
 	npm publish dist --access public
 	
+
+test:
+	node -r ts-node/register src/parser.test.ts
+
+t: test
+
 p: publish

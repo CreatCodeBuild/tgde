@@ -52,7 +52,9 @@ const { kw, TRUE, FALSE } = require("./index");
 module.exports = {
     // stringLiteral      := '"' [~["] | '\\' ('"' | '\\')]* '"'
     stringLiteral: $ => token.immediate(seq(
-        '"', '"'    //todo
+        '"',
+        repeat(/./),
+        '"'    //todo
     )),
     integer: $ => seq(optional("-"), repeat1(digit())),
     real: $ => choice(

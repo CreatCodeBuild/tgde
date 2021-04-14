@@ -1,7 +1,7 @@
 // common types and data used by both server and client
 export enum Request {
 	SemanticHightlight = "SemanticHightlight",
-	GQL = "GQL"
+	Hover = "Hover"
 }
 
 export interface SemanticHightlightHandler {

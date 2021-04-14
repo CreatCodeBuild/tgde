@@ -38,12 +38,15 @@ const g = {
     ],
 
     rules: {
-        source_file: $ => repeat1(
-            choice(
-                $.createQuery,
-                $.selectStmt
-            )
-        ),
+        // source_file: $ => repeat1(
+        //     choice(
+        //         $.createQuery,
+        //         $.selectStmt,
+        //         $.stringLiteral,
+        //         "DEBUG-literal"
+        //     )
+        // ),
+        source_file: $ => "DEBUG",
 
         /*
         createQuery := CREATE [OR REPLACE] [DISTRIBUTED] QUERY queryName 
@@ -54,15 +57,15 @@ const g = {
                [SYNTAX syntaxName]
                "{" queryBody "}"
         */
-        createQuery: $ => seq(
-            kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
-            "(", optional($.parameterList), ")",
-            optional(seq("FOR", "GRAPH", $.graphName)),
-            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
-            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
-            optional(seq("SYNTAX", $.syntaxName)),
-            "{", $.queryBody, "}"
-        ),
+        // createQuery: $ => seq(
+        //     kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
+        //     "(", optional($.parameterList), ")",
+        //     optional(seq("FOR", "GRAPH", $.graphName)),
+        //     optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
+        //     optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
+        //     optional(seq("SYNTAX", $.syntaxName)),
+        //     "{", $.queryBody, "}"
+        // ),
 
         /*
         parameterList := parameterType paramName ["=" constant]

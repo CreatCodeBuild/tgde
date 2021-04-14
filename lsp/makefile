@@ -1,7 +1,7 @@
 build:
 	rm -rf dist
 	$$(npm bin)/tsc -b
-	cd .. && cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/dist/server/
+	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm dist/server/
 	cp package.json dist/package.json
 
 build-prod: build

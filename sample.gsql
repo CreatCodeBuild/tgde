@@ -9,17 +9,13 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
 	OrAccum @Liked = false;
 	SumAccum<int> @@cnt;
 	SumAccum<string> @@xxx;
-    A  =  SELECT t
-            from :s -(LIKES:e1)- Post:msg -(HAS_CREATOR>)- :t
-            WHERE s.firstName == "Viktor" AND s.lastname == "Akhiezer" ;
+    A = SELECT t from :s -(LIKES:e1)- Post:msg -(HAS_CREATOR>)- :t WHERE s.firstName == "Viktor" AND s.lastname == "Akhiezer";
 
-	C = select x
-			FROM :x -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t
-			WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
+	C = select x FROM :x -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
 
-	B  =  SELECT t
-			FROM :s -(LIKES>:e1)- Comment:msg -(HAS_CREATOR>)- :t
-			WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
+	B = SELECT t
+		FROM :s -(LIKES>:e1)- Comment:msg -(HAS_CREATOR>)- :t
+		WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
 
 	Univ = SELECT u
 			FROM A:p -(STUDY_AT>) -:u - (<STUDY_AT)- B:s

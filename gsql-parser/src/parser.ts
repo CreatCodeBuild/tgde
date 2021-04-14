@@ -16,17 +16,18 @@ export type TokenType = "type" | "name" | "comment" | "keyword";
  */
 export class GSQLParser {
 
-	static async New() {
+	static async New(wasmURL?: string) {
+		wasmURL = wasmURL? wasmURL : path.join(__dirname, './tree-sitter-gsql.wasm')
 		await Parser.init();
 		const parser = new Parser();
-		const GSQL = await Parser.Language.load(path.join(__dirname, './tree-sitter-gsql.wasm'));
+		const GSQL = await Parser.Language.load(wasmURL);
 		parser.setLanguage(GSQL);
 		return new GSQLParser(parser, parser.parse(''));
 	}
 
 	// https://dev.to/satansdeer/typescript-constructor-shorthand-3ibd
 	private constructor(
-		private parser: Parser,
+		public parser: Parser,
 		public tree: Parser.Tree
 	) { }
 
@@ -42,6 +43,7 @@ export class GSQLParser {
 			node.parent?.parent?.parent?.parent?.parent?.parent?.type,
 			`${JSON.stringify(node.startPosition)}`,
 			`${JSON.stringify(node.endPosition)}`,
+			node.type === 'ERROR'? node.text: '',
 		]
 	}
 
@@ -50,7 +52,7 @@ export class GSQLParser {
 	 * that can be used for syntax highlighting.
 	 * UI should be handled by the caller.
 	 */
-	highlight(document: string): IterableIterator<HighlightToken> {
+	highlight(document: string): Array<HighlightToken> {
 		this.tree = this.parser.parse(document);
 		const hightlights = new Map<number, HighlightToken>();
 
@@ -71,7 +73,6 @@ export class GSQLParser {
 						break;
 				}
 
-				// console.log(node.type)
 				if (keywords.includes(node.type.toUpperCase())) {
 					const m: HighlightToken = {
 						type: 'keyword',
@@ -95,7 +96,7 @@ export class GSQLParser {
 				console.log(e)
 			}
 		}(this.tree.rootNode))
-		return hightlights.values();
+		return Array.from(hightlights.values());
 	}
 }
 
