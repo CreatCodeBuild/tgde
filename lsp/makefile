@@ -1,7 +1,9 @@
+install:
+	npm install
+
 build:
 	rm -rf dist
 	$$(npm bin)/tsc -b
-	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm dist/server/
 	cp package.json dist/package.json
 
 build-prod: build
@@ -13,7 +15,7 @@ watch:
 cp-dev:
 	cd .. && cp ./tree-sitter-gsql/tree-sitter-gsql.wasm ./lsp/src/server/
 
-package: build-prod
+package: install build-prod
 	cd dist && $$(npm bin)/vsce package
 
 bp: build package

@@ -1,6 +1,5 @@
 build:
 	rm -rf dist
-	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm src/tree-sitter-gsql.wasm
 	$$(npm bin)/tsc -b
 	cp src/tree-sitter-gsql.wasm dist/tree-sitter-gsql.wasm
 

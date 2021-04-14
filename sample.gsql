@@ -15,7 +15,7 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
 
 	B = SELECT t
 		FROM :s -(LIKES>:e1)- Comment:msg -(HAS_CREATOR>)- :t
-		WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
+		WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer";
 
 	Univ = SELECT u
 			FROM A:p -(STUDY_AT>) -:u - (<STUDY_AT)- B:s
