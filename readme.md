@@ -1,3 +1,8 @@
+# Use
+Go to [Releases](https://github.com/CreatCodeBuild/tgde/releases/) and download `.vsix` file. Use VS Code to install this file.
+[How to install vsix](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-install-vsix)
+
+# Development
 ## Requirement
 Can be developed on both windows and linux, but recommend linux because of `emcc`
 ```
