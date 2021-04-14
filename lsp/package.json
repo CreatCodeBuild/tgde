@@ -1,17 +1,17 @@
 {
 	"name": "tgde",
-	"description": "TigerGraph GSQL language server",
+	"description": "TigerGraph GSQL Language Server & Development Environment",
 	"author": "CreatCodeBuild",
 	"license": "MIT",
 	"version": "0.0.1",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/CreatCodeBuild/tgde"
 	},
 	"publisher": "CreatCodeBuild",
 	"categories": [],
 	"keywords": [
-		"multi-root ready"
+		"GSQL"
 	],
 	"engines": {
 		"vscode": "^1.43.0"
@@ -30,13 +30,6 @@
 				"extensions": [
 					".gsql"
 				]
-			}
-		],
-		"grammars": [
-			{
-				"language": "gsql",
-				"scopeName": "source.gsql",
-				"path": "./syntaxes/gsql.tmLanguage"
 			}
 		],
 		"configuration": {
@@ -67,8 +60,6 @@
 		"copy": "cp package.json dist/package.json"
 	},
 	"devDependencies": {
-		"@graphql-codegen/cli": "^1.21.3",
-		"@graphql-codegen/typescript": "^1.21.1",
 		"@types/mocha": "^8.0.3",
 		"@types/node": "^12.12.0",
 		"@typescript-eslint/parser": "^2.3.0",
@@ -77,9 +68,7 @@
 		"simple-graphql-to-typescript": "^0.10.13",
 		"ts-loader": "^8.1.0",
 		"typescript": "^4.2.4",
-		"vsce": "^1.87.1",
-		"webpack": "^5.31.0",
-		"webpack-cli": "^4.6.0"
+		"vsce": "^1.87.1"
 	},
 	"dependencies": {
 		"@types/vscode": "^1.55.0",
