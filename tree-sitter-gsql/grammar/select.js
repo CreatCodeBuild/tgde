@@ -189,7 +189,7 @@ module.exports = {
     // atomicVertexType := "_" | ANY | vertexSetType
     atomicVertexType: $ => choice("_", kw("ANY"), $.vertexSetType),
     // vertexSetType := vertexType | paramName | globalAccumName
-    vertexSetType: $ => token.immediate(choice($.vertexType, $.paramName, $.globalAccumName)),
+    vertexSetType: $ => choice($.vertexType, $.paramName, $.globalAccumName),
 
 
     /*

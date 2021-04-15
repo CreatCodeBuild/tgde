@@ -16,11 +16,11 @@
           },
           {
             "type": "SYMBOL",
-            "name": "stringLiteral"
+            "name": "gsqlSelectClause"
           },
           {
-            "type": "STRING",
-            "value": "DEBUG-literal"
+            "type": "SYMBOL",
+            "name": "stringLiteral"
           }
         ]
       }

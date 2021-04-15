@@ -42,8 +42,8 @@ const g = {
             choice(
                 $.createQuery,
                 $.selectStmt,
+                $.gsqlSelectClause,
                 $.stringLiteral,
-                "DEBUG-literal"
             )
         ),
 

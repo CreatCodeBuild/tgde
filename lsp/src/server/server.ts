@@ -19,7 +19,7 @@ import {
 import * as common from '../common/common';
 
 // @ts-ignore
-import { GSQLParser } from 'gsql-parser';
+import { GSQLParser } from '../gsql-parser/src/parser';
 import { NewSemanticHightlightHandler } from './request-handlers';
 
 

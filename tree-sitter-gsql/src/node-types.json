@@ -882,10 +882,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "createQuery",
+          "named": true
+        },
+        {
+          "type": "gsqlSelectClause",
           "named": true
         },
         {
@@ -1400,10 +1404,6 @@
   },
   {
     "type": "DATETIME",
-    "named": false
-  },
-  {
-    "type": "DEBUG-literal",
     "named": false
   },
   {
