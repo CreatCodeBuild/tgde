@@ -1037,6 +1037,21 @@
     }
   },
   {
+    "type": "stringLiteral",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "syntaxName",
     "named": true,
     "fields": {},
@@ -1257,6 +1272,10 @@
   },
   {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -1532,6 +1551,10 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "float",
     "named": false
   },
@@ -1550,10 +1573,6 @@
   {
     "type": "string compress",
     "named": false
-  },
-  {
-    "type": "stringLiteral",
-    "named": true
   },
   {
     "type": "{",

@@ -1,3 +1,6 @@
+install:
+	npm install
+
 build:
 	rm -rf dist
 	$$(npm bin)/tsc -b
@@ -9,9 +12,12 @@ publish: build
 	cp readme.md dist/readme.md
 	npm publish dist --access public
 	
-
 test:
 	node -r ts-node/register src/parser.test.ts
+
+i: install
+
+b: build
 
 t: test
 

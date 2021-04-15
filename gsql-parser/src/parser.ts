@@ -43,7 +43,7 @@ export class GSQLParser {
 			node.parent?.parent?.parent?.parent?.parent?.parent?.type,
 			`${JSON.stringify(node.startPosition)}`,
 			`${JSON.stringify(node.endPosition)}`,
-			node.type === 'ERROR'? node.text: '',
+			node.text,
 		]
 	}
 

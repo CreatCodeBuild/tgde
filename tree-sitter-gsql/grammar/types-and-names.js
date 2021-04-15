@@ -51,11 +51,25 @@ parameterType := baseType
 const { kw, TRUE, FALSE } = require("./index");
 module.exports = {
     // stringLiteral      := '"' [~["] | '\\' ('"' | '\\')]* '"'
-    stringLiteral: $ => token.immediate(seq(
+    stringLiteral: $ => seq(
         '"',
-        repeat(/./),
-        '"'    //todo
-    )),
+        repeat(choice(
+            token.immediate(prec(1, /[^\\"\n]+/)),
+            $.escape_sequence
+        )),
+        '"',
+    ),
+
+    escape_sequence: $ => token(prec(1, seq(
+        '\\',
+        choice(
+            /[^xuU]/,
+            /\d{2,3}/,
+            /x[0-9a-fA-F]{2,}/,
+            /u[0-9a-fA-F]{4}/,
+            /U[0-9a-fA-F]{8}/
+        )
+    ))),
     integer: $ => seq(optional("-"), repeat1(digit())),
     real: $ => choice(
         seq(optional("-"), ".", repeat1(digit())),
@@ -63,9 +77,6 @@ module.exports = {
     ),
     numeric: $ => choice($.integer, $.real),
 
-    /*
-    stringLiteral      := '"' [~["] | '\\' ('"' | '\\')]* '"'
-    */
 
     /*
     name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
@@ -88,7 +99,7 @@ module.exports = {
     funcName: $ => $.name,
 
     // filePath := paramName | stringLiteral
-    filePath: $=> choice($.paramName, $.stringLiteral),
+    filePath: $ => choice($.paramName, $.stringLiteral),
 
     /*
     baseType := INT

@@ -2199,26 +2199,80 @@
       ]
     },
     "stringLiteral": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "\""
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "PATTERN",
-              "value": "."
-            }
-          },
-          {
-            "type": "STRING",
-            "value": "\""
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PREC",
+                  "value": 1,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[^\\\\\"\\n]+"
+                  }
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "escape_sequence"
+              }
+            ]
           }
-        ]
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    },
+    "escape_sequence": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "\\"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[^xuU]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "\\d{2,3}"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "x[0-9a-fA-F]{2,}"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "u[0-9a-fA-F]{4}"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "U[0-9a-fA-F]{8}"
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     "integer": {
