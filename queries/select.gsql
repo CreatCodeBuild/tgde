@@ -1,0 +1,1 @@
+select x FROM :x -(LIKES>:e1)- Post:msg -(HAS_CREATOR>)- :t WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer" ;
