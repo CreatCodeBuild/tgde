@@ -19,22 +19,29 @@ const g = {
     conflicts: $ => [
         [$.vertexSetName, $.stepVertexSet],
         [$.vertexSetName, $.assignStmt],
-        [$.name],
-        [$.expr],
-        [$.condition],
         [$.baseType, $.accumType],
-        [$.pathPattern, $.stepV2],
         [$.name, $.atomicEdgeType],
         [$.stepEdgeSet, $.paramName, $.edgeType],
         [$.paramName, $.edgeType],
         [$.name, $.atomicVertexType],
         [$.paramName, $.vertexType, $.vertexSetName],
         [$.paramName, $.vertexType],
-        [$.atomicEdgePattern, $.stepEdgeTypes],
-        [$.stepEdgeTypes, $.atomicEdgeType],
         [$.expr, $.tableName],
         [$.fileVar, $.paramName],
-        [$.vertexAlias, $.edgeAlias]
+        [$.vertexAlias, $.edgeAlias],
+        [$.source_file, $.gsqlSelectBlock],
+        [$.stepV2, $.pathPattern],
+        [$.stepV2, $.pathEdgePattern],
+        [$.condition],
+        [$.condition, $.expr],
+        [$.source_file, $.constant],
+        [$.integer, $.real],
+        [$.integer],
+        [$.real],
+        [$.pathPattern],
+        [$.expr, $.assignStmt],
+        [$.expr],
+        [$.gsqlSelectBlock]
     ],
 
     rules: {
@@ -44,6 +51,9 @@ const g = {
                 $.selectStmt,
                 $.gsqlSelectClause,
                 $.stringLiteral,
+                $.fromClause,
+                $.whereClause,
+                $.condition
             )
         ),
 
@@ -161,9 +171,9 @@ const g = {
                 | expr [NOT] LIKE expr [ESCAPE escape_char]
         */
         condition: $ => choice(
+            seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             $.expr,
             seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
-            seq($.expr, $.comparisonOperator, $.expr)           // expr comparisonOperator expr
             // todo
         ),
 
@@ -196,7 +206,8 @@ const g = {
             $.globalAccumName,
             seq($.name, ".", $.name),                               // | name "." name
             seq($.name, ".", $.localAccumName, optional("\'")),     // | name "." localAccumName ["\'"]
-            seq($.expr, $.mathOperator, $.expr)                     // | expr mathOperator expr
+            seq($.expr, $.mathOperator, $.expr),                    // | expr mathOperator expr
+            $.constant
             // todo
         ),
         /*
@@ -263,6 +274,7 @@ const g = {
         //                 | disjPattern
         //                 | starPattern
         pathEdgePattern: $ => choice(
+            $.stepEdgeSet,
             $.atomicEdgePattern,
             seq("(", $.pathEdgePattern, ")")
             // todo

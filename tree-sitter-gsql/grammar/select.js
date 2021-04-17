@@ -96,7 +96,8 @@ module.exports = {
         $.gsqlSelectClause,
         $.fromClause,
         optional($.whereClause),
-        optional($.accumClause)
+        optional($.accumClause),
+        repeat($.postAccumClause)
         // todo
     ),
 
@@ -126,7 +127,11 @@ module.exports = {
 
     // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
     fromClause: $ => seq(
-        kw("from"), choice($.step, $.stepV2, seq($.pathPattern, optional(repeat(seq(",", $.pathPattern)))))
+        kw("from"), choice(
+            // $.step, 
+            // $.stepV2, 
+            seq($.pathPattern, optional(repeat(seq(",", $.pathPattern))))
+        )
     ),
 
 
@@ -139,9 +144,9 @@ module.exports = {
     ),
 
     // stepV2 :=  stepVertexSet ["-" "(" stepEdgeSet ")" "-" stepVertexSet]
-    stepV2: $ => seq(
+    stepV2: $ => prec.dynamic(10, seq(
         $.stepVertexSet, optional(seq("-", "(", $.stepEdgeSet, ")", "-", $.stepVertexSet))
-    ),
+    )),
 
 
     // stepSourceSet := vertexSetName [":" vertexAlias]
@@ -150,10 +155,14 @@ module.exports = {
     stepEdgeSet: $ => choice(
         $.stepEdgeTypes,
         seq(":", $.edgeAlias),
-        seq($.stepEdgeTypes, seq(":", $.edgeAlias))
+        seq($.stepEdgeTypes, ":", $.edgeAlias)
     ),
     // stepVertexSet := [stepVertexTypes] [":" vertexAlias]
-    stepVertexSet: $ => choice($.stepVertexTypes, seq(":", $.vertexAlias)),
+    stepVertexSet: $ => choice(
+        $.stepVertexTypes, 
+        seq(":", $.vertexAlias),
+        seq($.stepVertexTypes, ":", $.vertexAlias)
+    ),
     // alias := (vertexAlias | edgeAlias)
     alias: $ => choice($.vertexAlias, $.edgeAlias),
 
@@ -172,10 +181,10 @@ module.exports = {
 
 
     // stepEdgeTypes := atomicEdgeType | "(" edgeSetType ["|" edgeSetType]* ")"      
-    stepEdgeTypes: $ => choice(
-        $.atomicEdgeType,
+    stepEdgeTypes: $ => prec(2, choice(
+        $.atomicEdgePattern,
         seq("(", $.edgeSetType, repeat(seq("|", $.edgeSetType)))
-    ),
+    )),
     // atomicEdgeType := "_" | ANY | edgeSetType
     // edgeSetType := edgeType | paramName | globalAccumName
     atomicEdgeType: $ => choice("_", kw("ANY"), $.edgeSetType),
@@ -199,7 +208,7 @@ module.exports = {
                   | SAMPLE expr TARGET WHEN condition
                   | SAMPLE expr "%" TARGET PINNED WHEN condition
      
-    postAccumClause := "POST-ACCUM" dmlSubStmtList
+    
     
     
     vAccumFuncCall := vertexAlias "." localAccumName ("." funcName "(" [argList] ")")+
@@ -224,6 +233,12 @@ module.exports = {
         $.perClauseV2,
         kw("ACCUM"),
         $.dmlSubStmtList,
+    ),
+
+    // postAccumClause := "POST-ACCUM" dmlSubStmtList
+    postAccumClause: $ => seq(
+        "POST-ACCUM",
+        $.dmlSubStmtList
     ),
 
     // perClauseV2 := PER "(" alias ["," alias] ")"

@@ -81,10 +81,10 @@ module.exports = {
     /*
     name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
     */
-    name: $ => seq(
+    name: $ => prec.right(seq(
         choice(letter(), "_"),
         repeat(choice(letter(), digit(), "_"))
-    ),
+    )),
     graphName: $ => $.name,
     queryName: $ => $.name,
     paramName: $ => $.name,

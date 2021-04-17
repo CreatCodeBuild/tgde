@@ -390,6 +390,10 @@
       "required": true,
       "types": [
         {
+          "type": "constant",
+          "named": true
+        },
+        {
           "type": "expr",
           "named": true
         },
@@ -472,14 +476,6 @@
         {
           "type": "pathPattern",
           "named": true
-        },
-        {
-          "type": "step",
-          "named": true
-        },
-        {
-          "type": "stepV2",
-          "named": true
         }
       ]
     }
@@ -532,6 +528,10 @@
         },
         {
           "type": "gsqlSelectClause",
+          "named": true
+        },
+        {
+          "type": "postAccumClause",
           "named": true
         },
         {
@@ -692,6 +692,10 @@
         {
           "type": "pathEdgePattern",
           "named": true
+        },
+        {
+          "type": "stepEdgeSet",
+          "named": true
         }
       ]
     }
@@ -725,6 +729,21 @@
       "types": [
         {
           "type": "alias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "postAccumClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmtList",
           "named": true
         }
       ]
@@ -885,7 +904,15 @@
       "required": true,
       "types": [
         {
+          "type": "condition",
+          "named": true
+        },
+        {
           "type": "createQuery",
+          "named": true
+        },
+        {
+          "type": "fromClause",
           "named": true
         },
         {
@@ -899,28 +926,9 @@
         {
           "type": "stringLiteral",
           "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "step",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "stepEdgeSet",
-          "named": true
         },
         {
-          "type": "stepSourceSet",
-          "named": true
-        },
-        {
-          "type": "stepVertexSet",
+          "type": "whereClause",
           "named": true
         }
       ]
@@ -954,7 +962,7 @@
       "required": true,
       "types": [
         {
-          "type": "atomicEdgeType",
+          "type": "atomicEdgePattern",
           "named": true
         },
         {
@@ -984,30 +992,11 @@
     }
   },
   {
-    "type": "stepV2",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "stepEdgeSet",
-          "named": true
-        },
-        {
-          "type": "stepVertexSet",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "stepVertexSet",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -1460,6 +1449,10 @@
   },
   {
     "type": "PER",
+    "named": false
+  },
+  {
+    "type": "POST-ACCUM",
     "named": false
   },
   {
