@@ -1,10 +1,14 @@
 {
   "name": "gsql-parser",
   "version": "0.0.31",
-  "description": "",
+  "description": "An es/npm module which is used as a base component for building a language server for TigerGraph GSQL.",
   "main": "parser.js",
   "author": "https://github.com/CreatCodeBuild",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CreatCodeBuild/tgde/tree/master/lsp/src/gsql-parser"
+  },
   "devDependencies": {
     "@types/mocha": "^8.2.2",
     "@types/node": "^14.14.37",
