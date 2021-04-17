@@ -309,6 +309,10 @@
         {
           "type": "assignStmt",
           "named": true
+        },
+        {
+          "type": "gAccumAccumStmt",
+          "named": true
         }
       ]
     }
@@ -475,6 +479,25 @@
       "types": [
         {
           "type": "pathPattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gAccumAccumStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
           "named": true
         }
       ]
@@ -739,11 +762,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "perClauseV2",
           "named": true
         }
       ]
@@ -903,6 +930,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "accumClause",
+          "named": true
+        },
         {
           "type": "condition",
           "named": true
@@ -1297,6 +1328,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": "+=",
     "named": false
   },
   {

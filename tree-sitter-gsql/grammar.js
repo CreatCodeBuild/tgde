@@ -41,7 +41,8 @@ const g = {
         [$.pathPattern],
         [$.expr, $.assignStmt],
         [$.expr],
-        [$.gsqlSelectBlock]
+        [$.gsqlSelectBlock],
+        [$.expr, $.gAccumAccumStmt]
     ],
 
     rules: {
@@ -53,7 +54,8 @@ const g = {
                 $.stringLiteral,
                 $.fromClause,
                 $.whereClause,
-                $.condition
+                $.condition,
+                $.accumClause
             )
         ),
 

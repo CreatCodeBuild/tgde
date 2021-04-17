@@ -33,6 +33,10 @@
           {
             "type": "SYMBOL",
             "name": "condition"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "accumClause"
           }
         ]
       }
@@ -1286,6 +1290,23 @@
         }
       ]
     },
+    "gAccumAccumStmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "globalAccumName"
+        },
+        {
+          "type": "STRING",
+          "value": "+="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expr"
+        }
+      ]
+    },
     "baseDeclStmt": {
       "type": "SEQ",
       "members": [
@@ -2165,7 +2186,16 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
+          "type": "SYMBOL",
+          "name": "perClauseV2"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[pP][oO][sS][tT][--][aA][cC][cC][uU][mM]"
+          },
+          "named": false,
           "value": "POST-ACCUM"
         },
         {
@@ -2247,6 +2277,10 @@
         {
           "type": "SYMBOL",
           "name": "assignStmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "gAccumAccumStmt"
         }
       ]
     },
@@ -2848,6 +2882,10 @@
     ],
     [
       "gsqlSelectBlock"
+    ],
+    [
+      "expr",
+      "gAccumAccumStmt"
     ]
   ],
   "precedences": [],

@@ -52,4 +52,7 @@ module.exports = {
     // elementType := baseType | tupleType | STRING COMPRESS
 
     // gAccumAccumStmt := globalAccumName "+=" expr
+    gAccumAccumStmt: $ => seq(
+        $.globalAccumName, "+=", $.expr
+    )
 }
