@@ -1,8 +1,8 @@
 import { SemanticHightlightHandler } from '../common/common';
 
 import Parser from 'web-tree-sitter';
-// @ts-ignore
-import { GSQLParser } from 'gsql-parser';
+
+import { GSQLParser } from '../gsql-parser/src/parser';
 
 interface Putter {
 	put(tree: Parser.Tree)

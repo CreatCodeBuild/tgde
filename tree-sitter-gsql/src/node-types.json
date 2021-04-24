@@ -269,6 +269,25 @@
     }
   },
   {
+    "type": "debug_",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameterList",
+          "named": true
+        },
+        {
+          "type": "queryName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "declStmt",
     "named": true,
     "fields": {},
@@ -943,11 +962,19 @@
           "named": true
         },
         {
+          "type": "debug_",
+          "named": true
+        },
+        {
           "type": "fromClause",
           "named": true
         },
         {
           "type": "gsqlSelectClause",
+          "named": true
+        },
+        {
+          "type": "parameterList",
           "named": true
         },
         {

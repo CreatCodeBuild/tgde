@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Diagnostic } from "vscode-languageserver";
 
 declare const WebAssembly: any;
 import Parser, { Point } from 'web-tree-sitter';
@@ -17,7 +18,7 @@ export type TokenType = "type" | "name" | "comment" | "keyword";
 export class GSQLParser {
 
 	static async New(wasmURL?: string) {
-		wasmURL = wasmURL? wasmURL : path.join(__dirname, './tree-sitter-gsql.wasm')
+		wasmURL = wasmURL ? wasmURL : path.join(__dirname, './tree-sitter-gsql.wasm')
 		await Parser.init();
 		const parser = new Parser();
 		const GSQL = await Parser.Language.load(wasmURL);
@@ -31,7 +32,7 @@ export class GSQLParser {
 		public tree: Parser.Tree
 	) { }
 
-	hover(position: Point, document?: string): (string|undefined)[] {
+	hover(position: Point, document?: string): (string | undefined)[] {
 		const node = this.tree.rootNode.descendantForPosition(position)
 		return [
 			node.type,
@@ -97,6 +98,58 @@ export class GSQLParser {
 			}
 		}(this.tree.rootNode))
 		return Array.from(hightlights.values());
+	}
+
+	getDiagnostics(): Diagnostic[] {
+		// return [{
+		// 	range: {
+		// 		start: {
+		// 			line: 1,
+		// 			character: 1
+		// 		},
+		// 		end: {
+		// 			line: 1,
+		// 			character: 10
+		// 		}
+		// 	},
+		// 	message: "test"
+		// }]
+		return Array.from(filterTokens(this.tree.rootNode, node => node.type === "ERROR"))
+			.map(node => {
+				let start = {
+					line: node.startPosition.row,
+					character: node.startPosition.column
+				}
+				let end = {
+					line: node.endPosition.row,
+					character: node.endPosition.column
+				}
+				let range = {
+					start: start,
+					end: end
+				}
+				return {
+					range: range,
+					message: `${JSON.stringify(range)} ${node.toString()}`
+				}
+			})
+	}
+}
+
+interface Filterer {
+	(node: Parser.SyntaxNode): boolean
+}
+
+function* filterTokens(node: Parser.SyntaxNode, filterer: Filterer): Iterable<Parser.SyntaxNode> {
+	try {
+		if (filterer(node)) {
+			yield node
+		}
+		for (let child of node.children) {
+			yield* filterTokens(child, filterer)
+		}
+	} catch (e) {
+		console.log(e)
 	}
 }
 

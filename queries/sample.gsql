@@ -1,4 +1,4 @@
-Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
+Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 { 
 	#1. mark messages liked by Viktor
 	#2. calculate log similarity score for each persons share the same
 	#   interests at Tag level.

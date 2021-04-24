@@ -55,7 +55,9 @@ const g = {
                 $.fromClause,
                 $.whereClause,
                 $.condition,
-                $.accumClause
+                $.accumClause,
+                $.parameterList,
+                $.debug_
             )
         ),
 
@@ -77,6 +79,10 @@ const g = {
             optional(seq("SYNTAX", $.syntaxName)),
             "{", $.queryBody, "}"
         ),
+
+        debug_: $=> seq(
+            kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
+            "(", optional($.parameterList), ")"),
 
         /*
         parameterList := parameterType paramName ["=" constant]
