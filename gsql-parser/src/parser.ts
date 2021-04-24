@@ -130,7 +130,7 @@ export class GSQLParser {
 				}
 				return {
 					range: range,
-					message: `${JSON.stringify(range)} ${node.toString()}`
+					message: `${JSON.stringify(range)} unexpected ${node.firstChild?.type}`
 				}
 			})
 	}
