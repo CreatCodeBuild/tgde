@@ -63,7 +63,29 @@
   {
     "type": "accumType",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "elementType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "alias",
@@ -238,13 +260,24 @@
       "required": true,
       "types": [
         {
-          "type": "accumType",
+          "type": "createSignature",
           "named": true
         },
         {
-          "type": "baseType",
+          "type": "queryBody",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "createSignature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
         {
           "type": "graphName",
           "named": true
@@ -254,34 +287,19 @@
           "named": true
         },
         {
-          "type": "queryBody",
+          "type": "queryName",
           "named": true
         },
         {
-          "type": "queryName",
+          "type": "returns",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
           "named": true
         },
         {
           "type": "syntaxName",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "debug_",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "parameterList",
-          "named": true
-        },
-        {
-          "type": "queryName",
           "named": true
         }
       ]
@@ -399,6 +417,25 @@
       "types": [
         {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "elementType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
           "named": true
         }
       ]
@@ -927,6 +964,25 @@
     "fields": {}
   },
   {
+    "type": "returns",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "selectStmt",
     "named": true,
     "fields": {},
@@ -962,10 +1018,6 @@
           "named": true
         },
         {
-          "type": "debug_",
-          "named": true
-        },
-        {
           "type": "fromClause",
           "named": true
         },
@@ -975,6 +1027,10 @@
         },
         {
           "type": "parameterList",
+          "named": true
+        },
+        {
+          "type": "returns",
           "named": true
         },
         {
@@ -1442,6 +1498,10 @@
     "named": false
   },
   {
+    "type": "API",
+    "named": false
+  },
+  {
     "type": "AS",
     "named": false
   },
@@ -1451,6 +1511,10 @@
   },
   {
     "type": "BOOL",
+    "named": false
+  },
+  {
+    "type": "COMPRESS",
     "named": false
   },
   {
@@ -1499,6 +1563,10 @@
   },
   {
     "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "MapAccum",
     "named": false
   },
   {

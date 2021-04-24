@@ -57,7 +57,8 @@ const g = {
                 $.condition,
                 $.accumClause,
                 $.parameterList,
-                $.debug_
+                // $.createSignature,
+                $.returns
             )
         ),
 
@@ -71,18 +72,20 @@ const g = {
                "{" queryBody "}"
         */
         createQuery: $ => seq(
-            kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
-            "(", optional($.parameterList), ")",
-            optional(seq("FOR", "GRAPH", $.graphName)),
-            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
-            optional(seq("RETURNS", "(", choice($.baseType, $.accumType), ")")),
-            optional(seq("SYNTAX", $.syntaxName)),
+            $.createSignature,
             "{", $.queryBody, "}"
         ),
 
-        debug_: $=> seq(
+        createSignature: $=> seq(
             kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
-            "(", optional($.parameterList), ")"),
+            "(", optional($.parameterList), ")",
+            optional(seq("FOR", "GRAPH", $.graphName)),
+            optional($.returns),
+            optional(seq("API", "(", $.stringLiteral, ")")),
+            optional(seq("SYNTAX", $.syntaxName))
+        ),
+
+        returns:$=> seq("RETURNS", "(", choice($.baseType, $.accumType), ")"),
 
         /*
         parameterList := parameterType paramName ["=" constant]

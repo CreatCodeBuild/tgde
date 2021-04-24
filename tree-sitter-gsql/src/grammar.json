@@ -44,12 +44,33 @@
           },
           {
             "type": "SYMBOL",
-            "name": "debug_"
+            "name": "returns"
           }
         ]
       }
     },
     "createQuery": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "createSignature"
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "queryBody"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "createSignature": {
       "type": "SEQ",
       "members": [
         {
@@ -166,34 +187,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "RETURNS"
-                },
-                {
-                  "type": "STRING",
-                  "value": "("
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "baseType"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "accumType"
-                    }
-                  ]
-                },
-                {
-                  "type": "STRING",
-                  "value": ")"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "returns"
             },
             {
               "type": "BLANK"
@@ -208,24 +203,15 @@
               "members": [
                 {
                   "type": "STRING",
-                  "value": "RETURNS"
+                  "value": "API"
                 },
                 {
                   "type": "STRING",
                   "value": "("
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "baseType"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "accumType"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "stringLiteral"
                 },
                 {
                   "type": "STRING",
@@ -258,88 +244,15 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "queryBody"
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },
-    "debug_": {
+    "returns": {
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[cC][rR][eE][aA][tT][eE]"
-          },
-          "named": false,
-          "value": "create"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "PATTERN",
-                    "value": "[oO][rR]"
-                  },
-                  "named": false,
-                  "value": "OR"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "PATTERN",
-                    "value": "[rR][eE][pP][lL][aA][cC][eE]"
-                  },
-                  "named": false,
-                  "value": "REPLACE"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[dD][iI][sS][tT][rR][iI][bB][uU][tT][eE][dD]"
-              },
-              "named": false,
-              "value": "DISTRIBUTED"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "STRING",
-          "value": "QUERY"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "queryName"
+          "value": "RETURNS"
         },
         {
           "type": "STRING",
@@ -350,10 +263,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "parameterList"
+              "name": "baseType"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "accumType"
             }
           ]
         },
@@ -1385,6 +1299,89 @@
           },
           "named": false,
           "value": "OrAccum"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][aA][pP][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "MapAccum"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "elementType"
+            },
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "baseType"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "accumType"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "tupleType"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            }
+          ]
+        }
+      ]
+    },
+    "elementType": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "baseType"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tupleType"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[sS][tT][rR][iI][nN][gG]"
+              },
+              "named": false,
+              "value": "STRING"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[cC][oO][mM][pP][rR][eE][sS][sS]"
+              },
+              "named": false,
+              "value": "COMPRESS"
+            }
+          ]
         }
       ]
     },

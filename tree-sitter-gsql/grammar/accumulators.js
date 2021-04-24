@@ -47,9 +47,11 @@ module.exports = {
     accumType: $ => choice(
         seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
         kw("OrAccum"),
+        seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">")
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS
+    elementType: $=> choice($.baseType, $.tupleType, seq(kw("STRING"), kw("COMPRESS"))),
 
     // gAccumAccumStmt := globalAccumName "+=" expr
     gAccumAccumStmt: $ => seq(
