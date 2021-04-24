@@ -39,8 +39,6 @@ connection.onInitialize(async (params: InitializeParams) => {
 	const parser = await GSQLParser.New();
 	console.log('done');
 
-	connection.onRequest(common.Request.SemanticHightlight, NewSemanticHightlightHandler(parser));
-
 	let capabilities = params.capabilities;
 
 	// Does the client support the `workspace/configuration` request?
@@ -75,6 +73,8 @@ connection.onInitialize(async (params: InitializeParams) => {
 		};
 	}
 
+	// Requests
+	connection.onRequest(common.Request.SemanticHightlight, NewSemanticHightlightHandler(parser));
 	connection.onRequest(common.Request.Hover, async function (args: any) {
 		try {
 			return await parser.hover(args)
@@ -82,10 +82,19 @@ connection.onInitialize(async (params: InitializeParams) => {
 			console.log(e)
 		}
 	})
+
+	// Pushes
+	// The content of a text document has changed. This event is emitted
+	// when the text document first opened or when its content has changed.
+	documents.onDidChangeContent((change) => {
+		console.log('change');
+		connection.sendDiagnostics({ 
+			uri: change.document.uri, 
+			diagnostics: parser.getDiagnostics()
+		})
+	});
 	return result;
 });
-
-
 
 connection.onInitialized(() => {
 	connection.window.showInformationMessage("hello");
@@ -101,13 +110,6 @@ connection.onInitialized(() => {
 	}
 
 	connection.client.register
-});
-
-
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-documents.onDidChangeContent((change: any) => {
-	console.log('change');
 });
 
 // Make the text document manager listen on the connection
