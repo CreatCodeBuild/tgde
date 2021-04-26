@@ -47,7 +47,8 @@ module.exports = {
     accumType: $ => choice(
         seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
         kw("OrAccum"),
-        seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">")
+        seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">"),
+        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">")
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS

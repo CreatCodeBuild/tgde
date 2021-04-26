@@ -42,7 +42,10 @@ const g = {
         [$.expr, $.assignStmt],
         [$.expr],
         [$.gsqlSelectBlock],
-        [$.expr, $.gAccumAccumStmt]
+        [$.expr, $.gAccumAccumStmt],
+        [$.seed, $.name],
+        [$.paramName, $.vertexSetName],
+        [$.simpleSet]
     ],
 
     rules: {
@@ -153,6 +156,7 @@ const g = {
             /* $.assignStmt, */
             $.selectStmt,
             $.printStmt,
+            $.vSetVarDeclStmt,
         ),
 
         /*
