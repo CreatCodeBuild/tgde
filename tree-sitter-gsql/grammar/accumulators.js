@@ -38,8 +38,7 @@ module.exports = {
                 | "SetAccum"  "<" elementType ">"      
                 | "BagAccum"  "<" elementType ">"      
                 | "MapAccum"  "<" elementType "," (baseType | accumType | tupleType) ">"   
-                | "HeapAccum" "<" tupleType ">" "(" simpleSize "," fieleName [ASC | DESC]
-                                                    ["," fieldName [ASC | DESC]]* ")"
+                | "HeapAccum" "<" tupleType ">" "(" simpleSize "," fieldName [ASC | DESC] ["," fieldName [ASC | DESC]]* ")"
                 | "GroupByAccum" "<" elementType fieldName ["," elementType fieldName]* ,
                                         accumType fieldName ["," accumType fieldName]* ">"
                 | "ArrayAccum" "<" accumName ">"
@@ -48,7 +47,12 @@ module.exports = {
         seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
         kw("OrAccum"),
         seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">"),
-        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">")
+        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
+        seq(
+            kw("HeapAccum"), "<", $.tupleType, ">", 
+            "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))), 
+            repeat(seq(",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))))), ")"
+        )
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS

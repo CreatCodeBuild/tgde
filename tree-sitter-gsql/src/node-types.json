@@ -81,6 +81,14 @@
           "named": true
         },
         {
+          "type": "fieldName",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
+          "named": true
+        },
+        {
           "type": "tupleType",
           "named": true
         }
@@ -1117,6 +1125,29 @@
     }
   },
   {
+    "type": "simpleSize",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "varName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -1445,6 +1476,21 @@
     }
   },
   {
+    "type": "varName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "vertexAlias",
     "named": true,
     "fields": {},
@@ -1664,6 +1710,10 @@
     "named": false
   },
   {
+    "type": "ASC",
+    "named": false
+  },
+  {
     "type": "BAG",
     "named": false
   },
@@ -1677,6 +1727,10 @@
   },
   {
     "type": "DATETIME",
+    "named": false
+  },
+  {
+    "type": "DESC",
     "named": false
   },
   {
@@ -1713,6 +1767,10 @@
   },
   {
     "type": "GRAPH",
+    "named": false
+  },
+  {
+    "type": "HeapAccum",
     "named": false
   },
   {

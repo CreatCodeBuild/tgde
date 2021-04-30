@@ -45,7 +45,8 @@ const g = {
         [$.expr, $.gAccumAccumStmt],
         [$.seed, $.name],
         [$.paramName, $.vertexSetName],
-        [$.simpleSet]
+        [$.simpleSet],
+        [$.paramName, $.varName]
     ],
 
     rules: {
@@ -339,6 +340,7 @@ const g = {
 }
 
 Object.assign(g.rules, require("./grammar/accumulators"));
+Object.assign(g.rules, require("./grammar/control-flow-statements.js"));
 Object.assign(g.rules, require("./grammar/declarations"));
 Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));
