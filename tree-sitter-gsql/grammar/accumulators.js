@@ -52,7 +52,13 @@ module.exports = {
             kw("HeapAccum"), "<", $.tupleType, ">", 
             "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))), 
             repeat(seq(",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))))), ")"
-        )
+        ),
+        seq(
+            kw("ListAccum"), "<", $.type, ">"
+        ),
+        seq(
+            kw("SetAccum"), "<", $.elementType, ">"
+        ),
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS

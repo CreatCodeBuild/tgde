@@ -1528,6 +1528,58 @@
               "value": ")"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[lL][iI][sS][tT][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "ListAccum"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "type"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[sS][eE][tT][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "SetAccum"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "elementType"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            }
+          ]
         }
       ]
     },
@@ -3244,6 +3296,46 @@
         {
           "type": "SYMBOL",
           "name": "stringLiteral"
+        }
+      ]
+    },
+    "type": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "baseType"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tupleType"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "accumType"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[sS][tT][rR][iI][nN][gG]"
+              },
+              "named": false,
+              "value": "STRING"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[cC][oO][mM][pP][rR][eE][sS][sS]"
+              },
+              "named": false,
+              "value": "COMPRESS"
+            }
+          ]
         }
       ]
     },

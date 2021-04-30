@@ -101,6 +101,9 @@ module.exports = {
     // filePath := paramName | stringLiteral
     filePath: $ => choice($.paramName, $.stringLiteral),
 
+    // type := baseType | tupleType | accumType | STRING COMPRESS
+    type: $=> choice($.baseType, $.tupleType, $.accumType, seq(kw("STRING"), kw("COMPRESS"))),
+
     /*
     baseType := INT
       | UINT
