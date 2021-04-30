@@ -20,7 +20,7 @@ module.exports = {
     // fileDeclStmt := FILE fileVar "(" filePath ")"
     // fileVar := name
     fileDeclStmt: $ => seq(
-        kw("FILE")
+        kw("FILE"), $.fileVar, "(", $.filePath, ")"
     ),
     fileVar: $ => $.name,
 

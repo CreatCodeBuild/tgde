@@ -119,6 +119,21 @@
     }
   },
   {
+    "type": "argList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "assignStmt",
     "named": true,
     "fields": {},
@@ -202,6 +217,29 @@
     }
   },
   {
+    "type": "baseDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "baseType",
     "named": true,
     "fields": {},
@@ -258,6 +296,10 @@
         },
         {
           "type": "expr",
+          "named": true
+        },
+        {
+          "type": "setBagExpr",
           "named": true
         }
       ]
@@ -346,6 +388,14 @@
       "types": [
         {
           "type": "accumDeclStmt",
+          "named": true
+        },
+        {
+          "type": "baseDeclStmt",
+          "named": true
+        },
+        {
+          "type": "fileDeclStmt",
           "named": true
         }
       ]
@@ -503,6 +553,10 @@
         {
           "type": "name",
           "named": true
+        },
+        {
+          "type": "setBagExpr",
+          "named": true
         }
       ]
     }
@@ -517,6 +571,25 @@
       "types": [
         {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fileDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "filePath",
+          "named": true
+        },
+        {
+          "type": "fileVar",
           "named": true
         }
       ]
@@ -941,6 +1014,25 @@
     }
   },
   {
+    "type": "queryBodyIfStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "queryBodyStmt",
     "named": true,
     "fields": {},
@@ -950,6 +1042,14 @@
       "types": [
         {
           "type": "printStmt",
+          "named": true
+        },
+        {
+          "type": "queryBodyIfStmt",
+          "named": true
+        },
+        {
+          "type": "returnStmt",
           "named": true
         },
         {
@@ -997,6 +1097,21 @@
     "type": "real",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "returnStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "returns",
@@ -1110,6 +1225,33 @@
     }
   },
   {
+    "type": "setBagExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "simpleSet",
     "named": true,
     "fields": {},
@@ -1160,43 +1302,7 @@
       "required": true,
       "types": [
         {
-          "type": "accumClause",
-          "named": true
-        },
-        {
-          "type": "condition",
-          "named": true
-        },
-        {
           "type": "createQuery",
-          "named": true
-        },
-        {
-          "type": "fromClause",
-          "named": true
-        },
-        {
-          "type": "gsqlSelectClause",
-          "named": true
-        },
-        {
-          "type": "parameterList",
-          "named": true
-        },
-        {
-          "type": "returns",
-          "named": true
-        },
-        {
-          "type": "selectStmt",
-          "named": true
-        },
-        {
-          "type": "stringLiteral",
-          "named": true
-        },
-        {
-          "type": "whereClause",
           "named": true
         }
       ]
@@ -1773,6 +1879,14 @@
     "named": false
   },
   {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
     "type": "FALSE",
     "named": false
   },
@@ -1801,11 +1915,23 @@
     "named": false
   },
   {
+    "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
     "type": "INT",
     "named": false
   },
   {
     "type": "INTERSECT",
+    "named": false
+  },
+  {
+    "type": "IS",
     "named": false
   },
   {
@@ -1830,6 +1956,14 @@
   },
   {
     "type": "MaxAccum",
+    "named": false
+  },
+  {
+    "type": "NOT",
+    "named": false
+  },
+  {
+    "type": "NULL",
     "named": false
   },
   {
@@ -1894,6 +2028,10 @@
   },
   {
     "type": "SumAccum",
+    "named": false
+  },
+  {
+    "type": "THEN",
     "named": false
   },
   {
@@ -1962,6 +2100,10 @@
   },
   {
     "type": "int",
+    "named": false
+  },
+  {
+    "type": "return",
     "named": false
   },
   {

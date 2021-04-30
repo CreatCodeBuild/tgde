@@ -46,23 +46,28 @@ const g = {
         [$.seed, $.name],
         [$.paramName, $.vertexSetName],
         [$.simpleSet],
-        [$.paramName, $.varName]
+        [$.paramName, $.varName],
+        [$.declStmts],
+        [$.queryBodyIfStmt],
+        [$.expr, $.setBagExpr],
+        [$.expr, $.setBagExpr, $.tableName]
     ],
 
     rules: {
         source_file: $ => repeat1(
             choice(
                 $.createQuery,
-                $.selectStmt,
-                $.gsqlSelectClause,
-                $.stringLiteral,
-                $.fromClause,
-                $.whereClause,
-                $.condition,
-                $.accumClause,
-                $.parameterList,
+                // $.selectStmt,
+                // $.gsqlSelectClause,
+                // $.stringLiteral,
+                // $.fromClause,
+                // $.whereClause,
+                // $.condition,
+                // $.accumClause,
+                // $.parameterList,
                 // $.createSignature,
-                $.returns
+                // $.returns
+                // $.declStmts,
             )
         ),
 
@@ -122,7 +127,11 @@ const g = {
         declStmts: $ => repeat1(seq($.declStmt, ";")),
 
         // declStmt := baseDeclStmt | accumDeclStmt | fileDeclStmt
-        declStmt: $ => choice(/* $.baseDeclStmt,*/ $.accumDeclStmt, /*$.fileDeclStmt*/),
+        declStmt: $ => choice(
+            $.baseDeclStmt, 
+            $.accumDeclStmt, 
+            $.fileDeclStmt
+        ),
 
         declExceptiStmts: $ => "  ",
 
@@ -158,6 +167,8 @@ const g = {
             $.selectStmt,
             $.printStmt,
             $.vSetVarDeclStmt,
+            $.queryBodyIfStmt,
+            $.returnStmt
         ),
 
         /*
@@ -187,8 +198,10 @@ const g = {
                 | expr [NOT] LIKE expr [ESCAPE escape_char]
         */
         condition: $ => choice(
-            seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             $.expr,
+            seq($.expr, optional(kw("NOT")), kw("IN"), $.setBagExpr),
+            seq($.expr, kw("IS"), optional(kw("NOT")), kw("NULL")),
+            seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
             // todo
         ),
@@ -196,81 +209,9 @@ const g = {
         //comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
         comparisonOperator: $ => choice("<", "<=", ">", ">=", "==", "!="),
 
-        // aggregator := COUNT | MAX | MIN | AVG | SUM
 
-        /*
-        expr := name  
-            | globalAccumName
-            | name "." name "." name "(" [argList] ")"
-            | name "." name "(" [argList] ")" [ "." FILTER "(" condition ")" ]
-            | name ["<" type ["," type]* ">"] "(" [argList] ")"
-            | name "." localAccumName ("." name "(" [argList] ")")+ ["." name]
-            | globalAccumName ("." name "(" [argList] ")")+ ["." name]
-            | COALESCE "(" [argList] ")"
-            | aggregator "(" [DISTINCT] setBagExpr ")"
-            | ISEMPTY "(" setBagExpr ")"
-            | "-" expr
-            | "(" expr ")"
-            | "(" argList "->" argList ")"	// key value pair for MapAccum
-            | "[" argList "]"               // a list
-            | constant
-            | setBagExpr
-            | name "(" argList ")"          // function call or a tuple object 
-        */
-        expr: $ => choice(
-            $.name,
-            $.globalAccumName,
-            seq($.name, ".", $.name),                               // | name "." name
-            seq($.name, ".", $.localAccumName, optional("\'")),     // | name "." localAccumName ["\'"]
-            seq($.expr, $.mathOperator, $.expr),                    // | expr mathOperator expr
-            $.constant
-            // todo
-        ),
-        /*
-                
-        setBagExpr := name
-                | globalAccumName 
-                | name "." name
-                    | name "." localAccumName
-                    | name "." localAccumName ("." name "(" [argList] ")")+
-                    | name "." name "(" [argList] ")" [ "." FILTER "(" condition ")" ]
-                    | globalAccumName ("." name "(" [argList] ")")+
-                    | setBagExpr (UNION | INTERSECT | MINUS) setBagExpr
-                    | "(" argList ")"
-                    | "(" setBagExpr ")"
+
         
-        */
-
-
-        /*
-        ## Assignment Statements ##
-        assignStmt := name "=" expr
-                    | name "." attrName "=" expr
-        */
-        assignStmt: $ => choice(
-            seq($.name, "=", $.expr),
-            seq($.name, ".", $.attrName, "=", $.expr)
-        ),
-        /*
-                    
-        attrAccumStmt := name "." attrName "+=" expr
-                    
-        lAccumAssignStmt := vertexAlias "." localAccumName ("+="| "=") expr
-
-        gAccumAssignStmt :=  globalAccumName ("+=" | "=") expr
-
-        loadAccumStmt := globalAccumName "=" "{" LOADACCUM loadAccumParams
-                                        ["," LOADACCUM loadAccumParams]* "}"
-
-        loadAccumParams := "(" filePath "," columnId ["," [columnId]* ","
-                        stringLiteral "," (TRUE | FALSE) ")" ["." FILTER "(" condition ")"]
-
-        ## Function Call Statement ##
-        funcCallStmt := name ["<" type ["," type"]* ">"] "(" [argList] ")"
-                    | globalAccumName ("." funcName "(" [argList] ")")+
-                
-        argList := expr ["," expr]*
-        */
         
         
 
@@ -340,8 +281,10 @@ const g = {
 }
 
 Object.assign(g.rules, require("./grammar/accumulators"));
+Object.assign(g.rules, require("./grammar/assignment-statements.js"));
 Object.assign(g.rules, require("./grammar/control-flow-statements.js"));
 Object.assign(g.rules, require("./grammar/declarations"));
+Object.assign(g.rules, require("./grammar/operators-functions-expressions.js"));
 Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));
 Object.assign(g.rules, require("./grammar/types-and-names"));

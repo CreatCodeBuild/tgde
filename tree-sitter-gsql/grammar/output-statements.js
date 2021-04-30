@@ -41,5 +41,8 @@ module.exports = {
     vSetProj: $ => seq(
         $.expr, optional(seq(kw('AS'), $.jsonKey))
     ),
-    jsonKey: $ => $.name
+    jsonKey: $ => $.name,
+
+    // returnStmt := RETURN expr
+    returnStmt: $=>seq(kw("return"), $.expr)
 }
