@@ -5,6 +5,15 @@ https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal
 
 const { kw, TRUE, FALSE } = require("./grammar/index");
 
+const _kw = {
+    CREATE: kw('CREATE'),
+    VERTEX: kw('VERTEX'),
+    DEFAULT: kw('DEFAULT'),
+    WITH: kw('WITH'),
+    STATS: kw('STATS'),
+    PRIMARY_ID: kw('PRIMARY_ID')
+}
+
 const g = {
     name: 'gsql',
 
@@ -56,6 +65,7 @@ const g = {
     rules: {
         source_file: $ => repeat1(
             choice(
+                $.CREATE_VERTEX,
                 $.createQuery,
                 // $.selectStmt,
                 // $.gsqlSelectClause,
@@ -277,6 +287,39 @@ const g = {
                 '/'
             )
         )),
+
+        /*
+        CREATE VERTEX vertex_type_name "(" primary_id_name_type
+            ["," attribute_name type [DEFAULT default_value] ]* ")"
+            [WITH [STATS="none"|"outdegree_by_edgetype"][primary_id_as_attribute="true"]]
+        */
+        CREATE_VERTEX: $=>seq(
+            _kw.CREATE, _kw.VERTEX, "(", $.primary_id_name_type, 
+                repeat(seq(
+                    ",", $.name, $.type, optional(seq(_kw.DEFAULT, $.expr))
+                )),
+            ")",
+            optional(seq(
+                _kw.WITH,
+                optional(
+                    seq(_kw.STATS, "=", choice('"none"', '"outdegree_by_edgetype"'))
+                ),
+                optional(
+                    seq(
+                        "primary_id_as_attribute",
+                        "=",
+                        '"true"'
+                    )
+                )
+            ))
+        ),
+
+        // primary_id_name_type := PRIMARY_ID id_name id_type
+        primary_id_name_type: $=>seq(
+            _kw.PRIMARY_ID,
+            $.name,
+            $.type
+        )
     },
 }
 

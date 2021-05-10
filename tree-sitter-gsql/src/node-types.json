@@ -1,5 +1,32 @@
 [
   {
+    "type": "CREATE_VERTEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "primary_id_name_type",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "accumClause",
     "named": true,
     "fields": {},
@@ -937,6 +964,25 @@
     }
   },
   {
+    "type": "primary_id_name_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "printExpr",
     "named": true,
     "fields": {},
@@ -1301,6 +1347,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "CREATE_VERTEX",
+          "named": true
+        },
         {
           "type": "createQuery",
           "named": true
@@ -1715,6 +1765,18 @@
     "named": false
   },
   {
+    "type": "\"none\"",
+    "named": false
+  },
+  {
+    "type": "\"outdegree_by_edgetype\"",
+    "named": false
+  },
+  {
+    "type": "\"true\"",
+    "named": false
+  },
+  {
     "type": "$",
     "named": false
   },
@@ -1859,7 +1921,15 @@
     "named": false
   },
   {
+    "type": "CREATE",
+    "named": false
+  },
+  {
     "type": "DATETIME",
+    "named": false
+  },
+  {
+    "type": "DEFAULT",
     "named": false
   },
   {
@@ -1983,6 +2053,10 @@
     "named": false
   },
   {
+    "type": "PRIMARY_ID",
+    "named": false
+  },
+  {
     "type": "PRINT",
     "named": false
   },
@@ -2008,6 +2082,10 @@
   },
   {
     "type": "STATIC",
+    "named": false
+  },
+  {
+    "type": "STATS",
     "named": false
   },
   {
@@ -2063,6 +2141,10 @@
     "named": false
   },
   {
+    "type": "WITH",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -2100,6 +2182,10 @@
   },
   {
     "type": "int",
+    "named": false
+  },
+  {
+    "type": "primary_id_as_attribute",
     "named": false
   },
   {
