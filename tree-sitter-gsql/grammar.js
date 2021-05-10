@@ -294,7 +294,7 @@ const g = {
             [WITH [STATS="none"|"outdegree_by_edgetype"][primary_id_as_attribute="true"]]
         */
         CREATE_VERTEX: $=>seq(
-            _kw.CREATE, _kw.VERTEX, "(", $.primary_id_name_type, 
+            _kw.CREATE, _kw.VERTEX, $.vertexType, "(", $.primary_id_name_type, 
                 repeat(seq(
                     ",", $.name, $.type, optional(seq(_kw.DEFAULT, $.expr))
                 )),

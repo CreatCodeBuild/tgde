@@ -992,6 +992,10 @@
           "value": "VERTEX"
         },
         {
+          "type": "SYMBOL",
+          "name": "vertexType"
+        },
+        {
           "type": "STRING",
           "value": "("
         },
@@ -3842,6 +3846,15 @@
           },
           "named": false,
           "value": "INT"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[uU][iI][nN][tT]"
+          },
+          "named": false,
+          "value": "UINT"
         },
         {
           "type": "ALIAS",

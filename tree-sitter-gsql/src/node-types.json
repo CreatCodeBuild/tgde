@@ -22,6 +22,10 @@
         {
           "type": "type",
           "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
         }
       ]
     }
@@ -2126,6 +2130,10 @@
   },
   {
     "type": "TYPEDEF",
+    "named": false
+  },
+  {
+    "type": "UINT",
     "named": false
   },
   {

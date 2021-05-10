@@ -119,6 +119,7 @@ module.exports = {
     */
     baseType: $ => choice(
         kw("INT"),
+        kw("UINT"),
         kw("FLOAT"),
         kw("DOUBLE"),
         kw("STRING"),
