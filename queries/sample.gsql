@@ -25,6 +25,5 @@ Create QUERY RecommendMessage (String fn, String ln) SYNTAX v2 {
 			POST-ACCUM @@cnt+=1;
 
 	PRINT @@cnt;
-	PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank];
-	xxx
+	PRINT RecommendedMessage[RecommendedMessage.content, RecommendedMessage.@Rank]
 }

@@ -1,6 +1,7 @@
 {
-	"name": "tgde",
-	"description": "TigerGraph GSQL Language Server & Development Environment",
+	"name": "TigerDE",
+	"description": "Unofficial TigerGraph GSQL Language Server by a TigerGraph Engineer (Work In Progress)",
+	"icon": "docs/tigergraph-logo.png",
 	"author": "CreatCodeBuild",
 	"license": "MIT",
 	"version": "0.0.2",
@@ -68,7 +69,7 @@
 		"simple-graphql-to-typescript": "^0.10.13",
 		"ts-loader": "^8.1.0",
 		"typescript": "^4.2.4",
-		"vsce": "^1.87.1"
+		"vsce": "^1.88.0"
 	},
 	"dependencies": {
 		"@types/vscode": "^1.55.0",
