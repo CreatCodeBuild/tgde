@@ -8,8 +8,12 @@ Main development platform.
 Is used to compile C to wasm.
 ```
 git clone https://github.com/emscripten-core/emsdk.git ~/emsdk
+cd emsdk
+git checkout 2.0.17
 ```
 Then follow https://github.com/emscripten-core/emsdk
+
+__Make sure to use emcc@2.0.17__ Other versions will generate incorrect tree-sitter WASM.
 
 `emcc` uses Python3.6 syntax (f string), make sure `python` in your shell points to a Python3.6+ installation.
 
