@@ -43,6 +43,9 @@ module.exports = {
     ),
     jsonKey: $ => $.name,
 
+    // LOG "(" condition "," argList ")"
+    logStmt: $ => seq(kw("LOG"), "(", $.condition, ",", $.argList, ")"),
+
     // returnStmt := RETURN expr
     returnStmt: $=>seq(kw("return"), $.expr)
 }

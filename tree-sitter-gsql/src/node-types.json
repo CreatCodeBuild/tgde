@@ -810,6 +810,25 @@
     }
   },
   {
+    "type": "logStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "mathOperator",
     "named": true,
     "fields": {}
@@ -1090,6 +1109,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "logStmt",
+          "named": true
+        },
         {
           "type": "printStmt",
           "named": true
@@ -1913,6 +1936,10 @@
     "named": false
   },
   {
+    "type": "AvgAccum",
+    "named": false
+  },
+  {
     "type": "BAG",
     "named": false
   },
@@ -2017,6 +2044,10 @@
     "named": false
   },
   {
+    "type": "LOG",
+    "named": false
+  },
+  {
     "type": "ListAccum",
     "named": false
   },
@@ -2030,6 +2061,10 @@
   },
   {
     "type": "MaxAccum",
+    "named": false
+  },
+  {
+    "type": "MinAccum",
     "named": false
   },
   {

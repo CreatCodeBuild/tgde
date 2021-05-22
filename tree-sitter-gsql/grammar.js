@@ -178,7 +178,8 @@ const g = {
             $.printStmt,
             $.vSetVarDeclStmt,
             $.queryBodyIfStmt,
-            $.returnStmt
+            $.returnStmt,
+            $.logStmt,
         ),
 
         /*
