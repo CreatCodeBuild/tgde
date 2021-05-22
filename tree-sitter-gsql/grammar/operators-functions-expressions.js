@@ -84,7 +84,9 @@ module.exports = {
         seq($.name, ".", $.localAccumName, optional("\'")),     // | name "." localAccumName ["\'"]
         seq($.expr, $.mathOperator, $.expr),                    // | expr mathOperator expr
         $.constant,
-        $.setBagExpr
+        $.setBagExpr,
+        seq($.name, ".", $.name, "(", optional($.argList), ")", optional(seq(".", kw("FILTER"), "(", $.condition, ")"))),
+        seq("(", $.expr, ")")
         // todo
     ),
     /*

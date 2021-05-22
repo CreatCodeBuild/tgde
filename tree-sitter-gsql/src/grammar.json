@@ -557,6 +557,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "assignStmt"
+        },
+        {
+          "type": "SYMBOL",
           "name": "selectStmt"
         },
         {
@@ -578,6 +582,14 @@
         {
           "type": "SYMBOL",
           "name": "logStmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "funcCallStmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "queryBodyWhileStmt"
         }
       ]
     },
@@ -783,6 +795,23 @@
             {
               "type": "SYMBOL",
               "name": "condition"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "condition"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
             }
           ]
         }
@@ -1433,13 +1462,44 @@
           ]
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[oO][rR][aA][cC][cC][uU][mM]"
-          },
-          "named": false,
-          "value": "OrAccum"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[oO][rR][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "OrAccum"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[oO][rR][aA][cC][cC][uU][mM]"
+                  },
+                  "named": false,
+                  "value": "OrAccum"
+                },
+                {
+                  "type": "STRING",
+                  "value": "<"
+                },
+                {
+                  "type": "STRING",
+                  "value": "bool"
+                },
+                {
+                  "type": "STRING",
+                  "value": ">"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "ALIAS",
@@ -1596,6 +1656,10 @@
                   },
                   "named": false,
                   "value": "double"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "elementType"
                 }
               ]
             },
@@ -1883,28 +1947,37 @@
         }
       ]
     },
-    "argList": {
+    "lAccumAssignStmt": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "expr"
+          "name": "vertexAlias"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ","
-              },
-              {
-                "type": "SYMBOL",
-                "name": "expr"
-              }
-            ]
-          }
+          "type": "STRING",
+          "value": "."
+        },
+        {
+          "type": "SYMBOL",
+          "name": "localAccumName"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "+="
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expr"
         }
       ]
     },
@@ -2005,6 +2078,72 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][dD]"
+          },
+          "named": false,
+          "value": "END"
+        }
+      ]
+    },
+    "queryBodyWhileStmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[wW][hH][iI][lL][eE]"
+          },
+          "named": false,
+          "value": "WHILE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "condition"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[lL][iI][mM][iI][tT]"
+                  },
+                  "named": false,
+                  "value": "LIMIT"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "simpleSize"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "DO"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "queryBodyStmts"
         },
         {
           "type": "ALIAS",
@@ -2505,6 +2644,106 @@
         }
       ]
     },
+    "funcCallStmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "<"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "type"
+                    },
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": ","
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "type"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ">"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "argList"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
+        }
+      ]
+    },
+    "argList": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expr"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expr"
+              }
+            ]
+          }
+        }
+      ]
+    },
     "expr": {
       "type": "CHOICE",
       "members": [
@@ -2586,6 +2825,98 @@
         {
           "type": "SYMBOL",
           "name": "setBagExpr"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "argList"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "."
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[fF][iI][lL][tT][eE][rR]"
+                      },
+                      "named": false,
+                      "value": "FILTER"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "("
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "condition"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ")"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expr"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
         }
       ]
     },
@@ -3495,10 +3826,6 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "perClauseV2"
-        },
-        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -4274,6 +4601,19 @@
       "expr",
       "setBagExpr",
       "tableName"
+    ],
+    [
+      "funcCallStmt",
+      "vertexSetName"
+    ],
+    [
+      "argList",
+      "expr",
+      "condition"
+    ],
+    [
+      "argList",
+      "expr"
     ]
   ],
   "precedences": [],

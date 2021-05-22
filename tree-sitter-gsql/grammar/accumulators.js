@@ -45,11 +45,11 @@ module.exports = {
     */
     accumType: $ => choice(
         seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
-        kw("OrAccum"),
+        choice(kw("OrAccum"), seq(kw("OrAccum"), "<", "bool", ">")),
         kw("AvgAccum"),
         seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">"),
-        seq(kw("MinAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
-        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
+        seq(kw("MinAccum"), "<", choice(kw("int"), kw("float"), kw("double")),">"),
+        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double"), $.elementType), ">"),
         seq(
             kw("HeapAccum"), "<", $.tupleType, ">", 
             "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))), 

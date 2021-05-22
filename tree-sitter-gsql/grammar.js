@@ -59,7 +59,10 @@ const g = {
         [$.declStmts],
         [$.queryBodyIfStmt],
         [$.expr, $.setBagExpr],
-        [$.expr, $.setBagExpr, $.tableName]
+        [$.expr, $.setBagExpr, $.tableName],
+        [$.funcCallStmt, $.vertexSetName],
+        [$.argList, $.expr, $.condition],
+        [$.argList, $.expr]
     ],
 
     rules: {
@@ -173,13 +176,15 @@ const g = {
         */
         // todo
         queryBodyStmt: $ => choice(
-            /* $.assignStmt, */
+            $.assignStmt,
             $.selectStmt,
             $.printStmt,
             $.vSetVarDeclStmt,
             $.queryBodyIfStmt,
             $.returnStmt,
             $.logStmt,
+            $.funcCallStmt,
+            $.queryBodyWhileStmt
         ),
 
         /*
@@ -214,7 +219,8 @@ const g = {
             seq($.expr, kw("IS"), optional(kw("NOT")), kw("NULL")),
             seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
-            // todo
+            seq("(", $.condition, ")")
+            // todo,
         ),
 
         //comparisonOperator := "<" | "<=" | ">" | ">=" | "==" | "!="
@@ -328,6 +334,7 @@ Object.assign(g.rules, require("./grammar/accumulators"));
 Object.assign(g.rules, require("./grammar/assignment-statements.js"));
 Object.assign(g.rules, require("./grammar/control-flow-statements.js"));
 Object.assign(g.rules, require("./grammar/declarations"));
+Object.assign(g.rules, require("./grammar/function-call-statements.js"));
 Object.assign(g.rules, require("./grammar/operators-functions-expressions.js"));
 Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));

@@ -44,5 +44,7 @@ module.exports = {
         repeat(seq(ELSE, IF, $.condition, THEN, $.queryBodyStmts)),
         optional(seq(ELSE, $.queryBodyStmts)), END
     ),
+    // queryBodyWhileStmt := WHILE condition [LIMIT simpleSize] DO queryBodyStmts END
+    queryBodyWhileStmt: $ => seq(kw("WHILE"), $.condition, optional(seq(kw("LIMIT"), $.simpleSize)), kw("DO"), $.queryBodyStmts, kw("END")),
     simpleSize: $ => choice($.integer, $.varName, $.paramName)
 }

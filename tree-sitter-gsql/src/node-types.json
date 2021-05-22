@@ -562,6 +562,14 @@
       "required": true,
       "types": [
         {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
           "type": "constant",
           "named": true
         },
@@ -670,6 +678,29 @@
       "types": [
         {
           "type": "pathPattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "funcCallStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "type",
           "named": true
         }
       ]
@@ -972,15 +1003,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "dmlSubStmtList",
-          "named": true
-        },
-        {
-          "type": "perClauseV2",
           "named": true
         }
       ]
@@ -1110,6 +1137,14 @@
       "required": true,
       "types": [
         {
+          "type": "assignStmt",
+          "named": true
+        },
+        {
+          "type": "funcCallStmt",
+          "named": true
+        },
+        {
           "type": "logStmt",
           "named": true
         },
@@ -1119,6 +1154,10 @@
         },
         {
           "type": "queryBodyIfStmt",
+          "named": true
+        },
+        {
+          "type": "queryBodyWhileStmt",
           "named": true
         },
         {
@@ -1146,6 +1185,29 @@
       "types": [
         {
           "type": "queryBodyStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyWhileStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
           "named": true
         }
       ]
@@ -1972,6 +2034,10 @@
     "named": false
   },
   {
+    "type": "DO",
+    "named": false
+  },
+  {
     "type": "DOUBLE",
     "named": false
   },
@@ -2041,6 +2107,10 @@
   },
   {
     "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "LIMIT",
     "named": false
   },
   {
@@ -2184,6 +2254,10 @@
     "named": false
   },
   {
+    "type": "WHILE",
+    "named": false
+  },
+  {
     "type": "WITH",
     "named": false
   },
@@ -2197,6 +2271,10 @@
   },
   {
     "type": "_",
+    "named": false
+  },
+  {
+    "type": "bool",
     "named": false
   },
   {

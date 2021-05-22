@@ -14,12 +14,6 @@ loadAccumStmt := globalAccumName "=" "{" LOADACCUM loadAccumParams
 
 loadAccumParams := "(" filePath "," columnId ["," [columnId]* ","
                 stringLiteral "," (TRUE | FALSE) ")" ["." FILTER "(" condition ")"]
-
-## Function Call Statement ##
-funcCallStmt := name ["<" type ["," type"]* ">"] "(" [argList] ")"
-              | globalAccumName ("." funcName "(" [argList] ")")+
-           
-argList := expr ["," expr]*
 */
 module.exports = {
     /*
@@ -32,9 +26,6 @@ module.exports = {
         seq($.name, ".", $.attrName, "=", $.expr)
     ),
 
-
-    // argList := expr ["," expr]*
-    argList: $ => seq(
-        $.expr, repeat(seq(",", $.expr))
-    )
+    // lAccumAssignStmt := vertexAlias "." localAccumName ("+="| "=") expr
+    lAccumAssignStmt: $ => seq($.vertexAlias, ".", $.localAccumName, choice("+=", "="), $.expr),
 }
