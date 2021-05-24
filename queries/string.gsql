@@ -1,8 +1,15 @@
-DROP ALL
-CREATE VERTEX person(PRIMARY_ID personId UINT, id STRING, gender STRING) WITH STATS="OUTDEGREE_BY_EDGETYPE"
-CREATE UNDIRECTED EDGE friend(FROM person, TO person)
-CREATE VERTEX post(PRIMARY_ID postId UINT, subject STRING, postTime DATETIME)
-CREATE DIRECTED EDGE posted(FROM person, TO post)
-CREATE DIRECTED EDGE liked(FROM person, TO post, actionTime DATETIME)
-CREATE GRAPH social(*)
-CREATE GRAPH G1()
+CREATE VERTEX User (PRIMARY_ID user_id UINT, name STRING, age UINT, gender STRING, postalCode STRING)
+CREATE VERTEX Occupation (PRIMARY_ID occ_id UINT, occ_name STRING)
+    WITH STATS="outdegree_by_edgetype"
+CREATE VERTEX Book  (PRIMARY_ID bookcode UINT, title STRING, pub_year UINT)
+    WITH STATS="none"
+CREATE VERTEX Genre (PRIMARY_ID genre_id STRING, genre_name STRING)
+CREATE UNDIRECTED EDGE user_occupation (FROM User, TO Occupation)
+CREATE UNDIRECTED EDGE book_genre (FROM Book, TO Genre)
+CREATE UNDIRECTED EDGE user_book_rating (FROM User, TO Book, rating UINT, date_time UINT)
+CREATE UNDIRECTED EDGE friend_of (FROM User, TO User, on_date UINT)
+CREATE UNDIRECTED EDGE user_book_read (FROM User, To Book, on_date UINT)
+CREATE DIRECTED EDGE sequel_of (FROM Book, TO Book) WITH REVERSE_EDGE="preceded_by"
+CREATE GRAPH Book_rating (*)
+ALTER VERTEX object_type_name ADD INDEX index_type_name ON (attribute_name);
+ALTER VERTEX xxx DROP INDEX index_type_name;

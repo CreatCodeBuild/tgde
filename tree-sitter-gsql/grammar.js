@@ -61,6 +61,9 @@ const g = {
                 $.CREATE_DIRECTED_EDGE,
                 $.CREATE_GRAPH,
                 $.DROP,
+                $.ADD_INDEX,
+                $.DROP_INDEX,
+                $.create_loading_job,
                 $.createQuery,
                 // $.selectStmt,
                 // $.gsqlSelectClause,
@@ -297,4 +300,5 @@ Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));
 Object.assign(g.rules, require("./grammar/types-and-names"));
 Object.assign(g.rules, require("./grammar/schema"));
+Object.assign(g.rules, require("./grammar/create-loading-job"));
 module.exports = grammar(g);

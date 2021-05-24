@@ -1,5 +1,24 @@
 [
   {
+    "type": "ADD_INDEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "CREATE_DIRECTED_EDGE",
     "named": true,
     "fields": {},
@@ -17,6 +36,10 @@
         },
         {
           "type": "expr",
+          "named": true
+        },
+        {
+          "type": "name",
           "named": true
         },
         {
@@ -114,7 +137,32 @@
   {
     "type": "DROP",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "DROP_INDEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "WITH",
@@ -501,6 +549,25 @@
     }
   },
   {
+    "type": "create_loading_job",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "define_statement",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "declStmt",
     "named": true,
     "fields": {},
@@ -533,6 +600,25 @@
       "types": [
         {
           "type": "declStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "define_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
           "named": true
         }
       ]
@@ -1443,6 +1529,10 @@
       "required": true,
       "types": [
         {
+          "type": "ADD_INDEX",
+          "named": true
+        },
+        {
           "type": "CREATE_DIRECTED_EDGE",
           "named": true
         },
@@ -1463,7 +1553,15 @@
           "named": true
         },
         {
+          "type": "DROP_INDEX",
+          "named": true
+        },
+        {
           "type": "createQuery",
+          "named": true
+        },
+        {
+          "type": "create_loading_job",
           "named": true
         }
       ]
@@ -1996,11 +2094,19 @@
     "named": false
   },
   {
+    "type": "ADD",
+    "named": false
+  },
+  {
     "type": "ADMIN",
     "named": false
   },
   {
     "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "ALTER",
     "named": false
   },
   {
@@ -2048,6 +2154,10 @@
     "named": false
   },
   {
+    "type": "DEFINE",
+    "named": false
+  },
+  {
     "type": "DESC",
     "named": false
   },
@@ -2088,6 +2198,10 @@
     "named": false
   },
   {
+    "type": "FILENAME",
+    "named": false
+  },
+  {
     "type": "FILTER",
     "named": false
   },
@@ -2120,6 +2234,10 @@
     "named": false
   },
   {
+    "type": "INDEX",
+    "named": false
+  },
+  {
     "type": "INT",
     "named": false
   },
@@ -2132,11 +2250,19 @@
     "named": false
   },
   {
+    "type": "JOB",
+    "named": false
+  },
+  {
     "type": "JSONARRAY",
     "named": false
   },
   {
     "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "LOADING",
     "named": false
   },
   {
@@ -2161,6 +2287,10 @@
   },
   {
     "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "ON",
     "named": false
   },
   {
@@ -2337,10 +2467,6 @@
   },
   {
     "type": "return",
-    "named": false
-  },
-  {
-    "type": "rev_name",
     "named": false
   },
   {

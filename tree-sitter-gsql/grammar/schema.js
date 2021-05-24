@@ -53,7 +53,7 @@ module.exports = {
         )),
         ")",
         optional(seq(
-            kw.WITH, kw.REVERSE_EDGE, "=", '"', kw.REV_NAME, '"',
+            kw.WITH, kw.REVERSE_EDGE, "=", '"', $.name, '"',
         ))
     ),
 
@@ -100,6 +100,23 @@ module.exports = {
     // DROP ALL
     DROP: $ => seq(
         kw.DROP,
-        kw.ALL
+        choice(
+            kw.ALL,
+            seq(kw.GRAPH, $.name)
+        )
+    ),
+
+    /*
+    CREATE GLOBAL SCHEMA_CHANGE job <job-name> 
+    {
+        ALTER VERTEX object_type_name ADD INDEX index_type_name ON (attribute_name);
+        ALTER VERTEX vertex_type_name DROP INDEX index_type_name;
+    };  
+    */
+    ADD_INDEX: $ => seq(
+        kw.ALTER, kw.VERTEX, $.type, kw.ADD, kw.INDEX, $.type, kw.ON, "(", $.attrName, ")", optional(";")
+    ),
+    DROP_INDEX: $ => seq(
+        kw.ALTER, kw.VERTEX, $.type, kw.DROP, kw.INDEX, $.type, optional(";")
     )
 }
