@@ -5,27 +5,6 @@ https://docs.tigergraph.com/dev/gsql-ref/querying/appendix-query/complete-formal
 
 const { kw, TRUE, FALSE } = require("./grammar/index");
 
-const _kw = {
-    CREATE: kw('CREATE'),
-    VERTEX: kw('VERTEX'),
-    DEFAULT: kw('DEFAULT'),
-    WITH: kw('WITH'),
-    STATS: kw('STATS'),
-    PRIMARY_ID: kw('PRIMARY_ID'),
-    DROP: kw('DROP'),
-    ALL: kw('ALL'),
-    OUTDEGREE_BY_EDGETYPE: kw('OUTDEGREE_BY_EDGETYPE'),
-    UNDIRECTED: kw('UNDIRECTED'),
-    DIRECTED: kw('DIRECTED'),
-    EDGE: kw('EDGE'),
-    FROM: kw('FROM'),
-    TO: kw('TO'),
-    rev_name: kw('rev_name'),
-    REVERSE_EDGE: kw('REVERSE_EDGE'),
-    ADMIN: kw('ADMIN'),
-    GRAPH: kw('GRAPH'),
-}
-
 const g = {
     name: 'gsql',
 
@@ -205,7 +184,7 @@ const g = {
                 | GSQL_INT_MAX | GSQL_INT_MIN | TO_DATETIME "(" stringLiteral ")"
         */
         constant: $ => choice(
-            $.numeric, $.stringLiteral, TRUE, FALSE
+            $.numeric, $.stringLiteral, kw.TRUE, kw.FALSE
         ),
 
 
@@ -304,105 +283,7 @@ const g = {
             )
         )),
 
-        /*
-        CREATE VERTEX vertex_type_name "(" primary_id_name_type
-            ["," attribute_name type [DEFAULT default_value] ]* ")"
-            [WITH [STATS="none"|"outdegree_by_edgetype"][primary_id_as_attribute="true"]]
-        */
-        CREATE_VERTEX: $=>seq(
-            _kw.CREATE, _kw.VERTEX, $.vertexType, "(", $.primary_id_name_type, 
-                repeat(seq(
-                    ",", $.name, $.type, optional(seq(_kw.DEFAULT, $.expr))
-                )),
-            ")",
-            optional($.WITH)
-        ),
-
-        /*
-        CREATE UNDIRECTED EDGE edge_type_name "("
-                FROM vertex_type_name "," TO vertex_type_name
-                ["|" FROM vertex_type_name, TO vertex_type_name]*
-                ["," attribute_name type [DEFAULT default_value]]* ")"        
-        */
-        CREATE_UNDIRECTED_EDGE: $=>seq(
-            _kw.CREATE, _kw.UNDIRECTED, _kw.EDGE, $.edgeType, "(",
-            _kw.FROM, $.vertexType, ",", _kw.TO, $.vertexType,
-            repeat(seq(
-                "|", _kw.FROM, $.vertexType, _kw.TO, $.vertexType
-            )),
-            repeat(seq(
-                ",", $.attrName, $.type, optional(seq(_kw.DEFAULT, $.expr))
-            )),
-            ")"
-        ),
-
-        /*
-        CREATE DIRECTED EDGE edge_type_name "("
-                FROM vertex_type_name "," TO vertex_type_name
-                ["|" FROM vertex_type_name, TO vertex_type_name]*
-                ["," attribute_name type [DEFAULT default_value]]* ")"
-                [WITH REVERSE_EDGE="rev_name"]        
-        */
-        CREATE_DIRECTED_EDGE: $=>seq(
-            _kw.CREATE, _kw.DIRECTED, _kw.EDGE, $.edgeType, "(",
-            _kw.FROM, $.vertexType, ",", _kw.TO, $.vertexType,
-            repeat(seq(
-                "|", _kw.FROM, $.vertexType, _kw.TO, $.vertexType
-            )),
-            repeat(seq(
-                ",", $.attrName, $.type, optional(seq(_kw.DEFAULT, $.expr))
-            )),
-            ")",
-            optional(seq(
-                _kw.WITH, _kw.REVERSE_EDGE, "=", '"', _kw.rev_name, '"',
-            ))
-        ),
-
-        WITH: $=>seq(
-            _kw.WITH,
-            optional(
-                seq(_kw.STATS, "=", 
-                    choice(
-                        '"none"', 
-                        seq('"', _kw.OUTDEGREE_BY_EDGETYPE, '"')
-                    )
-                )
-            ),
-            optional(
-                seq(
-                    "primary_id_as_attribute",
-                    "=",
-                    '"true"'
-                )
-            )
-        ),
-
-        /*
-        CREATE GRAPH graph_name (vertex_or_edge_type, vertex_or_edge_type...)
-                        [WITH ADMIN username]
-        // Replace graph_name with the name you want to name the graph with
-        // Replace vertex_or_edge_type with the vertex and edge types you
-        //     want to include in the graph
-        */
-        CREATE_GRAPH: $=>seq(
-            _kw.CREATE, _kw.GRAPH, $.name, "(", choice(repeat($.name), "*"), ")",
-            optional(seq(
-                _kw.WITH, _kw.ADMIN, $.name, 
-            ))
-        ),
-
-        // primary_id_name_type := PRIMARY_ID id_name id_type
-        primary_id_name_type: $=>seq(
-            _kw.PRIMARY_ID,
-            $.name,
-            $.type
-        ),
-
-        // DROP ALL
-        DROP: $=>seq(
-            _kw.DROP,
-            _kw.ALL
-        )
+       
         
     },
 }
@@ -415,4 +296,5 @@ Object.assign(g.rules, require("./grammar/operators-functions-expressions.js"));
 Object.assign(g.rules, require("./grammar/output-statements"));
 Object.assign(g.rules, require("./grammar/select"));
 Object.assign(g.rules, require("./grammar/types-and-names"));
+Object.assign(g.rules, require("./grammar/schema"));
 module.exports = grammar(g);
