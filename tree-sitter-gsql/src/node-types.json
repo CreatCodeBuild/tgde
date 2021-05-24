@@ -1,5 +1,82 @@
 [
   {
+    "type": "CREATE_DIRECTED_EDGE",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_GRAPH",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_UNDIRECTED_EDGE",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "CREATE_VERTEX",
     "named": true,
     "fields": {},
@@ -7,6 +84,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "WITH",
+          "named": true
+        },
         {
           "type": "expr",
           "named": true
@@ -29,6 +110,16 @@
         }
       ]
     }
+  },
+  {
+    "type": "DROP",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "WITH",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "accumClause",
@@ -1352,7 +1443,23 @@
       "required": true,
       "types": [
         {
+          "type": "CREATE_DIRECTED_EDGE",
+          "named": true
+        },
+        {
+          "type": "CREATE_GRAPH",
+          "named": true
+        },
+        {
+          "type": "CREATE_UNDIRECTED_EDGE",
+          "named": true
+        },
+        {
           "type": "CREATE_VERTEX",
+          "named": true
+        },
+        {
+          "type": "DROP",
           "named": true
         },
         {
@@ -1773,10 +1880,6 @@
     "named": false
   },
   {
-    "type": "\"outdegree_by_edgetype\"",
-    "named": false
-  },
-  {
     "type": "\"true\"",
     "named": false
   },
@@ -1893,6 +1996,14 @@
     "named": false
   },
   {
+    "type": "ADMIN",
+    "named": false
+  },
+  {
+    "type": "ALL",
+    "named": false
+  },
+  {
     "type": "AND",
     "named": false
   },
@@ -1941,11 +2052,19 @@
     "named": false
   },
   {
+    "type": "DIRECTED",
+    "named": false
+  },
+  {
     "type": "DISTRIBUTED",
     "named": false
   },
   {
     "type": "DOUBLE",
+    "named": false
+  },
+  {
+    "type": "DROP",
     "named": false
   },
   {
@@ -1978,6 +2097,10 @@
   },
   {
     "type": "FOR",
+    "named": false
+  },
+  {
+    "type": "FROM",
     "named": false
   },
   {
@@ -2045,6 +2168,10 @@
     "named": false
   },
   {
+    "type": "OUTDEGREE_BY_EDGETYPE",
+    "named": false
+  },
+  {
     "type": "OrAccum",
     "named": false
   },
@@ -2074,6 +2201,10 @@
   },
   {
     "type": "RETURNS",
+    "named": false
+  },
+  {
+    "type": "REVERSE_EDGE",
     "named": false
   },
   {
@@ -2117,6 +2248,10 @@
     "named": false
   },
   {
+    "type": "TO",
+    "named": false
+  },
+  {
     "type": "TO_CSV",
     "named": false
   },
@@ -2134,6 +2269,10 @@
   },
   {
     "type": "UINT",
+    "named": false
+  },
+  {
+    "type": "UNDIRECTED",
     "named": false
   },
   {
@@ -2198,6 +2337,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "rev_name",
     "named": false
   },
   {
