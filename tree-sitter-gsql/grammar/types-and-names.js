@@ -92,7 +92,10 @@ module.exports = {
     edgeType: $ => $.name,
     accumName: $ => $.name,
     vertexSetName: $ => $.name,
-    attrName: $ => $.name,
+    attrName: $ => choice(
+        $.name,
+        $.localAccumName
+    ),
     varName: $ => $.name,
     tupleType: $ => $.name,
     fieldName: $ => $.name,

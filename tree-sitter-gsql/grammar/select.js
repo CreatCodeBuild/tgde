@@ -230,14 +230,14 @@ module.exports = {
 
     // accumClause := [perClauseV2] ACCUM dmlSubStmtList
     accumClause: $ => seq(
-        $.perClauseV2,
+        optional($.perClauseV2),
         kw("ACCUM"),
         $.dmlSubStmtList,
     ),
 
     // postAccumClause := "POST-ACCUM" dmlSubStmtList
     postAccumClause: $ => seq(
-        $.perClauseV2,
+        optional($.perClauseV2),
         kw("POST-ACCUM"),
         $.dmlSubStmtList
     ),
@@ -277,7 +277,9 @@ module.exports = {
     //             | logStmt              // Output
     dmlSubStmt: $ => choice(
         $.assignStmt,
-        $.gAccumAccumStmt
+        $.gAccumAccumStmt,
+        $.lAccumAccumStmt,
+        $.dmlSubWhileStmt
         // todo
     )
 }

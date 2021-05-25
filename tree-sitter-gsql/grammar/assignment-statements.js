@@ -29,7 +29,7 @@ module.exports = {
         */
     assignStmt: $ => choice(
         seq($.name, "=", $.expr),
-        seq($.name, ".", $.attrName, "=", $.expr)
+        seq($.name, ".", choice($.attrName, $.localAccumName), "=", $.expr)
     ),
 
 

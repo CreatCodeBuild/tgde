@@ -320,6 +320,10 @@
           "named": true
         },
         {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
           "type": "name",
           "named": true
         }
@@ -379,6 +383,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "localAccumName",
+          "named": true
+        },
         {
           "type": "name",
           "named": true
@@ -637,7 +645,15 @@
           "named": true
         },
         {
+          "type": "dmlSubWhileStmt",
+          "named": true
+        },
+        {
           "type": "gAccumAccumStmt",
+          "named": true
+        },
+        {
+          "type": "lAccumAccumStmt",
           "named": true
         }
       ]
@@ -653,6 +669,29 @@
       "types": [
         {
           "type": "dmlSubStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubWhileStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
           "named": true
         }
       ]
@@ -738,6 +777,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
         {
           "type": "constant",
           "named": true
@@ -867,6 +910,10 @@
         {
           "type": "globalAccumName",
           "named": true
+        },
+        {
+          "type": "name",
+          "named": true
         }
       ]
     }
@@ -964,6 +1011,29 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lAccumAccumStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
         {
           "type": "name",
           "named": true
@@ -1276,6 +1346,10 @@
           "named": true
         },
         {
+          "type": "queryBodyWhileStmt",
+          "named": true
+        },
+        {
           "type": "returnStmt",
           "named": true
         },
@@ -1300,6 +1374,29 @@
       "types": [
         {
           "type": "queryBodyStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyWhileStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
           "named": true
         }
       ]
@@ -1562,6 +1659,10 @@
         },
         {
           "type": "create_loading_job",
+          "named": true
+        },
+        {
+          "type": "fromClause",
           "named": true
         }
       ]
@@ -2170,6 +2271,10 @@
     "named": false
   },
   {
+    "type": "DO",
+    "named": false
+  },
+  {
     "type": "DOUBLE",
     "named": false
   },
@@ -2259,6 +2364,10 @@
   },
   {
     "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "LIMIT",
     "named": false
   },
   {
@@ -2415,6 +2524,10 @@
   },
   {
     "type": "WHERE",
+    "named": false
+  },
+  {
+    "type": "WHILE",
     "named": false
   },
   {

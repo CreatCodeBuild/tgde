@@ -28,11 +28,7 @@ keyVar := name
 valueVar := name
 */
 const { kw } = require("./index");
-const { escape_sequence } = require("./types-and-names");
-const IF = kw("IF")
-const ELSE = kw("ELSE")
-const THEN = kw("THEN")
-const END = kw("END")
+
 module.exports = {
     /*
     queryBodyIfStmt := IF condition THEN queryBodyStmts
@@ -40,9 +36,19 @@ module.exports = {
                     [ELSE queryBodyStmts ] END    
     */
     queryBodyIfStmt: $=>seq(
-        IF, $.condition, THEN, $.queryBodyStmts,
-        repeat(seq(ELSE, IF, $.condition, THEN, $.queryBodyStmts)),
-        optional(seq(ELSE, $.queryBodyStmts)), END
+        kw.IF, $.condition, kw.THEN, $.queryBodyStmts,
+        repeat(seq(kw.ELSE, kw.IF, $.condition, kw.THEN, $.queryBodyStmts)),
+        optional(seq(kw.ELSE, $.queryBodyStmts)), kw.END
     ),
-    simpleSize: $ => choice($.integer, $.varName, $.paramName)
+    simpleSize: $ => choice($.integer, $.varName, $.paramName),
+
+    // queryBodyWhileStmt := WHILE condition [LIMIT simpleSize] DO queryBodyStmts END
+    // dmlSubWhileStmt :=    WHILE condition [LIMIT simpleSize] DO dmlSubStmtList END
+    queryBodyWhileStmt: $=> seq(
+        kw.WHILE, $.condition, optional(seq(kw.LIMIT, $.simpleSize)), kw.DO, $.queryBodyStmts, kw.END
+    ),
+
+    dmlSubWhileStmt: $=>seq(
+        kw.WHILE, $.condition, optional(seq(kw.LIMIT, $.simpleSize)), kw.DO, $.dmlSubStmtList, kw.END
+    )
 }

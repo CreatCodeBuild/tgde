@@ -50,7 +50,8 @@ const g = {
         [$.declStmts],
         [$.queryBodyIfStmt],
         [$.expr, $.setBagExpr],
-        [$.expr, $.setBagExpr, $.tableName]
+        [$.expr, $.setBagExpr, $.tableName],
+        [$.assignStmt, $.attrName]
     ],
 
     rules: {
@@ -68,7 +69,7 @@ const g = {
                 // $.selectStmt,
                 // $.gsqlSelectClause,
                 // $.stringLiteral,
-                // $.fromClause,
+                $.fromClause,
                 // $.whereClause,
                 // $.condition,
                 // $.accumClause,
@@ -176,7 +177,8 @@ const g = {
             $.printStmt,
             $.vSetVarDeclStmt,
             $.queryBodyIfStmt,
-            $.returnStmt
+            $.returnStmt,
+            $.queryBodyWhileStmt
         ),
 
         /*
@@ -211,6 +213,7 @@ const g = {
             seq($.expr, kw("IS"), optional(kw("NOT")), kw("NULL")),
             seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
+            seq(kw.NOT, $.condition)
             // todo
         ),
 
@@ -229,7 +232,7 @@ const g = {
         pathPattern: $ => seq(
             $.stepVertexSet,
             repeat(seq(
-                "-", "(", $.pathEdgePattern, ")", "-", $.stepVertexSet
+                "-", "(", $.pathEdgePattern, ")", choice("-", "->"), $.stepVertexSet
             ))),
 
         

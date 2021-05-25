@@ -49,8 +49,8 @@ module.exports = {
         seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">"),
         seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
         seq(
-            kw("HeapAccum"), "<", $.tupleType, ">", 
-            "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))), 
+            kw("HeapAccum"), "<", $.tupleType, ">",
+            "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))),
             repeat(seq(",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))))), ")"
         ),
         seq(
@@ -62,10 +62,20 @@ module.exports = {
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS
-    elementType: $=> choice($.baseType, $.tupleType, seq(kw("STRING"), kw("COMPRESS"))),
+    elementType: $ => choice($.baseType, $.tupleType, seq(kw("STRING"), kw("COMPRESS"))),
 
     // gAccumAccumStmt := globalAccumName "+=" expr
     gAccumAccumStmt: $ => seq(
-        $.globalAccumName, "+=", $.expr
-    )
+        choice(
+            $.globalAccumName,
+            seq($.name, ".", $.globalAccumName)
+        ), "+=", $.expr
+    ),
+
+    lAccumAccumStmt: $ => seq(
+        choice(
+            $.localAccumName,
+            seq($.name, ".", $.localAccumName)
+        ), "+=", $.expr
+    ),
 }
