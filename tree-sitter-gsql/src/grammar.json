@@ -3359,6 +3359,10 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "SYMBOL",
+              "name": "step"
+            },
+            {
               "type": "SEQ",
               "members": [
                 {
@@ -3573,36 +3577,35 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "stepVertexTypes"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ":"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "vertexAlias"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
               "type": "SYMBOL",
               "name": "stepVertexTypes"
             },
             {
-              "type": "STRING",
-              "value": ":"
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "vertexAlias"
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "vertexAlias"
+              "type": "BLANK"
             }
           ]
         }
@@ -3917,6 +3920,10 @@
         {
           "type": "SYMBOL",
           "name": "gAccumAccumStmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lAccumAssignStmt"
         }
       ]
     },
@@ -4614,6 +4621,10 @@
     [
       "argList",
       "expr"
+    ],
+    [
+      "assignStmt",
+      "vertexAlias"
     ]
   ],
   "precedences": [],

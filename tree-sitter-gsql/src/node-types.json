@@ -462,6 +462,10 @@
         {
           "type": "gAccumAccumStmt",
           "named": true
+        },
+        {
+          "type": "lAccumAssignStmt",
+          "named": true
         }
       ]
     }
@@ -679,6 +683,10 @@
         {
           "type": "pathPattern",
           "named": true
+        },
+        {
+          "type": "step",
+          "named": true
         }
       ]
     }
@@ -820,6 +828,29 @@
       "types": [
         {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lAccumAssignStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "vertexAlias",
           "named": true
         }
       ]
@@ -1442,6 +1473,29 @@
         },
         {
           "type": "createQuery",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "step",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "stepEdgeSet",
+          "named": true
+        },
+        {
+          "type": "stepSourceSet",
+          "named": true
+        },
+        {
+          "type": "stepVertexSet",
           "named": true
         }
       ]

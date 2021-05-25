@@ -128,7 +128,7 @@ module.exports = {
     // fromClause := FROM (step | stepV2 | pathPattern ["," pathPattern]*)
     fromClause: $ => seq(
         kw("from"), choice(
-            // $.step, 
+            $.step, 
             // $.stepV2, 
             seq($.pathPattern, optional(repeat(seq(",", $.pathPattern))))
         )
@@ -136,10 +136,10 @@ module.exports = {
 
 
     // step :=  stepSourceSet ["-" "(" stepEdgeSet ")" ("-"|"->") stepVertexSet]
-    step: _ => seq(
-        _.stepSourceSet,
+    step: $ => seq(
+        $.stepSourceSet,
         optional(seq(
-            "-", "(", _.stepEdgeSet, ")", choice("-", "->"), _.stepVertexSet
+            "-", "(", $.stepEdgeSet, ")", choice("-", "->"), $.stepVertexSet
         ))
     ),
 
@@ -260,7 +260,7 @@ module.exports = {
     // dmlSubStmt := assignStmt           // Assignment   
     //             | funcCallStmt         // Function Call  
     //             | gAccumAccumStmt      // Assignment
-    //             | lAccumAccumStmt      // Assignment
+    //             | lAccumAccumStmt      // Assignment      FIXME: there is no lAccumAccumStmt, Maybe lAccumAssignStmt
     //             | attrAccumStmt        // Assignment
     //             | vAccumFuncCall       // Function Call
     //             | localVarDeclStmt     // Declaration
@@ -276,7 +276,8 @@ module.exports = {
     //             | logStmt              // Output
     dmlSubStmt: $ => choice(
         $.assignStmt,
-        $.gAccumAccumStmt
+        $.gAccumAccumStmt,
+        $.lAccumAssignStmt
         // todo
     )
 }

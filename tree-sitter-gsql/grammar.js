@@ -62,7 +62,8 @@ const g = {
         [$.expr, $.setBagExpr, $.tableName],
         [$.funcCallStmt, $.vertexSetName],
         [$.argList, $.expr, $.condition],
-        [$.argList, $.expr]
+        [$.argList, $.expr],
+        [$.assignStmt, $.vertexAlias]
     ],
 
     rules: {
