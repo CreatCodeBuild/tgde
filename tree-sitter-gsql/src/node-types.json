@@ -782,6 +782,10 @@
           "named": true
         },
         {
+          "type": "condition",
+          "named": true
+        },
+        {
           "type": "constant",
           "named": true
         },
@@ -1051,6 +1055,25 @@
       "types": [
         {
           "type": "accumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "logStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "condition",
           "named": true
         }
       ]
@@ -1338,6 +1361,14 @@
       "required": true,
       "types": [
         {
+          "type": "assignStmt",
+          "named": true
+        },
+        {
+          "type": "logStmt",
+          "named": true
+        },
+        {
           "type": "printStmt",
           "named": true
         },
@@ -1558,6 +1589,10 @@
       "types": [
         {
           "type": "argList",
+          "named": true
+        },
+        {
+          "type": "condition",
           "named": true
         },
         {
@@ -2163,6 +2198,10 @@
     "named": false
   },
   {
+    "type": "<bool>",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
@@ -2228,6 +2267,10 @@
   },
   {
     "type": "ASC",
+    "named": false
+  },
+  {
+    "type": "AvgAccum",
     "named": false
   },
   {
@@ -2375,6 +2418,10 @@
     "named": false
   },
   {
+    "type": "LOG",
+    "named": false
+  },
+  {
     "type": "ListAccum",
     "named": false
   },
@@ -2388,6 +2435,10 @@
   },
   {
     "type": "MaxAccum",
+    "named": false
+  },
+  {
+    "type": "MinAccum",
     "named": false
   },
   {

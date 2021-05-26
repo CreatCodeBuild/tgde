@@ -14,7 +14,7 @@ module.exports = {
         ),
         seq(optional(kw("STATIC")), $.accumType, $.globalAccumName,
             optional(seq("=", $.constant)),
-            repeat(seq(",", $.localAccumName, optional(seq("=", $.constant))))
+            repeat(seq(",", $.globalAccumName, optional(seq("=", $.constant))))
         )
     ),
 
@@ -45,9 +45,10 @@ module.exports = {
     */
     accumType: $ => choice(
         seq(kw("SumAccum"), "<", choice(kw("int"), kw("float"), kw("double"), kw("string"), kw("string compress")), ">"),
-        kw("OrAccum"),
         seq(kw("MapAccum"), "<", $.elementType, ",", choice($.baseType, $.accumType, $.tupleType), ">"),
-        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
+        seq(kw("MaxAccum"), "<", choice(kw("int"), kw("float"), kw("double"), $.elementType), ">"),
+        seq(kw("MinAccum"), "<", choice(kw("int"), kw("float"), kw("double")), ">"),
+        seq(kw("OrAccum"), optional("<bool>")),
         seq(
             kw("HeapAccum"), "<", $.tupleType, ">",
             "(", $.simpleSize, ",", $.fieldName, optional(choice(kw("ASC"), kw("DESC"))),
@@ -59,6 +60,7 @@ module.exports = {
         seq(
             kw("SetAccum"), "<", $.elementType, ">"
         ),
+        kw("AvgAccum")
         // todo
     ),
     // elementType := baseType | tupleType | STRING COMPRESS

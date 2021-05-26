@@ -589,6 +589,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "assignStmt"
+        },
+        {
+          "type": "SYMBOL",
           "name": "selectStmt"
         },
         {
@@ -610,6 +614,10 @@
         {
           "type": "SYMBOL",
           "name": "queryBodyWhileStmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "logStmt"
         }
       ]
     },
@@ -833,6 +841,23 @@
             {
               "type": "SYMBOL",
               "name": "condition"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "condition"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
             }
           ]
         }
@@ -1167,7 +1192,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "localAccumName"
+                    "name": "globalAccumName"
                   },
                   {
                     "type": "CHOICE",
@@ -1299,15 +1324,6 @@
           ]
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[oO][rR][aA][cC][cC][uU][mM]"
-          },
-          "named": false,
-          "value": "OrAccum"
-        },
-        {
           "type": "SEQ",
           "members": [
             {
@@ -1399,12 +1415,96 @@
                   },
                   "named": false,
                   "value": "double"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "elementType"
                 }
               ]
             },
             {
               "type": "STRING",
               "value": ">"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][iI][nN][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "MinAccum"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[iI][nN][tT]"
+                  },
+                  "named": false,
+                  "value": "int"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[fF][lL][oO][aA][tT]"
+                  },
+                  "named": false,
+                  "value": "float"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[dD][oO][uU][bB][lL][eE]"
+                  },
+                  "named": false,
+                  "value": "double"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[oO][rR][aA][cC][cC][uU][mM]"
+              },
+              "named": false,
+              "value": "OrAccum"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "<bool>"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -1583,6 +1683,15 @@
               "value": ">"
             }
           ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[aA][vV][gG][aA][cC][cC][uU][mM]"
+          },
+          "named": false,
+          "value": "AvgAccum"
         }
       ]
     },
@@ -2612,6 +2721,81 @@
               "value": ")"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "argList"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "."
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[fF][iI][lL][tT][eE][rR]"
+                      },
+                      "named": false,
+                      "value": "FILTER"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "("
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "condition"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ")"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2674,6 +2858,81 @@
             {
               "type": "STRING",
               "value": ")"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "argList"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "."
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[fF][iI][lL][tT][eE][rR]"
+                      },
+                      "named": false,
+                      "value": "FILTER"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "("
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "condition"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ")"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }
@@ -2918,6 +3177,40 @@
         {
           "type": "SYMBOL",
           "name": "expr"
+        }
+      ]
+    },
+    "logStmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[lL][oO][gG]"
+          },
+          "named": false,
+          "value": "LOG"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "condition"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "SYMBOL",
+          "name": "argList"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -5277,6 +5570,10 @@
     [
       "assignStmt",
       "attrName"
+    ],
+    [
+      "condition",
+      "argList"
     ]
   ],
   "precedences": [],

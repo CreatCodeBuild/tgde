@@ -51,7 +51,8 @@ const g = {
         [$.queryBodyIfStmt],
         [$.expr, $.setBagExpr],
         [$.expr, $.setBagExpr, $.tableName],
-        [$.assignStmt, $.attrName]
+        [$.assignStmt, $.attrName],
+        [$.condition, $.argList]
     ],
 
     rules: {
@@ -172,13 +173,14 @@ const g = {
         */
         // todo
         queryBodyStmt: $ => choice(
-            /* $.assignStmt, */
+            $.assignStmt,
             $.selectStmt,
             $.printStmt,
             $.vSetVarDeclStmt,
             $.queryBodyIfStmt,
             $.returnStmt,
-            $.queryBodyWhileStmt
+            $.queryBodyWhileStmt,
+            $.logStmt
         ),
 
         /*
@@ -213,7 +215,8 @@ const g = {
             seq($.expr, kw("IS"), optional(kw("NOT")), kw("NULL")),
             seq($.expr, $.comparisonOperator, $.expr),           // expr comparisonOperator expr
             seq($.condition, choice("AND", "OR"), $.condition), // | condition (AND | OR) condition
-            seq(kw.NOT, $.condition)
+            seq(kw.NOT, $.condition),
+            seq("(", $.condition, ")")
             // todo
         ),
 
