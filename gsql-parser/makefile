@@ -13,7 +13,7 @@ publish: build
 	npm publish dist --access public
 	
 test:
-	node -r ts-node/register src/parser.test.ts
+	$$(npm bin)/mocha -r ts-node/register src/parser.test.ts
 
 i: install
 
