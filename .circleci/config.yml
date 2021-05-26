@@ -7,7 +7,8 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: cd gsql-parser && make tes
+      - run: cd gsql-parser && npm install
+      - run: cd gsql-parser && make test
 
 # Orchestrate our job run sequence
 workflows:
