@@ -9,6 +9,7 @@
 		"esModuleInterop": true,
 		"strictNullChecks": true,
 		"declaration": true,
+		"types": ["mocha", "node"]
 	},
 	"include": [
 		"src"
