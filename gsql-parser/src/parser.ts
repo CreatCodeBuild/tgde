@@ -129,7 +129,7 @@ interface Filterer {
 	(node: Parser.SyntaxNode): boolean
 }
 
-function* filterTokens(node: Parser.SyntaxNode, filterer: Filterer): Iterable<Parser.SyntaxNode> {
+export function* filterTokens(node: Parser.SyntaxNode, filterer: Filterer): Iterable<Parser.SyntaxNode> {
 	try {
 		if (filterer(node)) {
 			yield node

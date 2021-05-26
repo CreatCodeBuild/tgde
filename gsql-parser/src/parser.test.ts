@@ -1,14 +1,21 @@
-import { GSQLParser } from "./parser";
+import { GSQLParser, filterTokens } from "./parser";
+import assert from 'assert';
+import { readFile } from 'fs/promises';
 
-(async () => {
-    const p = await GSQLParser.New();
-    
-    // Test 1
-    console.log(p.parser.parse(`SELECT t
-    FROM :s -(LIKES>:e1)- Comment:msg -(HAS_CREATOR>)- :t
-    WHERE s.firstName == "Viktor" AND s.lastName == "Akhiezer"`).rootNode.lastChild?.type)
-    
-    
-    console.log(1234)
-    
-})();
+describe("", async () => {
+    it("", async () => {
+        const p = await GSQLParser.New();
+
+        const f = await readFile(__dirname+"/testdata/create-query.gsql");
+        const tree = p.parser.parse(f.toString())
+        for(let token of filterTokens(tree.rootNode, (node) => node.type == "Error")) {
+            assert.equal(token, '')
+        }
+
+        const f2 = await readFile(__dirname+"/testdata/schema.gsql");
+        const tree2 = p.parser.parse(f2.toString())
+        for(let token of filterTokens(tree2.rootNode, (node) => node.type == "Error")) {
+            assert.equal(token, '')
+        }
+    })
+})
