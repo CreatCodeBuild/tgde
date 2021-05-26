@@ -92,7 +92,7 @@ CREATE QUERY shortest_ss_pos_wt (VERTEX source, SET<STRING> v_type, SET<STRING> 
 			POST-ACCUM 
 			  IF result_attr != "" THEN s.setAttr(result_attr, s.@minPath.top().dist) END,
 			  IF file_path != "" THEN f.println(s, s.@minPath.top().dist, s.@path) END;
-		  
+		  sdfs
 	IF print_accum THEN
     IF output_limit >= 0 THEN
         component = SELECT s FROM component:s LIMIT output_limit;

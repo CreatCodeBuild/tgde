@@ -1,21 +1,23 @@
 import { GSQLParser, filterTokens } from "./parser";
 import assert from 'assert';
-import { readFile } from 'fs/promises';
+import { readFile, readdir } from 'fs/promises';
 
 describe("", async () => {
     it("", async () => {
         const p = await GSQLParser.New();
-
-        const f = await readFile(__dirname+"/testdata/create-query.gsql");
-        const tree = p.parser.parse(f.toString())
-        for(let token of filterTokens(tree.rootNode, (node) => node.type == "Error")) {
-            assert.equal(token, '')
-        }
-
-        const f2 = await readFile(__dirname+"/testdata/schema.gsql");
-        const tree2 = p.parser.parse(f2.toString())
-        for(let token of filterTokens(tree2.rootNode, (node) => node.type == "Error")) {
-            assert.equal(token, '')
+        const testdata = __dirname + "/testdata";
+        const files = await readdir(testdata);
+        for (const filename of files) {
+            const filepath = testdata + "/" + filename
+            console.log(filepath)
+            const f = await readFile(filepath);
+            const tree = p.parser.parse(f.toString())
+            for (let token of filterTokens(tree.rootNode, (node) => { return node.type == "ERROR" } ) ) {
+                console.log('failed');
+                console.log(token.tree.rootNode.toString())
+                return
+            }
+            console.log("passed\n")
         }
     })
 })
