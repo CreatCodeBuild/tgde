@@ -6,3 +6,4 @@ node_modules
 build
 .cache
 .wasm
+lsp/src/gsql-parser

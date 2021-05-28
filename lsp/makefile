@@ -1,7 +1,7 @@
 install:
 	npm install
 
-build:
+build: cp-gsql-parser
 	rm -rf dist
 	$$(npm bin)/tsc -b
 	cp README.md dist/README.md
@@ -15,7 +15,12 @@ watch:
 	$$(npm bin)/tsc -b -w
 
 cp-wasm:
-	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm dist/gsql-parser/src
+	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm dist/gsql-parser/
+
+cp-gsql-parser:
+	rm -rf src/gsql-parser
+	mkdir src/gsql-parser
+	cp -r ../gsql-parser/src/* src/gsql-parser
 
 package: install build-prod
 	cd dist && $$(npm bin)/vsce package

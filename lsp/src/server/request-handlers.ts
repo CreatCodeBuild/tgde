@@ -2,7 +2,7 @@ import { SemanticHightlightHandler } from '../common/common';
 
 import Parser from 'web-tree-sitter';
 
-import { GSQLParser } from '../gsql-parser/src/parser';
+import { GSQLParser } from '../gsql-parser/parser';
 
 interface Putter {
 	put(tree: Parser.Tree)

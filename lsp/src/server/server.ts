@@ -18,8 +18,7 @@ import {
 
 import * as common from '../common/common';
 
-// @ts-ignore
-import { GSQLParser } from '../gsql-parser/src/parser';
+import { GSQLParser } from '../gsql-parser/parser';
 import { NewSemanticHightlightHandler } from './request-handlers';
 
 
@@ -97,7 +96,7 @@ connection.onInitialize(async (params: InitializeParams) => {
 });
 
 connection.onInitialized(() => {
-	connection.window.showInformationMessage("hello");
+	connection.window.showInformationMessage("Hello TigerGraph User!");
 
 	if (hasConfigurationCapability) {
 		// Register for all configuration changes.
