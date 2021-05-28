@@ -28,3 +28,6 @@ package: build-prod
 p: package
 
 pp: install build-prod
+
+test:
+	$$(npm bin)/mocha -r ts-node/register src/client/gadmin.test.ts

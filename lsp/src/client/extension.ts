@@ -6,8 +6,9 @@
 // Node
 import * as path from 'path';
 import util from 'util';
-import { exec as _exec } from 'child_process';
+import { exec as _exec, spawn } from 'child_process';
 const exec = util.promisify(_exec);
+
 
 // VS Code
 import { workspace, ExtensionContext, languages } from 'vscode';
@@ -160,7 +161,9 @@ class tgDataProvider implements vscode.TreeDataProvider<any> {
 		this.workspaceRoot = workspaceRoot;
 
 		async function lsExample() {
-			const { stdout, stderr } = await exec('gadmin status -v');
+			process.seteuid(1000)
+
+			const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin status -v" tg');
 			console.log('stdout:', stdout);
 			console.log('stderr:', stderr);
 		}
