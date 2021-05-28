@@ -46,7 +46,7 @@
 		"views": {
 			"TigerDE": [
 				{
-					"id": "connectedDatabases",
+					"id": "tgDataProvider",
 					"name": "Connected Databases"
 				}
 			]
