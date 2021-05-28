@@ -4,7 +4,7 @@
 	"icon": "docs/tigergraph-logo.png",
 	"author": "CreatCodeBuild",
 	"license": "MIT",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/CreatCodeBuild/tgde"
@@ -18,7 +18,8 @@
 		"vscode": "^1.43.0"
 	},
 	"activationEvents": [
-		"onLanguage:gsql"
+		"onLanguage:gsql",
+		"onStartupFinished"
 	],
 	"main": "./client/extension.js",
 	"contributes": {
@@ -32,10 +33,24 @@
 					".gsql"
 				]
 			}
-		]
-	},
-	"scripts": {
-		"copy": "cp package.json dist/package.json"
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "TigerDE",
+					"title": "TigerGraph Development Environment",
+					"icon": "docs/activity-bar-logo.svg"
+				}
+			]
+		},
+		"views": {
+			"TigerDE": [
+				{
+					"id": "connectedDatabases",
+					"name": "Connected Databases"
+				}
+			]
+		}
 	},
 	"devDependencies": {
 		"@types/mocha": "^8.0.3",
