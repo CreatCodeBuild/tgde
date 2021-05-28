@@ -46,8 +46,12 @@
 		"views": {
 			"TigerDE": [
 				{
-					"id": "tgDataProvider",
-					"name": "Connected Databases"
+					"id": "gadminStatus",
+					"name": "Status"
+				},
+				{
+					"id": "gadminLogs",
+					"name": "Logs"
 				}
 			]
 		}

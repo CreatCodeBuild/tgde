@@ -1,5 +1,5 @@
-export function parseGadminStatus(x: string): string[][] {
-	let r: string[] | string[][] = x.split('\n').filter(line => line != '').filter(line => {
+export function parseGadminStatus(stdout: string): string[][] {
+	let r: string[] | string[][] = stdout.split('\n').filter(line => line != '').filter(line => {
 		for (let c of line) {
 			if (c == ' ' || c == '\t') { // not whitespace
 				continue
@@ -18,4 +18,23 @@ export function parseGadminStatus(x: string): string[][] {
 			.slice(1, 4)
 	})
 	return r
+}
+
+export function parseGadminLogs(stdout: string) {
+	let r: string[] | string[][] = stdout.split('\n').filter(line => line != '').filter(line => {
+		for (let c of line) {
+			if (c == ' ' || c == '\t') { // not whitespace
+				continue
+			} else {
+				return true
+			}
+		}
+		return false
+	})
+	r = r.map(line => {
+		return Array.from(line)
+			.filter(char => char != ' ' && char != '\t').join('').split(':')
+	})
+
+	return r;
 }

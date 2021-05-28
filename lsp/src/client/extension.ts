@@ -25,6 +25,7 @@ import {
 // TigerDE
 // @ts-ignore
 import * as common from '../common/common';
+import { parseGadminLogs, parseGadminStatus } from './gadmin';
 
 
 
@@ -140,8 +141,10 @@ export function activate(context: ExtensionContext) {
 	// Activity Bar //
 	//////////////////
 	console.log("registerTreeDataProvider")
-	const viewIdTigerGraphDataProvider = 'tgDataProvider';
-	vscode.window.registerTreeDataProvider(viewIdTigerGraphDataProvider, new tgDataProvider(vscode.workspace.rootPath));
+	const gadminStatusProvideViewID = 'gadminStatus';
+	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID, new gadminStatusProvider(vscode.workspace.rootPath));
+	const gadminLogsProvideViewID = 'gadminLogs';
+	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath));
 
 	// Start the client. This will also launch the server
 	client.start();
@@ -156,28 +159,49 @@ export function deactivate(): Thenable<void> | undefined {
 
 
 
-class tgDataProvider implements vscode.TreeDataProvider<any> {
+class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 	constructor(private workspaceRoot: string | undefined) {
 		this.workspaceRoot = workspaceRoot;
-
-		async function lsExample() {
-			process.seteuid(1000)
-
-			const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin status -v" tg');
-			console.log('stdout:', stdout);
-			console.log('stderr:', stderr);
-		}
-		lsExample();
+		// process.seteuid(1000)
 	}
 
-	getTreeItem(element): vscode.TreeItem {
+	getTreeItem(element: string[]): vscode.TreeItem {
 		console.log('getTreeItem', element)
-		return new vscode.TreeItem(element)
+		return new vscode.TreeItem(element[0])
 	}
 
-	getChildren(element) {
+	async getChildren(element) {
 		console.log('getChildren', element)
-		return ["abc"];
+		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin status -v" tg');
+		console.log('stdout:', stdout);
+		console.log('stderr:', stderr);
+		return parseGadminStatus(stdout);
 	}
 
+}
+
+class gadminLogsProvider  implements vscode.TreeDataProvider<any> {
+	constructor(private workspaceRoot: string | undefined) {
+		this.workspaceRoot = workspaceRoot;
+	}
+
+	getTreeItem(element: string[]): vscode.TreeItem {
+		console.log('getTreeItem', element)
+		let item = new vscode.TreeItem(vscode.Uri.file(element[1]))
+		item.command = {
+			// https://code.visualstudio.com/api/references/commands
+			command: 'vscode.open',
+			title: '',
+			arguments: [vscode.Uri.file(element[1])]
+		}
+		return item
+	}
+
+	async getChildren(element) {
+		console.log('getChildren', element)
+		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin log" tg');
+		console.log('stdout:', stdout);
+		console.log('stderr:', stderr);
+		return parseGadminLogs(stdout);
+	}
 }
