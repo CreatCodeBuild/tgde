@@ -1,0 +1,2605 @@
+[
+  {
+    "type": "ADD_INDEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_DIRECTED_EDGE",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_GRAPH",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_UNDIRECTED_EDGE",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CREATE_VERTEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "WITH",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "primary_id_name_type",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "DROP",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "DROP_INDEX",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "WITH",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "accumClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "perClauseV2",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "accumDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "accumName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "accumType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "elementType",
+          "named": true
+        },
+        {
+          "type": "fieldName",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "edgeAlias",
+          "named": true
+        },
+        {
+          "type": "vertexAlias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "argList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assignStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attrName",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "atomicEdgePattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgeType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "atomicEdgeType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "edgeSetType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "atomicVertexType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "vertexSetType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "attrName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "baseDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "baseType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "columnId",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "comparisonOperator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comparisonOperator",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "setBagExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constant",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "numeric",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "createQuery",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "createSignature",
+          "named": true
+        },
+        {
+          "type": "queryBody",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "createSignature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "graphName",
+          "named": true
+        },
+        {
+          "type": "parameterList",
+          "named": true
+        },
+        {
+          "type": "queryName",
+          "named": true
+        },
+        {
+          "type": "returns",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        },
+        {
+          "type": "syntaxName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_loading_job",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "define_statement",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumDeclStmt",
+          "named": true
+        },
+        {
+          "type": "baseDeclStmt",
+          "named": true
+        },
+        {
+          "type": "fileDeclStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declStmts",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "define_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignStmt",
+          "named": true
+        },
+        {
+          "type": "dmlSubWhileStmt",
+          "named": true
+        },
+        {
+          "type": "gAccumAccumStmt",
+          "named": true
+        },
+        {
+          "type": "lAccumAccumStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubStmtList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dmlSubWhileStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "edgeAlias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "edgeSetType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "edgeType",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "edgeType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "elementType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "mathOperator",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "setBagExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fieldName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fileDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "filePath",
+          "named": true
+        },
+        {
+          "type": "fileVar",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "filePath",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fileVar",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fromClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pathPattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gAccumAccumStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "globalAccumName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "graphName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gsqlSelectBlock",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "accumClause",
+          "named": true
+        },
+        {
+          "type": "fromClause",
+          "named": true
+        },
+        {
+          "type": "gsqlSelectClause",
+          "named": true
+        },
+        {
+          "type": "postAccumClause",
+          "named": true
+        },
+        {
+          "type": "whereClause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gsqlSelectClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "vertexAlias",
+          "named": true
+        },
+        {
+          "type": "vertexSetName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "integer",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "jsonKey",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lAccumAccumStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "localAccumName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mathOperator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "numeric",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "real",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "paramName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameterList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "parameterType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameterType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pathEdgePattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgePattern",
+          "named": true
+        },
+        {
+          "type": "pathEdgePattern",
+          "named": true
+        },
+        {
+          "type": "stepEdgeSet",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pathPattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pathEdgePattern",
+          "named": true
+        },
+        {
+          "type": "stepVertexSet",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "perClauseV2",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "alias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "postAccumClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dmlSubStmtList",
+          "named": true
+        },
+        {
+          "type": "perClauseV2",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "primary_id_name_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "printExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "jsonKey",
+          "named": true
+        },
+        {
+          "type": "tableName",
+          "named": true
+        },
+        {
+          "type": "vExprSet",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "printStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "filePath",
+          "named": true
+        },
+        {
+          "type": "fileVar",
+          "named": true
+        },
+        {
+          "type": "printExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBody",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declStmts",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        },
+        {
+          "type": "typedefs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyIfStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "printStmt",
+          "named": true
+        },
+        {
+          "type": "queryBodyIfStmt",
+          "named": true
+        },
+        {
+          "type": "queryBodyWhileStmt",
+          "named": true
+        },
+        {
+          "type": "returnStmt",
+          "named": true
+        },
+        {
+          "type": "selectStmt",
+          "named": true
+        },
+        {
+          "type": "vSetVarDeclStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyStmts",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "queryBodyStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryBodyWhileStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "queryBodyStmts",
+          "named": true
+        },
+        {
+          "type": "simpleSize",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "queryName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "real",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "returnStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "returns",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "seed",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "selectVertParams",
+          "named": true
+        },
+        {
+          "type": "vertexSetName",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "seedSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "seed",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "selectStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "gsqlSelectBlock",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "selectVertParams",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "columnId",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "filePath",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "setBagExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argList",
+          "named": true
+        },
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "localAccumName",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "simpleSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "simpleSet",
+          "named": true
+        },
+        {
+          "type": "vertexSetName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "simpleSize",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "varName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ADD_INDEX",
+          "named": true
+        },
+        {
+          "type": "CREATE_DIRECTED_EDGE",
+          "named": true
+        },
+        {
+          "type": "CREATE_GRAPH",
+          "named": true
+        },
+        {
+          "type": "CREATE_UNDIRECTED_EDGE",
+          "named": true
+        },
+        {
+          "type": "CREATE_VERTEX",
+          "named": true
+        },
+        {
+          "type": "DROP",
+          "named": true
+        },
+        {
+          "type": "DROP_INDEX",
+          "named": true
+        },
+        {
+          "type": "createQuery",
+          "named": true
+        },
+        {
+          "type": "create_loading_job",
+          "named": true
+        },
+        {
+          "type": "fromClause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepEdgeSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "edgeAlias",
+          "named": true
+        },
+        {
+          "type": "stepEdgeTypes",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepEdgeTypes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicEdgePattern",
+          "named": true
+        },
+        {
+          "type": "edgeSetType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepSourceSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "vertexAlias",
+          "named": true
+        },
+        {
+          "type": "vertexSetName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepVertexSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "stepVertexTypes",
+          "named": true
+        },
+        {
+          "type": "vertexAlias",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stepVertexTypes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "atomicVertexType",
+          "named": true
+        },
+        {
+          "type": "vertexSetType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "stringLiteral",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "syntaxName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tableName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tupleFields",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "fieldName",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tupleType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "accumType",
+          "named": true
+        },
+        {
+          "type": "baseType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typedef",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "tupleFields",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typedefs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "typedef",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vExprSet",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "vSetProj",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vSetProj",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "jsonKey",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vSetVarDeclStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "gsqlSelectBlock",
+          "named": true
+        },
+        {
+          "type": "seedSet",
+          "named": true
+        },
+        {
+          "type": "simpleSet",
+          "named": true
+        },
+        {
+          "type": "vertexSetName",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "varName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vertexAlias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vertexSetName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vertexSetType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "globalAccumName",
+          "named": true
+        },
+        {
+          "type": "paramName",
+          "named": true
+        },
+        {
+          "type": "vertexType",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vertexType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "whereClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "\"none\"",
+    "named": false
+  },
+  {
+    "type": "\"true\"",
+    "named": false
+  },
+  {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "+=",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": "->",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": ".*",
+    "named": false
+  },
+  {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": ";",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "==",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": ">>",
+    "named": false
+  },
+  {
+    "type": "@",
+    "named": false
+  },
+  {
+    "type": "@@",
+    "named": false
+  },
+  {
+    "type": "ACCUM",
+    "named": false
+  },
+  {
+    "type": "ADD",
+    "named": false
+  },
+  {
+    "type": "ADMIN",
+    "named": false
+  },
+  {
+    "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "ALTER",
+    "named": false
+  },
+  {
+    "type": "AND",
+    "named": false
+  },
+  {
+    "type": "ANY",
+    "named": false
+  },
+  {
+    "type": "API",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
+    "type": "ASC",
+    "named": false
+  },
+  {
+    "type": "BAG",
+    "named": false
+  },
+  {
+    "type": "BOOL",
+    "named": false
+  },
+  {
+    "type": "COMPRESS",
+    "named": false
+  },
+  {
+    "type": "CREATE",
+    "named": false
+  },
+  {
+    "type": "DATETIME",
+    "named": false
+  },
+  {
+    "type": "DEFAULT",
+    "named": false
+  },
+  {
+    "type": "DEFINE",
+    "named": false
+  },
+  {
+    "type": "DESC",
+    "named": false
+  },
+  {
+    "type": "DIRECTED",
+    "named": false
+  },
+  {
+    "type": "DISTRIBUTED",
+    "named": false
+  },
+  {
+    "type": "DO",
+    "named": false
+  },
+  {
+    "type": "DOUBLE",
+    "named": false
+  },
+  {
+    "type": "DROP",
+    "named": false
+  },
+  {
+    "type": "EDGE",
+    "named": false
+  },
+  {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
+    "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FILE",
+    "named": false
+  },
+  {
+    "type": "FILENAME",
+    "named": false
+  },
+  {
+    "type": "FILTER",
+    "named": false
+  },
+  {
+    "type": "FLOAT",
+    "named": false
+  },
+  {
+    "type": "FOR",
+    "named": false
+  },
+  {
+    "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "GRAPH",
+    "named": false
+  },
+  {
+    "type": "HeapAccum",
+    "named": false
+  },
+  {
+    "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
+    "type": "INDEX",
+    "named": false
+  },
+  {
+    "type": "INT",
+    "named": false
+  },
+  {
+    "type": "INTERSECT",
+    "named": false
+  },
+  {
+    "type": "IS",
+    "named": false
+  },
+  {
+    "type": "JOB",
+    "named": false
+  },
+  {
+    "type": "JSONARRAY",
+    "named": false
+  },
+  {
+    "type": "JSONOBJECT",
+    "named": false
+  },
+  {
+    "type": "LIMIT",
+    "named": false
+  },
+  {
+    "type": "LOADING",
+    "named": false
+  },
+  {
+    "type": "ListAccum",
+    "named": false
+  },
+  {
+    "type": "MINUS",
+    "named": false
+  },
+  {
+    "type": "MapAccum",
+    "named": false
+  },
+  {
+    "type": "MaxAccum",
+    "named": false
+  },
+  {
+    "type": "NOT",
+    "named": false
+  },
+  {
+    "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "ON",
+    "named": false
+  },
+  {
+    "type": "OR",
+    "named": false
+  },
+  {
+    "type": "OUTDEGREE_BY_EDGETYPE",
+    "named": false
+  },
+  {
+    "type": "OrAccum",
+    "named": false
+  },
+  {
+    "type": "PER",
+    "named": false
+  },
+  {
+    "type": "POST-ACCUM",
+    "named": false
+  },
+  {
+    "type": "PRIMARY_ID",
+    "named": false
+  },
+  {
+    "type": "PRINT",
+    "named": false
+  },
+  {
+    "type": "QUERY",
+    "named": false
+  },
+  {
+    "type": "REPLACE",
+    "named": false
+  },
+  {
+    "type": "RETURNS",
+    "named": false
+  },
+  {
+    "type": "REVERSE_EDGE",
+    "named": false
+  },
+  {
+    "type": "SELECT",
+    "named": false
+  },
+  {
+    "type": "SET",
+    "named": false
+  },
+  {
+    "type": "STATIC",
+    "named": false
+  },
+  {
+    "type": "STATS",
+    "named": false
+  },
+  {
+    "type": "STRING",
+    "named": false
+  },
+  {
+    "type": "SYNTAX",
+    "named": false
+  },
+  {
+    "type": "SelectVertex",
+    "named": false
+  },
+  {
+    "type": "SetAccum",
+    "named": false
+  },
+  {
+    "type": "SumAccum",
+    "named": false
+  },
+  {
+    "type": "THEN",
+    "named": false
+  },
+  {
+    "type": "TO",
+    "named": false
+  },
+  {
+    "type": "TO_CSV",
+    "named": false
+  },
+  {
+    "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "TUPLE",
+    "named": false
+  },
+  {
+    "type": "TYPEDEF",
+    "named": false
+  },
+  {
+    "type": "UINT",
+    "named": false
+  },
+  {
+    "type": "UNDIRECTED",
+    "named": false
+  },
+  {
+    "type": "UNION",
+    "named": false
+  },
+  {
+    "type": "VERTEX",
+    "named": false
+  },
+  {
+    "type": "WHERE",
+    "named": false
+  },
+  {
+    "type": "WHILE",
+    "named": false
+  },
+  {
+    "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "_",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
+  },
+  {
+    "type": "create",
+    "named": false
+  },
+  {
+    "type": "double",
+    "named": false
+  },
+  {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "float",
+    "named": false
+  },
+  {
+    "type": "from",
+    "named": false
+  },
+  {
+    "type": "int",
+    "named": false
+  },
+  {
+    "type": "primary_id_as_attribute",
+    "named": false
+  },
+  {
+    "type": "return",
+    "named": false
+  },
+  {
+    "type": "string",
+    "named": false
+  },
+  {
+    "type": "string compress",
+    "named": false
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
+  }
+]

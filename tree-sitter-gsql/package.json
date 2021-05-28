@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-gsql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node run.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tree-sitter": "^0.19.0",
+    "web-tree-sitter": "^0.19.1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.19.3"
+  }
+}
