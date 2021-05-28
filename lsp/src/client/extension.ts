@@ -3,7 +3,14 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
+// Node
 import * as path from 'path';
+import util from 'util';
+import { exec as _exec, spawn } from 'child_process';
+const exec = util.promisify(_exec);
+
+
+// VS Code
 import { workspace, ExtensionContext, languages } from 'vscode';
 import * as vscode from 'vscode';
 
@@ -14,14 +21,26 @@ import {
 	ServerOptions,
 	TransportKind
 } from 'vscode-languageclient/node';
+
+// TigerDE
 // @ts-ignore
 import * as common from '../common/common';
+import { parseGadminLogs, parseGadminStatus } from './gadmin';
+
+
+
+
+
 
 let client: LanguageClient;
 const lang = "gsql";
 
 export function activate(context: ExtensionContext) {
-	console.log("activate")
+	console.log("extension activates")
+
+	//////////////////////////////
+	// Language Server Protocol //
+	//////////////////////////////
 	// The server is implemented in node
 	let serverModule = path.join(__dirname, '../server/server.js')
 	// The debug options for the server
@@ -57,6 +76,7 @@ export function activate(context: ExtensionContext) {
 	const tokenTypes = ['class', 'interface', 'enum', 'function', 'variable', 'comment', 'keyword', 'type'];
 	const tokenModifiers = ['declaration', 'documentation'];
 	const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
+	console.log("registerDocumentSemanticTokensProvider")
 	languages.registerDocumentSemanticTokensProvider(
 		[lang],
 		{
@@ -107,14 +127,24 @@ export function activate(context: ExtensionContext) {
 	);
 
 	// HoverProvider
+	console.log("registerHoverProvider")
 	vscode.languages.registerHoverProvider(lang, {
 		async provideHover(document, position: vscode.Position, token) {
 			console.log(position)
 			return {
-				contents: await client.sendRequest(common.Request.Hover, {row: position.line, column: position.character})
+				contents: await client.sendRequest(common.Request.Hover, { row: position.line, column: position.character })
 			}
 		}
 	});
+
+	//////////////////
+	// Activity Bar //
+	//////////////////
+	console.log("registerTreeDataProvider")
+	const gadminStatusProvideViewID = 'gadminStatus';
+	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID, new gadminStatusProvider(vscode.workspace.rootPath));
+	const gadminLogsProvideViewID = 'gadminLogs';
+	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath));
 
 	// Start the client. This will also launch the server
 	client.start();
@@ -125,4 +155,53 @@ export function deactivate(): Thenable<void> | undefined {
 		return undefined;
 	}
 	return client.stop();
+}
+
+
+
+class gadminStatusProvider implements vscode.TreeDataProvider<any> {
+	constructor(private workspaceRoot: string | undefined) {
+		this.workspaceRoot = workspaceRoot;
+		// process.seteuid(1000)
+	}
+
+	getTreeItem(element: string[]): vscode.TreeItem {
+		console.log('getTreeItem', element)
+		return new vscode.TreeItem(element[0])
+	}
+
+	async getChildren(element) {
+		console.log('getChildren', element)
+		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin status -v" tg');
+		console.log('stdout:', stdout);
+		console.log('stderr:', stderr);
+		return parseGadminStatus(stdout);
+	}
+
+}
+
+class gadminLogsProvider  implements vscode.TreeDataProvider<any> {
+	constructor(private workspaceRoot: string | undefined) {
+		this.workspaceRoot = workspaceRoot;
+	}
+
+	getTreeItem(element: string[]): vscode.TreeItem {
+		console.log('getTreeItem', element)
+		let item = new vscode.TreeItem(vscode.Uri.file(element[1]))
+		item.command = {
+			// https://code.visualstudio.com/api/references/commands
+			command: 'vscode.open',
+			title: '',
+			arguments: [vscode.Uri.file(element[1])]
+		}
+		return item
+	}
+
+	async getChildren(element) {
+		console.log('getChildren', element)
+		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin log" tg');
+		console.log('stdout:', stdout);
+		console.log('stderr:', stderr);
+		return parseGadminLogs(stdout);
+	}
 }

@@ -22,7 +22,12 @@ cp-gsql-parser:
 	mkdir src/gsql-parser
 	cp -r ../gsql-parser/src/* src/gsql-parser
 
-package: install build-prod
+package: build-prod
 	cd dist && $$(npm bin)/vsce package
 
 p: package
+
+pp: install build-prod
+
+test:
+	$$(npm bin)/mocha -r ts-node/register src/client/gadmin.test.ts
