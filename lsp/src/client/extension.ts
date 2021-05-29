@@ -167,7 +167,14 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 
 	getTreeItem(element: string[]): vscode.TreeItem {
 		console.log('getTreeItem', element)
-		return new vscode.TreeItem(element[0])
+		let i = new vscode.TreeItem(element[0])
+		if(element[2] == 'Running') {
+			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/ok-sign.svg"))
+		} else {
+			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/offline.svg"))
+		}
+		
+		return i
 	}
 
 	async getChildren(element) {
