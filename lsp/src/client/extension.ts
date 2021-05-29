@@ -145,14 +145,14 @@ export function activate(context: ExtensionContext) {
 	//////////////////
 	console.log("registerTreeDataProvider")
 	const gadminStatusProvideViewID = 'gadminStatus';
-	const provider =  new gadminStatusProvider(vscode.workspace.rootPath);
+	const provider = new gadminStatusProvider(vscode.workspace.rootPath);
 	(async function refresh() {
-		while(true) {
+		while (true) {
 			await sleep(3333)
-			provider.refresh() 
+			provider.refresh()
 		}
 	}())
-	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID,provider);
+	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID, provider);
 	const gadminLogsProvideViewID = 'gadminLogs';
 	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath));
 
@@ -177,36 +177,31 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 
 	private _onDidChangeTreeData: vscode.EventEmitter<void> = new vscode.EventEmitter();
 	readonly onDidChangeTreeData: vscode.Event<void> = this._onDidChangeTreeData.event;
-  
+
 	refresh(): void {
-	  this._onDidChangeTreeData.fire();
+		this._onDidChangeTreeData.fire();
 	}
 
 	getTreeItem(element: string[]): vscode.TreeItem {
 		console.log('getTreeItem', element)
 		let i = new vscode.TreeItem(element[0])
-		if(element[2] == 'Running') {
+		if (element[2] == 'Running') {
 			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/ok-sign.svg"))
 		} else {
 			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/offline.svg"))
 		}
-		
+
 		return i
 	}
 
 	async getChildren(element) {
 		console.log('getChildren', element)
-		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin status -v" tg');
-		console.log('stdout:', stdout);
-		console.log('stderr:', stderr);
+		const stdout = await tgCMD("gadmin status -v", "tg")	// todo: extension config
 		return parseGadminStatus(stdout);
 	}
-
-
-
 }
 
-class gadminLogsProvider  implements vscode.TreeDataProvider<any> {
+class gadminLogsProvider implements vscode.TreeDataProvider<any> {
 	constructor(private workspaceRoot: string | undefined) {
 		this.workspaceRoot = workspaceRoot;
 	}
@@ -225,9 +220,16 @@ class gadminLogsProvider  implements vscode.TreeDataProvider<any> {
 
 	async getChildren(element) {
 		console.log('getChildren', element)
-		const { stdout, stderr } = await exec('su -l -c "source ~/.zshrc && gadmin log" tg');
-		console.log('stdout:', stdout);
-		console.log('stderr:', stderr);
+		const stdout = await tgCMD("gadmin log", "tg")	// todo: extension config
 		return parseGadminLogs(stdout);
 	}
+}
+
+async function tgCMD(cmd: string, tgOSUser: string): Promise<string> {
+	const command = `su -l -c "source ~/.zshrc && ${cmd}" ${tgOSUser}`
+	console.log(command)
+	let { stdout, stderr } = await exec(command);
+	console.log('stdout:', stdout);
+	console.log('stderr:', stderr);
+	return stdout;
 }
