@@ -19,7 +19,8 @@ import {
 	LanguageClient,
 	LanguageClientOptions,
 	ServerOptions,
-	TransportKind
+	TransportKind,
+
 } from 'vscode-languageclient/node';
 
 // Third Party
@@ -196,7 +197,7 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 
 	async getChildren(element) {
 		console.log('getChildren', element)
-		const stdout = await tgCMD("gadmin status -v", "tg")	// todo: extension config
+		const stdout = await tgCMD("gadmin status -v", config())
 		return parseGadminStatus(stdout);
 	}
 }
@@ -220,7 +221,7 @@ class gadminLogsProvider implements vscode.TreeDataProvider<any> {
 
 	async getChildren(element) {
 		console.log('getChildren', element)
-		const stdout = await tgCMD("gadmin log", "tg")	// todo: extension config
+		const stdout = await tgCMD("gadmin log", config())	// todo: refresh on configuration change
 		return parseGadminLogs(stdout);
 	}
 }
@@ -232,4 +233,8 @@ async function tgCMD(cmd: string, tgOSUser: string): Promise<string> {
 	console.log('stdout:', stdout);
 	console.log('stderr:', stderr);
 	return stdout;
+}
+
+function config() {
+	return vscode.workspace.getConfiguration().get('TigerDE.OSUser') as string
 }

@@ -4,7 +4,7 @@
 	"icon": "docs/tigergraph-logo.png",
 	"author": "CreatCodeBuild",
 	"license": "MIT",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/CreatCodeBuild/tgde"
@@ -54,6 +54,16 @@
 					"name": "Logs"
 				}
 			]
+		},
+		"configuration": {
+			"title": "TigerDE",
+			"properties": {
+				"TigerDE.OSUser": {
+					"type": "string",
+					"default": "tigergraph",
+					"description": "The operating system user that tigergraph database is installed at"
+				}
+			}
 		}
 	},
 	"devDependencies": {
