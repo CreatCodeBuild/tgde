@@ -22,6 +22,9 @@ import {
 	TransportKind
 } from 'vscode-languageclient/node';
 
+// Third Party
+import { sleep } from "@creatcodebuild/csp"
+
 // TigerDE
 // @ts-ignore
 import * as common from '../common/common';
@@ -142,7 +145,14 @@ export function activate(context: ExtensionContext) {
 	//////////////////
 	console.log("registerTreeDataProvider")
 	const gadminStatusProvideViewID = 'gadminStatus';
-	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID, new gadminStatusProvider(vscode.workspace.rootPath));
+	const provider =  new gadminStatusProvider(vscode.workspace.rootPath);
+	(async function refresh() {
+		while(true) {
+			await sleep(3333)
+			provider.refresh() 
+		}
+	}())
+	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID,provider);
 	const gadminLogsProvideViewID = 'gadminLogs';
 	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath));
 
@@ -165,6 +175,13 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 		// process.seteuid(1000)
 	}
 
+	private _onDidChangeTreeData: vscode.EventEmitter<void> = new vscode.EventEmitter();
+	readonly onDidChangeTreeData: vscode.Event<void> = this._onDidChangeTreeData.event;
+  
+	refresh(): void {
+	  this._onDidChangeTreeData.fire();
+	}
+
 	getTreeItem(element: string[]): vscode.TreeItem {
 		console.log('getTreeItem', element)
 		let i = new vscode.TreeItem(element[0])
@@ -184,6 +201,8 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 		console.log('stderr:', stderr);
 		return parseGadminStatus(stdout);
 	}
+
+
 
 }
 
