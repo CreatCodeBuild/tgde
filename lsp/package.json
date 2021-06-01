@@ -62,6 +62,11 @@
 					"type": "string",
 					"default": "tigergraph",
 					"description": "The operating system user that tigergraph database is installed at"
+				},
+				"TigerDE.SHELL": {
+					"type": "string",
+					"default": "bash",
+					"description": "The shell OSUser uses to run `gadmin`"
 				}
 			}
 		}

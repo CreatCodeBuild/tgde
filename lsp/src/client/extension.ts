@@ -29,7 +29,7 @@ import { sleep } from "@creatcodebuild/csp"
 // TigerDE
 // @ts-ignore
 import * as common from '../common/common';
-import { parseGadminLogs, parseGadminStatus } from './gadmin';
+import { GadminSyncer, parseGadminLogs, parseGadminStatus, Status, tgCMD } from './gadmin';
 
 
 
@@ -145,17 +145,24 @@ export function activate(context: ExtensionContext) {
 	// Activity Bar //
 	//////////////////
 	console.log("registerTreeDataProvider")
+	const gadminSyncer = new GadminSyncer(getConfig, 3333);
 	const gadminStatusProvideViewID = 'gadminStatus';
-	const provider = new gadminStatusProvider(vscode.workspace.rootPath);
+	const provider = new gadminStatusProvider(vscode.workspace.rootPath, gadminSyncer);
 	(async function refresh() {
 		while (true) {
-			await sleep(3333)
-			provider.refresh()
+			try {
+				await gadminSyncer.statusChanged()
+				provider.refresh()
+			} catch {
+				gadminSyncer.status = []
+				await sleep(1000)
+				provider.refresh()
+			}
 		}
 	}())
 	vscode.window.registerTreeDataProvider(gadminStatusProvideViewID, provider);
 	const gadminLogsProvideViewID = 'gadminLogs';
-	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath));
+	vscode.window.registerTreeDataProvider(gadminLogsProvideViewID, new gadminLogsProvider(vscode.workspace.rootPath, gadminSyncer));
 
 	// Start the client. This will also launch the server
 	client.start();
@@ -171,7 +178,10 @@ export function deactivate(): Thenable<void> | undefined {
 
 
 class gadminStatusProvider implements vscode.TreeDataProvider<any> {
-	constructor(private workspaceRoot: string | undefined) {
+	constructor(
+		private workspaceRoot: string | undefined,
+		private gadminSyncer: GadminSyncer
+	) {
 		this.workspaceRoot = workspaceRoot;
 		// process.seteuid(1000)
 	}
@@ -183,27 +193,28 @@ class gadminStatusProvider implements vscode.TreeDataProvider<any> {
 		this._onDidChangeTreeData.fire();
 	}
 
-	getTreeItem(element: string[]): vscode.TreeItem {
+	getTreeItem(element: Status): vscode.TreeItem {
 		console.log('getTreeItem', element)
-		let i = new vscode.TreeItem(element[0])
-		if (element[2] == 'Running') {
+		let i = new vscode.TreeItem(element.ServiceStatus)
+		if (element.ProcessStatus == 'Running') {
 			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/ok-sign.svg"))
 		} else {
 			i.iconPath = vscode.Uri.file(path.join(__dirname, "../docs/offline.svg"))
 		}
-
 		return i
 	}
 
-	async getChildren(element) {
-		console.log('getChildren', element)
-		const stdout = await tgCMD("gadmin status -v", config())
-		return parseGadminStatus(stdout);
+	async getChildren(element): Promise<Status[]> {
+		console.log('gadminStatusProvider.getChildren', element)
+		return this.gadminSyncer.status
 	}
 }
 
 class gadminLogsProvider implements vscode.TreeDataProvider<any> {
-	constructor(private workspaceRoot: string | undefined) {
+	constructor(
+		private workspaceRoot: string | undefined,
+		private gadminSyncer: GadminSyncer
+	) {
 		this.workspaceRoot = workspaceRoot;
 	}
 
@@ -221,20 +232,10 @@ class gadminLogsProvider implements vscode.TreeDataProvider<any> {
 
 	async getChildren(element) {
 		console.log('getChildren', element)
-		const stdout = await tgCMD("gadmin log", config())	// todo: refresh on configuration change
-		return parseGadminLogs(stdout);
+		return this.gadminSyncer.logFiles()
 	}
 }
 
-async function tgCMD(cmd: string, tgOSUser: string): Promise<string> {
-	const command = `su -l -c "source ~/.zshrc && ${cmd}" ${tgOSUser}`
-	console.log(command)
-	let { stdout, stderr } = await exec(command);
-	console.log('stdout:', stdout);
-	console.log('stderr:', stderr);
-	return stdout;
-}
-
-function config() {
-	return vscode.workspace.getConfiguration().get('TigerDE.OSUser') as string
+function getConfig(config: string) {
+	return vscode.workspace.getConfiguration().get(config) as string
 }
