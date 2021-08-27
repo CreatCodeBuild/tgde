@@ -24,6 +24,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "USE_GRAPH"
+          },
+          {
+            "type": "SYMBOL",
             "name": "DROP"
           },
           {
@@ -4785,6 +4789,33 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "USE_GRAPH": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[uU][sS][eE]"
+          },
+          "named": false,
+          "value": "USE"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[gG][rR][aA][pP][hH]"
+          },
+          "named": false,
+          "value": "GRAPH"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "name"
         }
       ]
     },

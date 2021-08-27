@@ -61,6 +61,7 @@ const g = {
                 $.CREATE_UNDIRECTED_EDGE,
                 $.CREATE_DIRECTED_EDGE,
                 $.CREATE_GRAPH,
+                $.USE_GRAPH,
                 $.DROP,
                 $.ADD_INDEX,
                 $.DROP_INDEX,

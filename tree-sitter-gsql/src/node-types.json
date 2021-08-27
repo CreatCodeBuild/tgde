@@ -165,6 +165,21 @@
     }
   },
   {
+    "type": "USE_GRAPH",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "WITH",
     "named": true,
     "fields": {}
@@ -1654,6 +1669,10 @@
           "named": true
         },
         {
+          "type": "USE_GRAPH",
+          "named": true
+        },
+        {
           "type": "createQuery",
           "named": true
         },
@@ -2516,6 +2535,10 @@
   },
   {
     "type": "UNION",
+    "named": false
+  },
+  {
+    "type": "USE",
     "named": false
   },
   {

@@ -90,6 +90,10 @@ module.exports = {
         ))
     ),
 
+    USE_GRAPH: $ => seq(
+        kw.USE, kw.GRAPH, $.name
+    ),
+
     // primary_id_name_type := PRIMARY_ID id_name id_type
     primary_id_name_type: $ => seq(
         kw.PRIMARY_ID,
