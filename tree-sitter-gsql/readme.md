@@ -8,7 +8,7 @@ Main development platform.
 Is used to compile C to wasm.
 ```
 git clone https://github.com/emscripten-core/emsdk.git ~/emsdk
-cd emsdk
+cd ~/emsdk
 git checkout 2.0.17
 ```
 Then follow https://github.com/emscripten-core/emsdk

@@ -7,3 +7,4 @@ build
 .cache
 .wasm
 lsp/src/gsql-parser
+gsql-parser/src/*.wasm

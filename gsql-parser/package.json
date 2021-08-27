@@ -1,6 +1,6 @@
 {
   "name": "gsql-parser",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "An es/npm module which is used as a base component for building a language server for TigerGraph GSQL.",
   "main": "parser.js",
   "author": "https://github.com/CreatCodeBuild",

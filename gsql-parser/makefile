@@ -4,6 +4,7 @@ install:
 build:
 	rm -rf dist
 	$$(npm bin)/tsc -b
+	cp ../tree-sitter-gsql/tree-sitter-gsql.wasm src/tree-sitter-gsql.wasm
 	cp src/tree-sitter-gsql.wasm dist/tree-sitter-gsql.wasm
 
 publish: build
