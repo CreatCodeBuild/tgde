@@ -48,6 +48,14 @@
           },
           {
             "type": "SYMBOL",
+            "name": "interpretQuery"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "name"
+          },
+          {
+            "type": "SYMBOL",
             "name": "fromClause"
           }
         ]
@@ -84,7 +92,7 @@
             "value": "[cC][rR][eE][aA][tT][eE]"
           },
           "named": false,
-          "value": "create"
+          "value": "CREATE"
         },
         {
           "type": "CHOICE",
@@ -248,6 +256,81 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "interpretQuery": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[iI][nN][tT][eE][rR][pP][rR][eE][tT]"
+          },
+          "named": false,
+          "value": "INTERPRET"
+        },
+        {
+          "type": "STRING",
+          "value": "QUERY"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "parameterList"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "FOR"
+                },
+                {
+                  "type": "STRING",
+                  "value": "GRAPH"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "graphName"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "queryBody"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },
@@ -2051,6 +2134,10 @@
           "name": "baseType"
         },
         {
+          "type": "STRING",
+          "value": " "
+        },
+        {
           "type": "SYMBOL",
           "name": "name"
         },
@@ -3796,64 +3883,8 @@
       ]
     },
     "name": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "PATTERN",
-                    "value": "[a-z]"
-                  },
-                  {
-                    "type": "PATTERN",
-                    "value": "[A-Z]"
-                  }
-                ]
-              },
-              {
-                "type": "STRING",
-                "value": "_"
-              }
-            ]
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[a-z]"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "[A-Z]"
-                    }
-                  ]
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "[0-9]"
-                },
-                {
-                  "type": "STRING",
-                  "value": "_"
-                }
-              ]
-            }
-          }
-        ]
-      }
+      "type": "PATTERN",
+      "value": "(_|[a-zA-z])[a-zA-z0-9_]*"
     },
     "graphName": {
       "type": "SYMBOL",

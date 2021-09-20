@@ -1019,6 +1019,29 @@
     "fields": {}
   },
   {
+    "type": "interpretQuery",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "graphName",
+          "named": true
+        },
+        {
+          "type": "parameterList",
+          "named": true
+        },
+        {
+          "type": "queryBody",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "jsonKey",
     "named": true,
     "fields": {},
@@ -1073,11 +1096,6 @@
   },
   {
     "type": "mathOperator",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "name",
     "named": true,
     "fields": {}
   },
@@ -1683,6 +1701,14 @@
         {
           "type": "fromClause",
           "named": true
+        },
+        {
+          "type": "interpretQuery",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
         }
       ]
     }
@@ -2086,6 +2112,10 @@
     }
   },
   {
+    "type": " ",
+    "named": false
+  },
+  {
     "type": "!=",
     "named": false
   },
@@ -2366,6 +2396,10 @@
     "named": false
   },
   {
+    "type": "INTERPRET",
+    "named": false
+  },
+  {
     "type": "INTERSECT",
     "named": false
   },
@@ -2574,10 +2608,6 @@
     "named": true
   },
   {
-    "type": "create",
-    "named": false
-  },
-  {
     "type": "double",
     "named": false
   },
@@ -2596,6 +2626,10 @@
   {
     "type": "int",
     "named": false
+  },
+  {
+    "type": "name",
+    "named": true
   },
   {
     "type": "primary_id_as_attribute",

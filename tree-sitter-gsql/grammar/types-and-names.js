@@ -81,10 +81,7 @@ module.exports = {
     /*
     name := (letter | "_") [letter | digit | "_"]*   // can be a single "_" or start with "_"
     */
-    name: $ => prec.right(seq(
-        choice(letter(), "_"),
-        repeat(choice(letter(), digit(), "_"))
-    )),
+    name: $ => /(_|[a-zA-z])[a-zA-z0-9_]*/,
     graphName: $ => $.name,
     queryName: $ => $.name,
     paramName: $ => $.name,
@@ -146,7 +143,4 @@ module.exports = {
     ),
 }
 
-function lowercase() { return /[a-z]/ }
-function uppercase() { return /[A-Z]/ }
-function letter() { return choice(lowercase(), uppercase()) }
 function digit() { return /[0-9]/ }

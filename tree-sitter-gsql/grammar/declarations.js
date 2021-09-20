@@ -14,7 +14,7 @@ const { kw } = require("./index");
 module.exports = {
     // baseDeclStmt    := baseType name ["=" constant] ["," name ["=" constant]]*
     baseDeclStmt: $ => seq(
-        $.baseType, $.name, optional(seq("=", $.constant)), repeat(seq(",", $.name, optional(seq("=", $.constant))))
+        $.baseType, " ", $.name, optional(seq("=", $.constant)), repeat(seq(",", $.name, optional(seq("=", $.constant))))
     ),
 
     // fileDeclStmt := FILE fileVar "(" filePath ")"
@@ -28,7 +28,8 @@ module.exports = {
     // vSetVarDeclStmt := vertexSetName ["(" vertexType ")"]
     //                    "=" (seedSet | simpleSet | selectBlock)
     vSetVarDeclStmt: $=> seq(
-        $.vertexSetName, optional(seq(
+        $.vertexSetName,
+        optional(seq(
             "(", $.vertexType, ")"
         )),
         "=",

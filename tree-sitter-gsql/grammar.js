@@ -51,7 +51,8 @@ const g = {
         [$.queryBodyIfStmt],
         [$.expr, $.setBagExpr],
         [$.expr, $.setBagExpr, $.tableName],
-        [$.assignStmt, $.attrName]
+        [$.assignStmt, $.attrName],
+        // [$.name]
     ],
 
     rules: {
@@ -67,9 +68,11 @@ const g = {
                 $.DROP_INDEX,
                 $.create_loading_job,
                 $.createQuery,
+                $.interpretQuery,
                 // $.selectStmt,
                 // $.gsqlSelectClause,
                 // $.stringLiteral,
+                $.name,
                 $.fromClause,
                 // $.whereClause,
                 // $.condition,
@@ -96,12 +99,18 @@ const g = {
         ),
 
         createSignature: $=> seq(
-            kw("create"), optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
+            kw.CREATE, optional(seq(kw("OR"), kw("REPLACE"))), optional(kw("DISTRIBUTED")), "QUERY", $.queryName,
             "(", optional($.parameterList), ")",
             optional(seq("FOR", "GRAPH", $.graphName)),
             optional($.returns),
             optional(seq("API", "(", $.stringLiteral, ")")),
             optional(seq("SYNTAX", $.syntaxName))
+        ),
+
+        interpretQuery: $=>seq(
+            kw.INTERPRET, "QUERY", "(", optional($.parameterList), ")",
+            optional(seq("FOR", "GRAPH", $.graphName)),
+            "{", $.queryBody, "}"
         ),
 
         returns:$=> seq("RETURNS", "(", choice($.baseType, $.accumType), ")"),
